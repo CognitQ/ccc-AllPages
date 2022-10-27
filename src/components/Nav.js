@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { InputForm } from "./InputForm";
 import { Aboutus } from "./Aboutus";
-import { Testing } from "./Testing";
+// import { Testing } from "./Testing";
 // import {Link} from "react-router-dom";
 
-export const Nav = () => {
+export const Nav = (props) => {
   const [showHome, setHomeShow] = useState(true); //code for deployment
 
-  const [dataValues, setData] = useState([]);
+  // const [dataValues, setData] = useState([]);
 
-  const getData = (data) => {
-    console.log("coming from nav.js", data);
-    setData(data);
+  const getData = (deployment, demonset) => {
+    // console.log("coming from nav.js", data);
+    props.setData(deployment, demonset);
   };
 
   return (
     <div>
-       {/* <Nav>
+      {/* <Nav>
         <div>
           <ul>
             <li>
@@ -26,8 +26,6 @@ export const Nav = () => {
           </ul>
         </div>
       </Nav> */}
-
-
 
       <div className="nav">
         <button
@@ -45,7 +43,6 @@ export const Nav = () => {
           About Us
         </button>
       </div>
-     
 
       <div>
         {showHome ? (
@@ -54,8 +51,8 @@ export const Nav = () => {
           </div>
         ) : (
           <div className="App">
+            {/* <Testing data={dataValues} /> */}
             <Aboutus />
-            <Testing data={dataValues} />
           </div>
         )}
       </div>

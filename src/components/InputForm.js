@@ -10,6 +10,8 @@ export const InputForm = (props) => {
   const [deploymentValid, setDeploymentValid] = useState(false); //code for checking validity
   const [demonValid, setDemonValid] = useState(false); //code for checking validity
 
+  const navigate = useNavigate();
+
   // Start Code for deployment
   const [inputFields, setInputFields] = useState([
     {
@@ -23,7 +25,7 @@ export const InputForm = (props) => {
       maxRamUnit: "MiB",
       minVcpu: "1",
       maxVcpu: "",
-      storageUnit: "Gib",
+      storageUnit: "GiB",
       storage: "",
     },
   ]);
@@ -56,18 +58,6 @@ export const InputForm = (props) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // checkValidations();
-    // if (deploymentValid && demonValid) {
-    // console.log("DepoymentInputFields", inputFields);
-    // console.log("DemonsetInputFields", demonsetInputFields);
-
-    props.ondataSubmit(inputFields);
-    // props.ondataSubmit(demonsetInputFields);
-    // }
-  };
-
   const handleReset = (id) => {
     const values = [...inputFields];
     const containerId = values.findIndex((value) => value.id === id);
@@ -83,7 +73,7 @@ export const InputForm = (props) => {
         maxRamUnit: "MiB",
         minVcpu: "1",
         maxVcpu: "",
-        storageUnit: "Gib",
+        storageUnit: "GiB",
         storage: "",
       },
     ];
@@ -119,7 +109,7 @@ export const InputForm = (props) => {
         maxRamUnit: "MiB",
         minVcpu: "1",
         maxVcpu: "",
-        storageUnit: "Gib",
+        storageUnit: "GiB",
         storage: "",
       },
     ]);
@@ -148,7 +138,7 @@ export const InputForm = (props) => {
       demonMaxRamUnit: "MiB",
       demonMinVcpu: "1",
       demonMaxVcpu: "",
-      demonStorageUnit: "Gib",
+      demonStorageUnit: "GiB",
       demonStorage: "",
     },
   ]);
@@ -166,7 +156,7 @@ export const InputForm = (props) => {
         demonMaxRamUnit: "MiB",
         demonMinVcpu: "1",
         demonMaxVcpu: "",
-        demonStorageUnit: "Gib",
+        demonStorageUnit: "GiB",
         demonStorage: "",
       },
     ];
@@ -196,7 +186,7 @@ export const InputForm = (props) => {
         demonMaxRamUnit: "MiB",
         demonMinVcpu: "1",
         demonMaxVcpu: "",
-        demonStorageUnit: "Gib",
+        demonStorageUnit: "GiB",
         demonStorage: "",
       },
     ]);
@@ -212,9 +202,17 @@ export const InputForm = (props) => {
   };
   //end of function code for Demonset
 
-  const navigate = useNavigate();
-  const gotoSecond = () => {
-    navigate('/second')
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // checkValidations();
+    // if (deploymentValid && demonValid) {
+    // console.log("DepoymentInputFields", inputFields);
+    // console.log("DemonsetInputFields", demonsetInputFields);
+
+    props.ondataSubmit(inputFields, demonsetInputFields);
+    navigate("/second");
+    // props.ondataSubmit(demonsetInputFields);
+    // }
   };
 
   return (
@@ -722,25 +720,11 @@ export const InputForm = (props) => {
         {/* Start of clear all  and submit button code*/}
         <div className="nav send">
           <button
-            type="button"
-            onClick={refreshPage}
-            className="btn btn-secondary"
-          >
-            Clear All
-          </button>{" "}
-          <button
             type="submit"
             className="btn btn-secondary"
-            onClick={() => {{ handleSubmit();gotoSecond() }}}
+            onClick={handleSubmit}
           >
             Submit
-          </button>
-          <button
-            // type="submit"
-            className="btn btn-secondary"
-            onClick={() => gotoSecond()}
-          >
-            Submit2
           </button>
         </div>
         {/* End of clear all  and submit button code*/}
