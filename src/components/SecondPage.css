@@ -1,0 +1,20 @@
+.table{
+    padding:10%;
+    margin: 10px;
+    text-align: center;
+    height:200px;
+    width:750px;
+}
+
+.tHead{
+    background-color: rgb(214, 224, 243);
+}
+
+.tHeading{
+    width:130px;
+}
+
+
+.tButton{
+    width:130px;
+}
