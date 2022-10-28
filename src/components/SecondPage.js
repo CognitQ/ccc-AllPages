@@ -6,25 +6,140 @@ import { Link } from "react-router-dom";
 const SecondPage = (props) => {
   const navigate = useNavigate();
 
-  const depolymentRam = props.dpData.map((object) => {
-    if (object.maxRamUnit === "GiB") {
-      return parseInt(object.maxRam) * 1024;
+  // max Vcpu
+  const depolymentVcpu = props.dpData.map((object) => {
+    if (object.maxVcpu === "undefined") {
+      return parseInt(object.minVcpu);
     } else {
-      return parseInt(object.maxRam);
+      return parseInt(object.maxVcpu);
+    }
+  });
+
+  const maxVcpuindeployment = Math.max(...depolymentVcpu);
+
+  const demonsetVcpu = props.dsData.map((object) => {
+    if (object.demonMaxVcpu === "undefined") {
+      return parseInt(object.minVcpu);
+    } else {
+      return parseInt(object.demonMaxVcpu);
+    }
+  });
+
+  const maxVcpuindemonset = Math.max(...demonsetVcpu);
+
+  // Max Vcpu ends
+
+  // minVcpu
+  const depolymentMinVcpu = props.dpData.map((object) => {
+    return parseInt(object.minVcpu);
+  });
+
+  const minVcpuindeployment = Math.max(...depolymentMinVcpu);
+
+  const demonsetMinVcpu = props.dsData.map((object) => {
+    return parseInt(object.demonMinVcpu);
+  });
+
+  const minVcpuindemonset = Math.max(...demonsetMinVcpu);
+
+  // MinVcpu ends
+
+  // maxRam
+  const depolymentRam = props.dpData.map((object) => {
+    if (object.maxRam === "undefined") {
+      if (object.minRamUnit === "GiB") {
+        return parseInt(object.minRam) * 1024;
+      } else {
+        return parseInt(object.minRam);
+      }
+    } else {
+      if (object.maxRamUnit === "GiB") {
+        return parseInt(object.maxRam) * 1024;
+      } else {
+        return parseInt(object.maxRam);
+      }
     }
   });
 
   const maxRamindeployment = Math.max(...depolymentRam);
 
   const demonsetRam = props.dsData.map((object) => {
-    if (object.demonMaxRamUnit === "GiB") {
-      return parseInt(object.demonMaxRam) * 1024;
+    if (object.demonMaxRam === "undefined") {
+      if (object.demonMinRamUnit === "GiB") {
+        return parseInt(object.demonMinRam) * 1024;
+      } else {
+        return parseInt(object.DemonMinRam);
+      }
     } else {
-      return parseInt(object.demonMaxRam);
+      if (object.demonMaxRamUnit === "GiB") {
+        return parseInt(object.demonMaxRam) * 1024;
+      } else {
+        return parseInt(object.demonMaxRam);
+      }
     }
   });
 
   const maxRamindemonset = Math.max(...demonsetRam);
+
+  // Max Ram ends
+
+  // minRam
+  const depolymentMinRam = props.dpData.map((object) => {
+    if (object.minRamUnit === "GiB") {
+      return parseInt(object.minRam) * 1024;
+    } else {
+      return parseInt(object.minRam);
+    }
+  });
+
+  const minRamindeployment = Math.max(...depolymentMinRam);
+
+  const demonsetMinRam = props.dsData.map((object) => {
+    if (object.demonMinRamUnit === "GiB") {
+      return parseInt(object.demonMinRam) * 1024;
+    } else {
+      return parseInt(object.demonMinRam);
+    }
+  });
+
+  const minRamindemonset = Math.max(...demonsetMinRam);
+
+  // MinRam ends
+
+  // Storage Starts
+  const depolymentstorage = props.dpData.map((object) => {
+    if (object.storage === "undefined") {
+      return 0;
+    } else {
+      if (object.storageUnit === "GiB") {
+        return parseInt(object.storage) * 1024;
+      } else if (object.storageUnit === "TB") {
+        return parseInt(object.storage) * 1024 * 1024;
+      } else {
+        return parseInt(object.storage);
+      }
+    }
+  });
+
+  const storageindeployment = Math.max(...depolymentstorage);
+
+  const demonsetStorage = props.dsData.map((object) => {
+    if (object.demonStorage === "undefined") {
+      return 0;
+    } else {
+      if (object.demonStorageUnit === "GiB") {
+        return parseInt(object.demonStorage) * 1024;
+      } else if (object.demonStorageUnit === "TB") {
+        return parseInt(object.demonStorage) * 1024 * 1024;
+      } else {
+        return parseInt(object.demonStorage);
+      }
+    }
+  });
+
+  const storageindemonset = Math.max(...demonsetStorage);
+
+  //  storage ends
 
   const gotoDetail = () => {
     navigate("/detail");
@@ -45,8 +160,22 @@ const SecondPage = (props) => {
         </nav>
       </div>
 
-      <div>Deployment ram = {maxRamindeployment}</div>
-      <div>Demonset ram = {maxRamindemonset}</div>
+      <div>Deployment Maxram = {maxRamindeployment}</div>
+      <div>Demonset Maxram = {maxRamindemonset}</div>
+
+      <div>Deployment Minram = {minRamindeployment}</div>
+      <div>Demonset Minram = {minRamindemonset}</div>
+
+      <div>Deployment MaxVcpu = {maxVcpuindeployment}</div>
+      <div>Demonset MaxVcpu = {maxVcpuindemonset}</div>
+
+      <div>Deployment MinVcpu = {minVcpuindeployment}</div>
+      <div>Demonset MinVcpu = {minVcpuindemonset}</div>
+
+      <div>Deployment storage = {storageindeployment}</div>
+      <div>Demonset storage = {storageindemonset}</div>
+
+      <div>{console.log(storageindeployment)}</div>
 
       <center>
         <table className="table table-striped table-hover table-bordered table">
