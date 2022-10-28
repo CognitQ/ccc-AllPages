@@ -141,6 +141,34 @@ const SecondPage = (props) => {
 
   //  storage ends
 
+  // function for best performance
+  // ram = 500 vcpu 16
+  const bestPerforamnce = () => {
+    const requiredRam = (50 / 100) * maxRamindeployment + maxRamindeployment;
+    const requiredVcpu = (50 / 100) * maxVcpuindeployment + maxVcpuindeployment;
+    const ratio = requiredRam / requiredVcpu;
+    return ratio;
+  };
+  // function for best performance ends
+
+  // function for best cost
+  const bestcost = () => {
+    const requiredRam = (15 / 100) * maxRamindeployment + maxRamindeployment;
+    const requiredVcpu = (15 / 100) * maxVcpuindeployment + maxVcpuindeployment;
+    const ratio = requiredRam / requiredVcpu;
+    return ratio;
+  };
+  // function for best cost ends
+
+  // function for Balance
+  const balance = () => {
+    const requiredRam = (30 / 100) * maxRamindeployment + maxRamindeployment;
+    const requiredVcpu = (30 / 100) * maxVcpuindeployment + maxVcpuindeployment;
+    const ratio = requiredRam / requiredVcpu;
+    return ratio;
+  };
+  // function for Balance ends
+
   const gotoDetail = () => {
     navigate("/detail");
   };
@@ -160,22 +188,11 @@ const SecondPage = (props) => {
         </nav>
       </div>
 
-      <div>Deployment Maxram = {maxRamindeployment}</div>
-      <div>Demonset Maxram = {maxRamindemonset}</div>
-
-      <div>Deployment Minram = {minRamindeployment}</div>
-      <div>Demonset Minram = {minRamindemonset}</div>
-
-      <div>Deployment MaxVcpu = {maxVcpuindeployment}</div>
-      <div>Demonset MaxVcpu = {maxVcpuindemonset}</div>
-
-      <div>Deployment MinVcpu = {minVcpuindeployment}</div>
-      <div>Demonset MinVcpu = {minVcpuindemonset}</div>
-
-      <div>Deployment storage = {storageindeployment}</div>
-      <div>Demonset storage = {storageindemonset}</div>
-
-      <div>{console.log(storageindeployment)}</div>
+      {/* <div>Deployment Maxram = {maxRamindeployment}</div>
+      <div>Demonset Maxram = {maxRamindemonset}</div> */}
+      <div>Best performance = {bestPerforamnce()}</div>
+      <div>Best cost = {bestcost()}</div>
+      <div>Balanced = {balance()}</div>
 
       <center>
         <table className="table table-striped table-hover table-bordered table">
