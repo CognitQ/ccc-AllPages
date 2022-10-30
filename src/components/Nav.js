@@ -26,7 +26,7 @@ export const Nav = (props) => {
           </ul>
         </div>
       </Nav> */}
-
+      
       <div className="nav">
         <button
           type="button"
@@ -43,6 +43,7 @@ export const Nav = (props) => {
           About Us
         </button>
       </div>
+      
 
       <div>
         {showHome ? (

@@ -1,0 +1,19 @@
+.barbox{
+    width:100%;
+    height:192px;
+    justify-content:space-between;
+    /* margin-right: auto; */
+}
+
+.btnLeast{
+    margin-left:145px;
+}
+.barBest{
+    margin-left:342px;
+}
+.barBalance{
+    margin-left:340px;
+}
+.container{
+    align-items: center;
+}

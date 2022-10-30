@@ -2,9 +2,29 @@ import React from "react";
 import "./SecondPage.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {useState, useEffect} from 'react';
 
 const SecondPage = (props) => {
   const navigate = useNavigate();
+
+//code for fetch data
+const [instance, fetchInstance] = useState([])
+
+
+const getData = () => {
+  fetch('http://localhost:4000')
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res)
+      fetchInstance(res)
+    })
+}
+
+useEffect(() => {
+  getData()
+}, []) 
+
+
 
   // max Vcpu
   const depolymentVcpu = props.dpData.map((object) => {

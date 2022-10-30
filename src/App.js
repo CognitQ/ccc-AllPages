@@ -3,6 +3,7 @@ import { Nav } from "./components/Nav";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SecondPage from "./components/SecondPage";
 import { DetailPage } from "./components/DetailPage";
+// import Graph from "./components/Graph";
 
 const App = () => {
   const [deploymentData, setDeployementData] = useState([]);

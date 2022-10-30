@@ -19,7 +19,7 @@ export const DetailPage = () => {
 
 
       <center>
-        <div className="box">
+        <div className="mainbox">
           <div className="ltop">
             <label>
               <h5>
@@ -49,7 +49,7 @@ export const DetailPage = () => {
               </select>
             </button>
           </div>
-          <table class="table table-bordered">
+          <table class="table table-bordered table1">
             <thead>
               <tr>
                 <th scope="col">AKS</th>
@@ -120,7 +120,7 @@ export const DetailPage = () => {
               <option value="3">3</option>
             </select>
           </div>
-          <table class="table table-bordered">
+          <table class="table table-bordered table1">
             <thead>
               <tr>
                 <th scope="col">AKS</th>
