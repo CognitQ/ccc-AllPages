@@ -2,29 +2,10 @@ import React from "react";
 import "./SecondPage.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {useState, useEffect} from 'react';
+import { InstanceData } from "./InstanceData";
 
 const SecondPage = (props) => {
   const navigate = useNavigate();
-
-//code for fetch data
-const [instance, fetchInstance] = useState([])
-
-
-const getData = () => {
-  fetch('http://localhost:4000')
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res)
-      fetchInstance(res)
-    })
-}
-
-useEffect(() => {
-  getData()
-}, []) 
-
-
 
   // max Vcpu
   const depolymentVcpu = props.dpData.map((object) => {
@@ -81,7 +62,7 @@ useEffect(() => {
     }
   });
 
-  const maxRamindeployment = Math.max(...depolymentRam);
+  const maxRamindeployment = Math.max(...depolymentRam) / 1024;
 
   const demonsetRam = props.dsData.map((object) => {
     if (object.demonMaxRam === "undefined") {
@@ -171,6 +152,10 @@ useEffect(() => {
   };
   // function for best performance ends
 
+  const calculateRatio = () => {
+    const ratio = maxRamindeployment / maxVcpuindeployment;
+  };
+
   // function for best cost
   const bestcost = () => {
     const requiredRam = (15 / 100) * maxRamindeployment + maxRamindeployment;
@@ -210,9 +195,13 @@ useEffect(() => {
 
       {/* <div>Deployment Maxram = {maxRamindeployment}</div>
       <div>Demonset Maxram = {maxRamindemonset}</div> */}
-      <div>Best performance = {bestPerforamnce()}</div>
+      {/* <div>Best performance = {bestPerforamnce()}</div>
       <div>Best cost = {bestcost()}</div>
       <div>Balanced = {balance()}</div>
+
+      <div>calculateRatio = {calculateRatio()}</div> */}
+
+      <InstanceData ram={maxRamindeployment} vcpu={maxVcpuindeployment} />
 
       <center>
         <table className="table table-striped table-hover table-bordered table">
