@@ -41,6 +41,7 @@ export const InstanceData = (props) => {
           .filter(
             (Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost
           )
+          .slice(0, 1)
           .map((d) => {
             return (
               <li key={d.id}>
@@ -50,7 +51,7 @@ export const InstanceData = (props) => {
             );
           })}
       </ul>
-      {selected}
+      {/* {selected} */}
     </div>
   );
 };
