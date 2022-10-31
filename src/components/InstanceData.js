@@ -29,19 +29,6 @@ export const InstanceData = (props) => {
 
   const minCost = Math.min(...CostOfFilterdata);
 
-  // const selected = filterdata.map((object) => {
-  //   if (object.OnDemandLinuxpricing_USDperHour === minCost) {
-  //     return object;
-  //   }
-  // });
-
-  const selectedPrice = filterdata
-    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
-    .slice(0, 1)
-    .map((d) => {
-      return d.OnDemandLinuxpricing_USDperHour;
-    });
-
   const selectedName = filterdata
     .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
     .slice(0, 1)
@@ -49,9 +36,27 @@ export const InstanceData = (props) => {
       return d.InstanceType;
     });
 
+  // const noOfInsancesForCost = () => {
+  //   if (props.pods > 110) {
+  //     return props.pods / 110;
+  //   } else {
+  //     return 1;
+  //   }
+  // };
+
+  // const noOfInstancesPerformance = () => {
+  //   if (props.pods > 77) {
+  //     return props.pods / 77;
+  //   } else {
+  //     return 1;
+  //   }
+  // };
+
+  // const bestCost = minCost * noOfInsancesForCost() * 730;
+  // const bestpeformance = minCost * noOfInstancesPerformance() * 730;
+
   return (
     <div>
-      <div>{minCost}</div>
       <ul>
         {/* {filterdata
           .filter(
@@ -70,7 +75,8 @@ export const InstanceData = (props) => {
           })} */}
       </ul>
 
-      <Table cloudName="AWS" cost={selectedPrice} Name={selectedName} />
+      <Table cloudName="AWS" cost={minCost} Name={selectedName} />
+      {/* <Table cloudName="AWS" cost={bestperformance} Name={selectedName} /> */}
     </div>
   );
 };
