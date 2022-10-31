@@ -30,12 +30,13 @@ export const InstanceData = (props) => {
   const minCost = Math.min(...CostOfFilterdata);
 
   const selectedName = filterdata
-    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
+    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost)
     .slice(0, 1)
     .map((d) => {
       return d.InstanceType;
     });
 
+  props.setData(minCost);
   // const noOfInsancesForCost = () => {
   //   if (props.pods > 110) {
   //     return props.pods / 110;
@@ -57,24 +58,26 @@ export const InstanceData = (props) => {
 
   return (
     <div>
+      min cost ={minCost}
+      <br />
+      vcpu ={props.vcpu}
+      <br />
+      ram = {props.ram}
       <ul>
-        {/* {filterdata
+        {filterdata
           .filter(
-            (Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost
+            (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
           )
           .slice(0, 1)
           .map((d) => {
             return (
-              // <li key={d.id}>
-              //   name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
-              //   {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
-              // </li>
-
-              <Table cloudName="AWS" cost={d.OnDemandLinuxpricing_USDperHour} />
+              <li key={d.id}>
+                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
+              </li>
             );
-          })} */}
+          })}
       </ul>
-
       <Table cloudName="AWS" cost={minCost} Name={selectedName} />
       {/* <Table cloudName="AWS" cost={bestperformance} Name={selectedName} /> */}
     </div>

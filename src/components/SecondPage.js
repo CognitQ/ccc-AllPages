@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SecondPage.css";
 import { Link } from "react-router-dom";
 import { InstanceData } from "./InstanceData";
@@ -6,6 +6,12 @@ import { InstanceData } from "./InstanceData";
 import Graph from "./Graph";
 
 const SecondPage = (props) => {
+  const [instanceCost, setInstanceCost] = useState();
+
+  const getInstanceData = (instanceCost) => {
+    setInstanceCost(instanceCost);
+  };
+
   // max Pods
   const depolymentPods = props.dpData.map((object) => {
     if (object.maxPods === "undefined") {
@@ -185,19 +191,24 @@ const SecondPage = (props) => {
           </ul>
         </nav>
       </div>
-      <Graph />
-      ram_cost= {maxRamindeployment} <br/>
-      ram_performance = {ramindeploymentforPerformance} <br/>
-      ram_balance = {ramindeploymentforBalance}<br/>
-      Vcpu_cost= {maxVcpuindeployment}<br/>
-      Vcpu_performance = {VcpuindeploymentforPerformance}<br/>
-      Vcpu_balance = {VcpuindeploymentforBalance}<br/>
+      <Graph workerCost={instanceCost} />
+      ram_cost= {maxRamindeployment} <br />
+      ram_performance = {ramindeploymentforPerformance} <br />
+      ram_balance = {ramindeploymentforBalance}
+      <br />
+      Vcpu_cost= {maxVcpuindeployment}
+      <br />
+      Vcpu_performance = {VcpuindeploymentforPerformance}
+      <br />
+      Vcpu_balance = {VcpuindeploymentforBalance}
+      <br />
       <InstanceData
         pods={maxPodsindeployment}
         ram={maxRamindeployment}
         vcpu={maxVcpuindeployment}
+        setData={getInstanceData}
       />
-      <InstanceData
+      {/* <InstanceData
         pods={maxPodsindeployment}
         ram={ramindeploymentforPerformance}
         vcpu={VcpuindeploymentforPerformance}
@@ -206,7 +217,7 @@ const SecondPage = (props) => {
         pods={maxPodsindeployment}
         ram={ramindeploymentforBalance}
         vcpu={VcpuindeploymentforBalance}
-      />
+      /> */}
     </div>
   );
 };

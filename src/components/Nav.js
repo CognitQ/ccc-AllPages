@@ -10,7 +10,6 @@ export const Nav = (props) => {
   // const [dataValues, setData] = useState([]);
 
   const getData = (deployment, demonset) => {
-    // console.log("coming from nav.js", data);
     props.setData(deployment, demonset);
   };
 
@@ -26,7 +25,7 @@ export const Nav = (props) => {
           </ul>
         </div>
       </Nav> */}
-      
+
       <div className="nav">
         <button
           type="button"
@@ -43,7 +42,6 @@ export const Nav = (props) => {
           About Us
         </button>
       </div>
-      
 
       <div>
         {showHome ? (
