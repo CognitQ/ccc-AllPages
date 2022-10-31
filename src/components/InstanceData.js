@@ -28,23 +28,29 @@ export const InstanceData = (props) => {
 
   const minCost = Math.min(...CostOfFilterdata);
 
-  const selected = filterdata.filter(
-    (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
-  );
-
+  const selected = filterdata.map((object) => {
+    if (object.OnDemandLinuxpricing_USDperHour === minCost) {
+      return object;
+    }
+  });
   return (
     <div>
       <div>{minCost}</div>
       <ul>
         {filterdata
           .filter(
-            (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
+            (Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost
           )
-          .map((i) => {
-            return <li key={i.id}> name = {i.InstanceType} </li>;
+          .map((d) => {
+            return (
+              <li key={d.id}>
+                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
+              </li>
+            );
           })}
       </ul>
-      {/* <div>{console.log("coming from InstanceData" + selected)}</div> */}
+      {selected}
     </div>
   );
 };
