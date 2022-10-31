@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Table } from "./Table";
 
 export const InstanceData = (props) => {
   //code for fetch data
@@ -28,30 +29,48 @@ export const InstanceData = (props) => {
 
   const minCost = Math.min(...CostOfFilterdata);
 
-  const selected = filterdata.map((object) => {
-    if (object.OnDemandLinuxpricing_USDperHour === minCost) {
-      return object;
-    }
-  });
+  // const selected = filterdata.map((object) => {
+  //   if (object.OnDemandLinuxpricing_USDperHour === minCost) {
+  //     return object;
+  //   }
+  // });
+
+  const selectedPrice = filterdata
+    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
+    .slice(0, 1)
+    .map((d) => {
+      return d.OnDemandLinuxpricing_USDperHour;
+    });
+
+  const selectedName = filterdata
+    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
+    .slice(0, 1)
+    .map((d) => {
+      return d.InstanceType;
+    });
+
   return (
     <div>
       <div>{minCost}</div>
       <ul>
-        {filterdata
+        {/* {filterdata
           .filter(
             (Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost
           )
           .slice(0, 1)
           .map((d) => {
             return (
-              <li key={d.id}>
-                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
-                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
-              </li>
+              // <li key={d.id}>
+              //   name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+              //   {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
+              // </li>
+
+              <Table cloudName="AWS" cost={d.OnDemandLinuxpricing_USDperHour} />
             );
-          })}
+          })} */}
       </ul>
-      {/* {selected} */}
+
+      <Table cloudName="AWS" cost={selectedPrice} Name={selectedName} />
     </div>
   );
 };

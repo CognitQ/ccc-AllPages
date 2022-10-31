@@ -21,6 +21,7 @@ export const Table = (props) => {
               <th scope="col" className="tHeading">
                 Least Price
               </th>
+              <th scope="col">Instance Type</th>
               <th scope="col">Cost Of Worker Nodes Per month($)</th>
               <th scope="col">Cost of Master Node Per month($)</th>
               <th scope="col">Grand Total Per month($)</th>
@@ -30,6 +31,7 @@ export const Table = (props) => {
           <tbody>
             <tr>
               <th scope="row">{props.cloudName}</th>
+              <td>{props.Name}</td>
               <td>{props.cost}</td>
               <td>2</td>
               <td>{total}</td>

@@ -5,7 +5,6 @@ import { InstanceData } from "./InstanceData";
 import { Table } from "./Table";
 
 const SecondPage = (props) => {
-
   // max Vcpu
   const depolymentVcpu = props.dpData.map((object) => {
     if (object.maxVcpu === "undefined") {
@@ -146,8 +145,6 @@ const SecondPage = (props) => {
     return ratio;
   };
 
-  
-
   return (
     <div>
       <div>
@@ -175,7 +172,6 @@ const SecondPage = (props) => {
 
       <InstanceData ram={maxRamindeployment} vcpu={maxVcpuindeployment} />
 
-      <Table />
     </div>
   );
 };
