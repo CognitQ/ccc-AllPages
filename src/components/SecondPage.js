@@ -1,11 +1,10 @@
 import React from "react";
 import "./SecondPage.css";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { InstanceData } from "./InstanceData";
+import { Table } from "./Table";
 
 const SecondPage = (props) => {
-  const navigate = useNavigate();
 
   // max Vcpu
   const depolymentVcpu = props.dpData.map((object) => {
@@ -80,7 +79,7 @@ const SecondPage = (props) => {
     }
   });
 
-  const maxRamindemonset = Math.max(...demonsetRam);
+  const maxRamindemonset = Math.max(...demonsetRam) / 1024;
 
   // Max Ram ends
 
@@ -93,7 +92,7 @@ const SecondPage = (props) => {
     }
   });
 
-  const minRamindeployment = Math.max(...depolymentMinRam);
+  const minRamindeployment = Math.max(...depolymentMinRam) / 1024;
 
   const demonsetMinRam = props.dsData.map((object) => {
     if (object.demonMinRamUnit === "GiB") {
@@ -103,7 +102,7 @@ const SecondPage = (props) => {
     }
   });
 
-  const minRamindemonset = Math.max(...demonsetMinRam);
+  const minRamindemonset = Math.max(...demonsetMinRam) / 1024;
 
   // MinRam ends
 
@@ -122,7 +121,7 @@ const SecondPage = (props) => {
     }
   });
 
-  const storageindeployment = Math.max(...depolymentstorage);
+  const storageindeployment = Math.max(...depolymentstorage) / 1024;
 
   const demonsetStorage = props.dsData.map((object) => {
     if (object.demonStorage === "undefined") {
@@ -138,45 +137,16 @@ const SecondPage = (props) => {
     }
   });
 
-  const storageindemonset = Math.max(...demonsetStorage);
+  const storageindemonset = Math.max(...demonsetStorage) / 1024;
 
   //  storage ends
 
-  // function for best performance
-  // ram = 500 vcpu 16
-  const bestPerforamnce = () => {
-    const requiredRam = (50 / 100) * maxRamindeployment + maxRamindeployment;
-    const requiredVcpu = (50 / 100) * maxVcpuindeployment + maxVcpuindeployment;
-    const ratio = requiredRam / requiredVcpu;
-    return ratio;
-  };
-  // function for best performance ends
-
   const calculateRatio = () => {
     const ratio = maxRamindeployment / maxVcpuindeployment;
-  };
-
-  // function for best cost
-  const bestcost = () => {
-    const requiredRam = (15 / 100) * maxRamindeployment + maxRamindeployment;
-    const requiredVcpu = (15 / 100) * maxVcpuindeployment + maxVcpuindeployment;
-    const ratio = requiredRam / requiredVcpu;
     return ratio;
   };
-  // function for best cost ends
 
-  // function for Balance
-  const balance = () => {
-    const requiredRam = (30 / 100) * maxRamindeployment + maxRamindeployment;
-    const requiredVcpu = (30 / 100) * maxVcpuindeployment + maxVcpuindeployment;
-    const ratio = requiredRam / requiredVcpu;
-    return ratio;
-  };
-  // function for Balance ends
-
-  const gotoDetail = () => {
-    navigate("/detail");
-  };
+  
 
   return (
     <div>
@@ -193,8 +163,10 @@ const SecondPage = (props) => {
         </nav>
       </div>
 
-      {/* <div>Deployment Maxram = {maxRamindeployment}</div>
-      <div>Demonset Maxram = {maxRamindemonset}</div> */}
+      <div>Deployment Maxram = {maxRamindeployment}</div>
+      <div>Deployment MaxVcpu = {maxVcpuindeployment}</div>
+
+      {/* <div>Demonset Maxram = {maxRamindemonset}</div> */}
       {/* <div>Best performance = {bestPerforamnce()}</div>
       <div>Best cost = {bestcost()}</div>
       <div>Balanced = {balance()}</div>
@@ -203,59 +175,7 @@ const SecondPage = (props) => {
 
       <InstanceData ram={maxRamindeployment} vcpu={maxVcpuindeployment} />
 
-      <center>
-        <table className="table table-striped table-hover table-bordered table">
-          <thead className="tHead">
-            <tr>
-              <th scope="col" className="tHeading">
-                Least Price
-              </th>
-              <th scope="col">Cost Of Worker Nodes Per month($)</th>
-              <th scope="col">Cost of Master Node Per month($)</th>
-              <th scope="col">Grand Total Per month($)</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">EKS</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>
-                <button
-                  className="btn btn-link tButton"
-                  onClick={() => gotoDetail()}
-                >
-                  show Details{" "}
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">AKS</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>
-                <button className="btn btn-link" onClick={() => gotoDetail()}>
-                  show Details{" "}
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">GKE</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>
-                <button className="btn btn-link" onClick={() => gotoDetail()}>
-                  show Details{" "}
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </center>
+      <Table />
     </div>
   );
 };

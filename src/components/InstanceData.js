@@ -23,23 +23,26 @@ export const InstanceData = (props) => {
   );
 
   const CostOfFilterdata = filterdata.map((c) => {
-    return parseInt(c.OnDemandLinuxpricing_USDperHour);
+    return parseFloat(c.OnDemandLinuxpricing_USDperHour);
   });
 
-  const minCost = Math.min(CostOfFilterdata);
+  const minCost = Math.min(...CostOfFilterdata);
 
   return (
     <div>
       <ul>
-        {/* {filterdata.map((d) => {
-          return (
-            <li key={d.id}>
-              name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
-              {d.MemoryInGiB}
-            </li>
-          );
-        })} */}
-        {minCost}
+        {filterdata
+          .filter(
+            (Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost
+          )
+          .map((d) => {
+            return (
+              <li key={d.id}>
+                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
+              </li>
+            );
+          })}
       </ul>
     </div>
   );
