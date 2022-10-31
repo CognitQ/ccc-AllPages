@@ -14,7 +14,15 @@
         height: 273px;
         width: 730px;
         border: 0.1px solid beige;
-    
+        box-shadow: 1px 2px 8px 2px rgb(0,0,0,0.5);
+        border-radius: 10px;
+        background-color: beige;
+        margin-top:15px;
+    }
+    .box1 {
+        height: 225px;
+        width: 730px;
+        border: 0.1px solid beige;
         box-shadow: 1px 2px 8px 2px rgb(0,0,0,0.5);
         border-radius: 10px;
         background-color: beige;
@@ -42,7 +50,7 @@
     
     
     .pod {
-        margin-top: 52px;
+        margin-top: 54px;
         height: 40px;
         width: 650px;
         /* border:1px solid blue; */
@@ -116,6 +124,11 @@
         margin-top:10px;
         float:left;
     }
+    .ramds{
+        margin-top: 54px;
+        height: 40px;
+        width: 650px;
+    }
     
     .subbtn {
         float: right;
@@ -127,7 +140,8 @@
     .submitbtn {
         position: fixed;
         bottom: 10px;
-        right: 15px; 
+        right: 15px;
+ 
     }
     
     

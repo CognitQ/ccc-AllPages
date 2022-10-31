@@ -620,7 +620,7 @@ export const InputForm = (props) => {
                       </button>
                     </div>
                   </div> */}
-                    <div className="box">
+                    <div className="box1">
                     {/* <div className="detailform"> */}
                     <input type="text" id="deploytxt" placeholder='  Deployment1'
                       name="deployment"
@@ -639,40 +639,8 @@ export const InputForm = (props) => {
                            }
                         >Delete</button>
 
-                    <div className="pod">
-                      <div className="lpod">
 
-
-                        <label>* Min PODs </label>
-                        <input
-                          type="number"
-                          className="text"
-                          placeholder="1"
-                          name="minPods"
-                          value={demonsetInputField.minPods}
-                          onChange={(event) =>
-                            handleChangeInput(demonsetInputField.id, event)
-                          }
-                          min="1"
-                          required
-                        />
-                      </div>
-                      {/* </div> */}
-
-                      <div className="rpod">
-                        <label htmlFor="name">Max PODs</label>
-                        <input type="number" className="text"
-                          name="maxPods"
-                          value={demonsetInputField.maxPods}
-                          onChange={(event) =>
-                            handleChangeInput(demonsetInputField.id, event)
-                          }
-                          min="2"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="ram">
+                    <div className="ramds">
                       <div className="lram">
                         <label htmlFor="name">* Min Ram</label>
                         <input type="number" className="text" placeholder="1"
