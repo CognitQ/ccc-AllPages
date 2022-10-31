@@ -10,7 +10,6 @@ export const Nav = (props) => {
   // const [dataValues, setData] = useState([]);
 
   const getData = (deployment, demonset) => {
-    // console.log("coming from nav.js", data);
     props.setData(deployment, demonset);
   };
 

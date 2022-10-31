@@ -36,6 +36,8 @@ export const InstanceData = (props) => {
       return d.InstanceType;
     });
 
+  props.setData = (minCost, selectedName);
+
   // const noOfInsancesForCost = () => {
   //   if (props.pods > 110) {
   //     return props.pods / 110;
