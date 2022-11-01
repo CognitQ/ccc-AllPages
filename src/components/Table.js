@@ -30,9 +30,41 @@ export const Table = (props) => {
           </thead>
           <tbody>
             <tr>
-              <th scope="row">{props.cloudName}</th>
-              <td>{props.Name}</td>
-              <td>{props.cost}</td>
+              <th scope="row">Eks</th>
+              <td>{props.eksName}</td>
+              <td>{props.eksCost}</td>
+              <td>2</td>
+              <td>{total}</td>
+              <td>
+                <button
+                  className="btn btn-link tButton"
+                  onClick={() => gotoDetail()}
+                >
+                  show Details{" "}
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row">GKE</th>
+              <td>{props.gkeName}</td>
+              <td>{props.gkeCost}</td>
+              <td>2</td>
+              <td>{total}</td>
+              <td>
+                <button
+                  className="btn btn-link tButton"
+                  onClick={() => gotoDetail()}
+                >
+                  show Details{" "}
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row">Aks</th>
+              <td>{props.aksName}</td>
+              <td>{props.aksCost}</td>
               <td>2</td>
               <td>{total}</td>
               <td>

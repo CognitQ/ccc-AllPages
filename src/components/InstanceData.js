@@ -73,7 +73,15 @@ export const InstanceData = (props) => {
             );
           })} */}
       </ul>
-      <Table cloudName="AWS" cost={minCost} Name={selectedName} />
+      <Table
+        eksCost={minCost}
+        eksName={selectedName}
+        gkeCost={minCost}
+        gkeName={selectedName}
+        aksCost={minCost}
+        aksName={selectedName}
+      />
+
       {/* <Table cloudName="AWS" cost={bestperformance} Name={selectedName} /> */}
     </div>
   );
