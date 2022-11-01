@@ -2,7 +2,7 @@ import React from "react";
 import "./DetailPage.css";
 import {Link} from "react-router-dom";
 
-export const GkeDetails = () => {
+export const BalEksDetail = () => {
   return (
     <div>
       
@@ -23,7 +23,7 @@ export const GkeDetails = () => {
           <div className="ltop">
             <label>
               <h5>
-                <b>Pricing Model</b>
+                <b>Pricing Model for Balance Cost</b>
               </h5>
             </label>
           </div>
@@ -52,7 +52,7 @@ export const GkeDetails = () => {
           <table class="table table-bordered table1">
             <thead>
               <tr>
-                <th scope="col">GKE</th>
+                <th scope="col">EKS</th>
                 <th scope="col">Instance Name</th>
                 <th scope="col">vCPU</th>
                 <th scope="col">RAM GiB</th>
@@ -123,7 +123,7 @@ export const GkeDetails = () => {
           <table class="table table-bordered table1">
             <thead>
               <tr>
-                <th scope="col">GKE</th>
+                <th scope="col">EKS</th>
                 <th scope="col">Instance Name</th>
                 <th scope="col">vCPU</th>
                 <th scope="col">RAM GiB</th>

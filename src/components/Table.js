@@ -6,15 +6,15 @@ export const Table = (props) => {
   const navigate = useNavigate();
 
   const gotoEksDetails = () => {
-    navigate("/summary/EksDetails");
+    navigate("/summary/Least/EksDetail");
   };
 
   const gotoAksDetails = () => {
-    navigate("/summary/AksDetails");
+    navigate("/summary/Least/AksDetail");
   };
 
   const gotoGkeDetails = () => {
-    navigate("/summary/GkeDetails");
+    navigate("/summary/Least/GkeDetail");
   };
 
   // const total = props.cost + props.master;
