@@ -189,7 +189,7 @@ const SecondPage = (props) => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/second">SecondPage</Link>
+              <Link to="/summary">SecondPage</Link>
             </li>
           </ul>
         </nav>

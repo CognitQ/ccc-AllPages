@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Table } from "./Table";
 import "./InstanceData.css";
+import { navigate, useNavigate } from "react-router-dom";
 export const InstanceData = (props) => {
   //code for fetch data
   const [data, fetchData] = useState([]);
@@ -22,11 +23,16 @@ export const InstanceData = (props) => {
   const [bestCost, setCost] = useState(true);
   const [balance, setBalance] = useState(false);
   const [bestPeformance, setPeformance] = useState(false);
+  const navigate = useNavigate();
+
+
 
   const showBestCost = () => {
     setBalance(false);
     setPeformance(false);
     setCost(true);
+    // navigate("/summary");
+    alert("clicked");
   };
 
   const showBalance = () => {

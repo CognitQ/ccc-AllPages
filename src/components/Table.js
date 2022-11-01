@@ -5,8 +5,16 @@ import { useNavigate } from "react-router-dom";
 export const Table = (props) => {
   const navigate = useNavigate();
 
-  const gotoDetail = () => {
-    navigate("/detail");
+  const gotoEksDetails = () => {
+    navigate("/summary/EksDetails");
+  };
+
+  const gotoAksDetails = () => {
+    navigate("/summary/AksDetails");
+  };
+
+  const gotoGkeDetails = () => {
+    navigate("/summary/GkeDetails");
   };
 
   // const total = props.cost + props.master;
@@ -30,7 +38,7 @@ export const Table = (props) => {
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Eks</th>
+              <th scope="row">EKS</th>
               <td>{props.eksName}</td>
               <td>{props.eksCost}</td>
               <td>2</td>
@@ -38,7 +46,23 @@ export const Table = (props) => {
               <td>
                 <button
                   className="btn btn-link tButton"
-                  onClick={() => gotoDetail()}
+                  onClick={() => gotoEksDetails()}
+                >
+                  show Details{" "}
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row">AKS</th>
+              <td>{props.gkeName}</td>
+              <td>{props.gkeCost}</td>
+              <td>2</td>
+              <td>{total}</td>
+              <td>
+                <button
+                  className="btn btn-link tButton"
+                  onClick={() => gotoAksDetails()}
                 >
                   show Details{" "}
                 </button>
@@ -47,22 +71,6 @@ export const Table = (props) => {
 
             <tr>
               <th scope="row">GKE</th>
-              <td>{props.gkeName}</td>
-              <td>{props.gkeCost}</td>
-              <td>2</td>
-              <td>{total}</td>
-              <td>
-                <button
-                  className="btn btn-link tButton"
-                  onClick={() => gotoDetail()}
-                >
-                  show Details{" "}
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <th scope="row">Aks</th>
               <td>{props.aksName}</td>
               <td>{props.aksCost}</td>
               <td>2</td>
@@ -70,7 +78,7 @@ export const Table = (props) => {
               <td>
                 <button
                   className="btn btn-link tButton"
-                  onClick={() => gotoDetail()}
+                  onClick={() => gotoGkeDetails()}
                 >
                   show Details{" "}
                 </button>

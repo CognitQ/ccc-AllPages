@@ -210,7 +210,7 @@ export const InputForm = (props) => {
     // console.log("DemonsetInputFields", demonsetInputFields);
 
     props.ondataSubmit(inputFields, demonsetInputFields);
-    navigate("/second");
+    navigate("/summary");
     // props.ondataSubmit(demonsetInputFields);
     // }
   };

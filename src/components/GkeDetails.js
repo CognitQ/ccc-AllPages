@@ -2,7 +2,7 @@ import React from "react";
 import "./DetailPage.css";
 import {Link} from "react-router-dom";
 
-export const DetailPage = () => {
+export const GkeDetails = () => {
   return (
     <div>
       
@@ -12,7 +12,7 @@ export const DetailPage = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/second">SecondPage</Link>
+              <Link to="/summary">SecondPage</Link>
             </li>
           </ul>
         </nav>
@@ -52,7 +52,7 @@ export const DetailPage = () => {
           <table class="table table-bordered table1">
             <thead>
               <tr>
-                <th scope="col">AKS</th>
+                <th scope="col">GKE</th>
                 <th scope="col">Instance Name</th>
                 <th scope="col">vCPU</th>
                 <th scope="col">RAM GiB</th>
@@ -123,7 +123,7 @@ export const DetailPage = () => {
           <table class="table table-bordered table1">
             <thead>
               <tr>
-                <th scope="col">AKS</th>
+                <th scope="col">GKE</th>
                 <th scope="col">Instance Name</th>
                 <th scope="col">vCPU</th>
                 <th scope="col">RAM GiB</th>
