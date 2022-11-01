@@ -7,6 +7,28 @@ import Graph from "./Graph";
 const SecondPage = (props) => {
   const [instanceCost, setInstanceCost] = useState();
 
+  const [bestCost, setCost] = useState(true);
+  const [balance, setBalance] = useState(false);
+  const [bestPeformance, setPeformance] = useState(false);
+
+  const showBestCost = () => {
+    setBalance(false);
+    setPeformance(false);
+    setCost(true);
+  };
+
+  const showBalance = () => {
+    setBalance(true);
+    setPeformance(false);
+    setCost(false);
+  };
+
+  const showBestPeformance = () => {
+    setBalance(false);
+    setPeformance(true);
+    setCost(false);
+  };
+
   const getInstanceData = (instanceCost) => {
     setInstanceCost(instanceCost);
   };
@@ -193,33 +215,61 @@ const SecondPage = (props) => {
       <div className="graph">
         <div className="innerGraph">
           <Graph workerCost={instanceCost} />
-          <button className="btn btn-primary btn-sm btnLeast">Balance</button>
+          <button
+            className="btn btn-primary btn-sm btnLeast"
+            onClick={showBestCost}
+          >
+            BestCost
+          </button>
         </div>
         <div className="innerGraph">
           <Graph workerCost={instanceCost} />
-          <button className="btn btn-primary btn-sm btnLeast">Balance</button>
+          <button
+            className="btn btn-primary btn-sm btnLeast"
+            onClick={showBestPeformance}
+          >
+            BestPeformance
+          </button>
         </div>
         <div className="innerGraph">
           <Graph workerCost={instanceCost} />
-          <button className="btn btn-primary btn-sm btnLeast">Balance</button>
+          <button
+            className="btn btn-primary btn-sm btnLeast"
+            onClick={showBalance}
+          >
+            Balance
+          </button>
         </div>
       </div>
-      <InstanceData
-        pods={maxPodsindeployment}
-        ram={maxRamindeployment}
-        vcpu={maxVcpuindeployment}
-        setData={getInstanceData}
-      />
-      {/* <InstanceData
-        pods={maxPodsindeployment}
-        ram={ramindeploymentforPerformance}
-        vcpu={VcpuindeploymentforPerformance}
-      />
-      <InstanceData
-        pods={maxPodsindeployment}
-        ram={ramindeploymentforBalance}
-        vcpu={VcpuindeploymentforBalance}
-      /> */}
+      {bestCost ? (
+        <div>
+          <InstanceData
+            pods={maxPodsindeployment}
+            ram={maxRamindeployment}
+            vcpu={maxVcpuindeployment}
+            setData={getInstanceData}
+          />
+        </div>
+      ) : null}
+
+      {bestPeformance ? (
+        <div>
+          <InstanceData
+            pods={maxPodsindeployment}
+            ram={ramindeploymentforPerformance}
+            vcpu={VcpuindeploymentforPerformance}
+          />
+        </div>
+      ) : null}
+      {balance ? (
+        <div>
+          <InstanceData
+            pods={maxPodsindeployment}
+            ram={ramindeploymentforBalance}
+            vcpu={VcpuindeploymentforBalance}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

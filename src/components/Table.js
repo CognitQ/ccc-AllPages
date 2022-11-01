@@ -19,7 +19,7 @@ export const Table = (props) => {
           <thead className="tHead">
             <tr>
               <th scope="col" className="tHeading">
-                Least Price
+                Least Price {props.ram}
               </th>
               <th scope="col">Instance Type</th>
               <th scope="col">Cost Of Worker Nodes Per month($)</th>

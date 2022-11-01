@@ -80,6 +80,7 @@ export const InstanceData = (props) => {
         gkeName={selectedName}
         aksCost={minCost}
         aksName={selectedName}
+        ram={props.ram}
       />
 
       {/* <Table cloudName="AWS" cost={bestperformance} Name={selectedName} /> */}
