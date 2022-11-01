@@ -21,10 +21,10 @@ export const InputForm = (props) => {
       maxPods: "",
       minRam: "1",
       minRamUnit: "MiB",
-      maxRam: "",
-      maxRamUnit: "MiB",
+      maxRam: "32",
+      maxRamUnit: "GiB",
       minVcpu: "1",
-      maxVcpu: "",
+      maxVcpu: "16",
       storageUnit: "GiB",
       storage: "",
     },
@@ -219,8 +219,20 @@ export const InputForm = (props) => {
     <div className="main">
       {/* code Starting of Deployment Button */}
       <div>
-        <button type="button" className="btn btn-secondary" onClick={() => setShow(!show)}>Deployments </button>
-        <button type="button" className="btn btn-secondary" onClick={handleAddFields}>Add Deployment</button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => setShow(!show)}
+        >
+          Deployments{" "}
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleAddFields}
+        >
+          Add Deployment
+        </button>
       </div>
       {/* End of Deployment Button */}
 
@@ -234,7 +246,10 @@ export const InputForm = (props) => {
                 <div key={inputField.id} className="incontainer">
                   <div className="box">
                     {/* <div className="detailform"> */}
-                    <input type="text" id="deploytxt" placeholder='  Deployment1'
+                    <input
+                      type="text"
+                      id="deploytxt"
+                      placeholder="  Deployment1"
                       name="deployment"
                       value={inputField.deployment}
                       onChange={(event) =>
@@ -244,15 +259,18 @@ export const InputForm = (props) => {
                     />
                     {/* </div> */}
 
-                    <button type="button" className="btn btn-danger btn-sm" id="delbtn"
-                          disabled={inputFields.length === 1}
-                          onClick={() => handleRemoveFields(inputField.id)}
-                        >Delete</button>
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      id="delbtn"
+                      disabled={inputFields.length === 1}
+                      onClick={() => handleRemoveFields(inputField.id)}
+                    >
+                      Delete
+                    </button>
 
                     <div className="pod">
                       <div className="lpod">
-
-
                         <label>* Min PODs </label>
                         <input
                           type="number"
@@ -271,7 +289,9 @@ export const InputForm = (props) => {
 
                       <div className="rpod">
                         <label htmlFor="name">Max PODs</label>
-                        <input type="number" className="text"
+                        <input
+                          type="number"
+                          className="text"
                           name="maxPods"
                           value={inputField.maxPods}
                           onChange={(event) =>
@@ -285,7 +305,10 @@ export const InputForm = (props) => {
                     <div className="ram">
                       <div className="lram">
                         <label htmlFor="name">* Min Ram</label>
-                        <input type="number" className="text" placeholder="1"
+                        <input
+                          type="number"
+                          className="text"
+                          placeholder="1"
                           min="1"
                           name="minRam"
                           value={inputField.minRam}
@@ -294,11 +317,13 @@ export const InputForm = (props) => {
                           }
                           required
                         />
-                        <select name="minRamUnit"
+                        <select
+                          name="minRamUnit"
                           id="unit"
                           onChange={(event) =>
                             handleChangeInput(inputField.id, event)
-                          }>
+                          }
+                        >
                           <option value="MiB">MiB</option>
                           <option value="GiB">GiB</option>
                         </select>
@@ -306,29 +331,36 @@ export const InputForm = (props) => {
 
                       <div className="rram">
                         <label htmlFor="name">Max Ram</label>
-                        <input type="number" className="text" min="2"
+                        <input
+                          type="number"
+                          className="text"
+                          min="2"
                           name="maxRam"
                           value={inputField.maxRam}
                           onChange={(event) =>
                             handleChangeInput(inputField.id, event)
                           }
                         />
-                        <select name="maxRamUnit"
+                        <select
+                          name="maxRamUnit"
                           id="unit"
                           onChange={(event) =>
                             handleChangeInput(inputField.id, event)
-                          }>
-                          <option value="MiB">MiB</option>
+                          }
+                        >
                           <option value="GiB">GiB</option>
+                          <option value="MiB">MiB</option>
                         </select>
                       </div>
                     </div>
 
-
                     <div className="cpu">
                       <div className="lcpu">
                         <label htmlFor="name">* Min vCPU</label>
-                        <input type="number" className="text" placeholder="1"
+                        <input
+                          type="number"
+                          className="text"
+                          placeholder="1"
                           name="minVcpu"
                           value={inputField.minVcpu}
                           onChange={(event) =>
@@ -341,7 +373,10 @@ export const InputForm = (props) => {
 
                       <div className="rcpu">
                         <label htmlFor="name">Max vCPU</label>
-                        <input type="number" className="text" name="maxVcpu"
+                        <input
+                          type="number"
+                          className="text"
+                          name="maxVcpu"
                           value={inputField.maxVcpu}
                           onChange={(event) =>
                             handleChangeInput(inputField.id, event)
@@ -352,7 +387,10 @@ export const InputForm = (props) => {
                     </div>
                     <div className="storage">
                       <label htmlFor="name">* Storage</label>
-                      <input type="number" className="text" placeholder="1"
+                      <input
+                        type="number"
+                        className="text"
+                        placeholder="1"
                         name="storage"
                         value={inputField.storage}
                         onChange={(event) =>
@@ -360,11 +398,13 @@ export const InputForm = (props) => {
                         }
                         min="1"
                       />
-                      <select name="storageUnit"
+                      <select
+                        name="storageUnit"
                         id="unit"
                         onChange={(event) =>
                           handleChangeInput(inputField.id, event)
-                        }>
+                        }
+                      >
                         <option value="mb">MiB</option>
                         <option value="gb">Gib</option>
                         <option value="tb">TiB</option>
@@ -382,7 +422,8 @@ export const InputForm = (props) => {
                         type="button"
                         className="btn btn-secondary"
                         onClick={handleAddFields}
-                      >Done
+                      >
+                        Done
                       </button>
                     </div>
                   </div>
@@ -620,9 +661,12 @@ export const InputForm = (props) => {
                       </button>
                     </div>
                   </div> */}
-                    <div className="box1">
+                  <div className="box1">
                     {/* <div className="detailform"> */}
-                    <input type="text" id="deploytxt" placeholder='  Deployment1'
+                    <input
+                      type="text"
+                      id="deploytxt"
+                      placeholder="  Deployment1"
                       name="deployment"
                       value={demonsetInputField.demonset}
                       onChange={(event) =>
@@ -632,18 +676,25 @@ export const InputForm = (props) => {
                     />
                     {/* </div> */}
 
-                    <button type="button" className="btn btn-danger btn-sm" id="delbtn"
-                           disabled={demonsetInputFields.length === 1}
-                           onClick={() =>
-                             handleDemonRemoveFields(demonsetInputField.id)
-                           }
-                        >Delete</button>
-
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      id="delbtn"
+                      disabled={demonsetInputFields.length === 1}
+                      onClick={() =>
+                        handleDemonRemoveFields(demonsetInputField.id)
+                      }
+                    >
+                      Delete
+                    </button>
 
                     <div className="ramds">
                       <div className="lram">
                         <label htmlFor="name">* Min Ram</label>
-                        <input type="number" className="text" placeholder="1"
+                        <input
+                          type="number"
+                          className="text"
+                          placeholder="1"
                           min="1"
                           name="minRam"
                           value={demonsetInputField.minRam}
@@ -652,11 +703,13 @@ export const InputForm = (props) => {
                           }
                           required
                         />
-                        <select name="minRamUnit"
+                        <select
+                          name="minRamUnit"
                           id="unit"
                           onChange={(event) =>
                             handleChangeInput(demonsetInputField.id, event)
-                          }>
+                          }
+                        >
                           <option value="MiB">MiB</option>
                           <option value="GiB">GiB</option>
                         </select>
@@ -664,29 +717,36 @@ export const InputForm = (props) => {
 
                       <div className="rram">
                         <label htmlFor="name">Max Ram</label>
-                        <input type="number" className="text" min="2"
+                        <input
+                          type="number"
+                          className="text"
+                          min="2"
                           name="maxRam"
                           value={demonsetInputField.maxRam}
                           onChange={(event) =>
                             handleChangeInput(demonsetInputField.id, event)
                           }
                         />
-                        <select name="maxRamUnit"
+                        <select
+                          name="maxRamUnit"
                           id="unit"
                           onChange={(event) =>
                             handleChangeInput(demonsetInputField.id, event)
-                          }>
+                          }
+                        >
                           <option value="MiB">MiB</option>
                           <option value="GiB">GiB</option>
                         </select>
                       </div>
                     </div>
 
-
                     <div className="cpu">
                       <div className="lcpu">
                         <label htmlFor="name">* Min vCPU</label>
-                        <input type="number" className="text" placeholder="1"
+                        <input
+                          type="number"
+                          className="text"
+                          placeholder="1"
                           name="minVcpu"
                           value={demonsetInputField.minVcpu}
                           onChange={(event) =>
@@ -699,7 +759,10 @@ export const InputForm = (props) => {
 
                       <div className="rcpu">
                         <label htmlFor="name">Max vCPU</label>
-                        <input type="number" className="text" name="maxVcpu"
+                        <input
+                          type="number"
+                          className="text"
+                          name="maxVcpu"
                           value={demonsetInputField.maxVcpu}
                           onChange={(event) =>
                             handleChangeInput(demonsetInputField.id, event)
@@ -710,7 +773,10 @@ export const InputForm = (props) => {
                     </div>
                     <div className="storage">
                       <label htmlFor="name">* Storage</label>
-                      <input type="number" className="text" placeholder="1"
+                      <input
+                        type="number"
+                        className="text"
+                        placeholder="1"
                         name="storage"
                         value={demonsetInputField.storage}
                         onChange={(event) =>
@@ -718,11 +784,13 @@ export const InputForm = (props) => {
                         }
                         min="1"
                       />
-                      <select name="storageUnit"
+                      <select
+                        name="storageUnit"
                         id="unit"
                         onChange={(event) =>
                           handleChangeInput(demonsetInputField.id, event)
-                        }>
+                        }
+                      >
                         <option value="mb">MiB</option>
                         <option value="gb">Gib</option>
                         <option value="tb">TiB</option>
@@ -740,13 +808,11 @@ export const InputForm = (props) => {
                         type="button"
                         className="btn btn-secondary"
                         onClick={handleAddFields}
-                      >Done
+                      >
+                        Done
                       </button>
                     </div>
                   </div>
-
-
-
                 </div>
               ))}
             </div>

@@ -63,11 +63,13 @@ export const InstanceData = (props) => {
       vcpu ={props.vcpu}
       <br />
       ram = {props.ram}
+      <br />
+      costfilterdata = {CostOfFilterdata}
       <ul>
         {filterdata
-          .filter(
-            (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
-          )
+          // .filter(
+          //   (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
+          // )
           .slice(0, 1)
           .map((d) => {
             return (
