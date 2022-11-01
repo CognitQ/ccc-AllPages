@@ -30,7 +30,7 @@ export const InstanceData = (props) => {
   const minCost = Math.min(...CostOfFilterdata);
 
   const selectedName = filterdata
-    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost)
+    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
     .slice(0, 1)
     .map((d) => {
       return d.InstanceType;
@@ -58,18 +58,11 @@ export const InstanceData = (props) => {
 
   return (
     <div>
-      min cost ={minCost}
-      <br />
-      vcpu ={props.vcpu}
-      <br />
-      ram = {props.ram}
-      <br />
-      costfilterdata = {CostOfFilterdata}
       <ul>
-        {filterdata
-          // .filter(
-          //   (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
-          // )
+        {/* {filterdata
+          .filter(
+            (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
+          )
           .slice(0, 1)
           .map((d) => {
             return (
@@ -78,7 +71,7 @@ export const InstanceData = (props) => {
                 {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
               </li>
             );
-          })}
+          })} */}
       </ul>
       <Table cloudName="AWS" cost={minCost} Name={selectedName} />
       {/* <Table cloudName="AWS" cost={bestperformance} Name={selectedName} /> */}
