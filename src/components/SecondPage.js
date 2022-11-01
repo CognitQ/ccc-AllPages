@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./SecondPage.css";
 import { Link } from "react-router-dom";
 import { InstanceData } from "./InstanceData";
-// import { Table } from "./Table";
 import Graph from "./Graph";
 
 const SecondPage = (props) => {
@@ -191,17 +190,20 @@ const SecondPage = (props) => {
           </ul>
         </nav>
       </div>
-      <Graph workerCost={instanceCost} />
-      ram_cost= {maxRamindeployment} <br />
-      ram_performance = {ramindeploymentforPerformance} <br />
-      ram_balance = {ramindeploymentforBalance}
-      <br />
-      Vcpu_cost= {maxVcpuindeployment}
-      <br />
-      Vcpu_performance = {VcpuindeploymentforPerformance}
-      <br />
-      Vcpu_balance = {VcpuindeploymentforBalance}
-      <br />
+      <div className="graph">
+        <div className="innerGraph">
+          <Graph workerCost={instanceCost} />
+          <button className="btn btn-primary btn-sm btnLeast">Balance</button>
+        </div>
+        <div className="innerGraph">
+          <Graph workerCost={instanceCost} />
+          <button className="btn btn-primary btn-sm btnLeast">Balance</button>
+        </div>
+        <div className="innerGraph">
+          <Graph workerCost={instanceCost} />
+          <button className="btn btn-primary btn-sm btnLeast">Balance</button>
+        </div>
+      </div>
       <InstanceData
         pods={maxPodsindeployment}
         ram={maxRamindeployment}

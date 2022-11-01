@@ -14,6 +14,14 @@
     width:130px;
 }
 
+.graph{
+    display: flex;
+}
+
+.innerGraph{
+    -ms-flex: 1;   
+    flex: 1;
+}
 
 .tButton{
     width:130px;

@@ -51,7 +51,6 @@ const Graph = ({ workerCost }) => {
           </Bar>
         </BarChart>
       </div>
-      <button className="btn btn-primary btn-sm btnLeast">Balance</button>
     </div>
   );
 };
