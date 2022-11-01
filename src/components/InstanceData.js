@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Table } from "./Table";
-import "./InstanceData.css";
+// import "./InstanceData.css";
 import { navigate, useNavigate } from "react-router-dom";
 export const InstanceData = (props) => {
   //code for fetch data
@@ -23,9 +23,10 @@ export const InstanceData = (props) => {
   const [bestCost, setCost] = useState(true);
   const [balance, setBalance] = useState(false);
   const [bestPeformance, setPeformance] = useState(false);
-  const navigate = useNavigate();
 
-
+  const testing = () => {
+    alert("tested");
+  };
 
   const showBestCost = () => {
     setBalance(false);
@@ -124,8 +125,8 @@ export const InstanceData = (props) => {
 
   return (
     <div>
-      <ul>
-        {/* {filterdata
+      {/* <ul> */}
+      {/* {filterdata
           .filter(
             (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
           )
@@ -138,36 +139,40 @@ export const InstanceData = (props) => {
               </li>
             );
           })} */}
-      </ul>
+      {/* </ul> */}
 
       <div className="graph">
-        <div className="innerGraph">
-          <button
-            type="button"
-            className="btn btn-primary btn-sm btnLeast"
-            onClick={showBestCost}
-          >
-            BestCost
-          </button>
-        </div>
+        {/* <div className="innerGraph"> */}
+        <button
+          className="btn btn-primary btn-sm btnLeast"
+          onClick={testing}
+          // onClick={showBalance}
+          type="button"
+        >
+          BestCost
+        </button>
+        {/* </div> */}
         <div className="innerGraph">
           <button
             type="button"
             className="btn btn-primary btn-sm btnLeast"
             onClick={showBestPeformance}
+
+            // onClick={testing}
           >
             BestPeformance
           </button>
         </div>
-        <div className="innerGraph">
-          <button
-            className="btn btn-primary btn-sm btnLeast"
-            onClick={showBalance}
-            type="button"
-          >
-            Balance
-          </button>
-        </div>
+        {/* <div className="innerGraph"> */}
+        <button
+          className="btn btn-primary btn-sm btnLeast"
+          // onClick={testing}
+          onClick={showBalance}
+          type="button"
+        >
+          Balance
+        </button>
+        {/* </div> */}
       </div>
       {bestCost ? (
         <div>
@@ -192,7 +197,7 @@ export const InstanceData = (props) => {
             gkeName={selectedName}
             aksCost={minCost}
             aksName={selectedName}
-            ram={props.performanceRam}
+            ram={props.peformanceRam}
           />
         </div>
       ) : null}
