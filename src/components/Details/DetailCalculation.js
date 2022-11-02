@@ -22,9 +22,6 @@ export const DetailCalculation = (props) => {
   const filterInstaceName = data.filter(
     (name) => name.InstanceType === props.instanceName
   );
-  const name = filterInstaceName.map((i) => {
-    return i.instanceName;
-  });
 
   return (
     <div>
