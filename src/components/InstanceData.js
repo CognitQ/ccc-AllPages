@@ -83,7 +83,7 @@ export const InstanceData = (props) => {
   const balanceCost = Math.min(...CostOfBalance);
 
   const selectedName = filterdata
-    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
+    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost)
     .slice(0, 1)
     .map((d) => {
       setCostName(d.InstanceType);
@@ -92,7 +92,7 @@ export const InstanceData = (props) => {
 
   const performanceName = peformanceFilterdata
     .filter(
-      (Instance) => Instance.OnDemandLinuxpricing_USDperHour == performanceCost
+      (Instance) => Instance.OnDemandLinuxpricing_USDperHour === performanceCost
     )
     .slice(0, 1)
     .map((d) => {
@@ -102,7 +102,7 @@ export const InstanceData = (props) => {
 
   const balanceName = balanceFilterdata
     .filter(
-      (Instance) => Instance.OnDemandLinuxpricing_USDperHour == balanceCost
+      (Instance) => Instance.OnDemandLinuxpricing_USDperHour === balanceCost
     )
     .slice(0, 1)
     .map((d) => {
@@ -110,14 +110,14 @@ export const InstanceData = (props) => {
       return d.InstanceType;
     });
 
-  // props.setData(
-  //   minCost,
-  //   performanceCost,
-  //   balanceCost,
-  //   cost_Name,
-  //   balance_Name,
-  //   peformance_Name
-  // );
+  props.setData(
+    minCost,
+    performanceCost,
+    balanceCost,
+    cost_Name,
+    balance_Name,
+    peformance_Name
+  );
   // const noOfInsancesForCost = () => {
   //   if (props.pods > 110) {
   //     return props.pods / 110;
@@ -154,8 +154,7 @@ export const InstanceData = (props) => {
             );
           })} */}
       {/* </ul> */}
-      {cost_Name}, {balance_Name}
-      {peformance_Name}
+
       <div className="graph">
         {/* <div className="innerGraph"> */}
         <button

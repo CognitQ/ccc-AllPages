@@ -9,9 +9,9 @@ const SecondPage = (props) => {
   const [performanceCost, setPerformanceCost] = useState();
   const [balanceCost, setBalanceCost] = useState();
 
-  const [instanceName, setInstanceName] = useState();
-  const [performanceName, setPerformanceName] = useState();
-  const [balanceName, setBalanceName] = useState();
+  const [cost_InstanceName, setInstanceName] = useState();
+  const [performance_InstanceName, setPerformanceName] = useState();
+  const [balance_InstanceName, setBalanceName] = useState();
   const getInstanceData = (
     instanceCost,
     PerformanceCost,
@@ -194,7 +194,11 @@ const SecondPage = (props) => {
   };
 
   //
-  props.setInstanceName(instanceName, balanceName, performanceName);
+  props.setInstanceName(
+    cost_InstanceName,
+    balance_InstanceName,
+    performance_InstanceName
+  );
 
   return (
     <div>
