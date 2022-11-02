@@ -43,18 +43,21 @@ const App = () => {
           element={
             <SecondPage
               dpData={deploymentData}
-              setInstanceName={getDataFromID}
+              setInstanceNameInApp={getDataFromID}
               dsData={demonsetData}
             />
           }
         />
-        <Route path="/summary/Least/EksDetail" element={<EksDetails />} />
+        <Route
+          path="/summary/Least/EksDetail"
+          element={<EksDetails instanceNameForDetails={cost_IName} />}
+        />
         <Route path="/summary/Least/AksDetail" element={<AksDetails />} />
         <Route path="/summary/Least/GkeDetail" element={<GkeDetails />} />
 
         <Route
           path="/summary/Performance/EksDetail"
-          element={<PerfEksDetail />}
+          element={<PerfEksDetail instanceNameForDetails={peformance_IName} />}
         />
         <Route
           path="/summary/Performance/AksDetail"
@@ -65,7 +68,10 @@ const App = () => {
           element={<PerfGkeDetail />}
         />
 
-        <Route path="/summary/Balance/EksDetail" element={<BalEksDetail />} />
+        <Route
+          path="/summary/Balance/EksDetail"
+          element={<BalEksDetail instanceNameForDetails={balance_IName} />}
+        />
         <Route path="/summary/Balance/AksDetail" element={<BalAksDetail />} />
         <Route path="/summary/Balance/GkeDetail" element={<BalGkeDetail />} />
       </Routes>

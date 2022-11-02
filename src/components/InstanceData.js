@@ -25,10 +25,6 @@ export const InstanceData = (props) => {
   const [balance, setBalance] = useState(false);
   const [bestPeformance, setPeformance] = useState(false);
 
-  const [cost_Name, setCostName] = useState();
-  const [balance_Name, setBalanceName] = useState();
-  const [peformance_Name, setPeformanceName] = useState();
-
   const testing = () => {
     alert("tested");
   };
@@ -83,41 +79,40 @@ export const InstanceData = (props) => {
   const balanceCost = Math.min(...CostOfBalance);
 
   const selectedName = filterdata
-    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost)
+    .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
     .slice(0, 1)
     .map((d) => {
-      setCostName(d.InstanceType);
       return d.InstanceType;
     });
 
   const performanceName = peformanceFilterdata
     .filter(
-      (Instance) => Instance.OnDemandLinuxpricing_USDperHour === performanceCost
+      (Instance) => Instance.OnDemandLinuxpricing_USDperHour == performanceCost
     )
     .slice(0, 1)
     .map((d) => {
-      setPeformanceName(d.InstanceType);
       return d.InstanceType;
     });
 
   const balanceName = balanceFilterdata
     .filter(
-      (Instance) => Instance.OnDemandLinuxpricing_USDperHour === balanceCost
+      (Instance) => Instance.OnDemandLinuxpricing_USDperHour == balanceCost
     )
     .slice(0, 1)
     .map((d) => {
-      setBalanceName(d.InstanceType);
       return d.InstanceType;
     });
 
-  props.setData(
-    minCost,
-    performanceCost,
-    balanceCost,
-    cost_Name,
-    balance_Name,
-    peformance_Name
-  );
+  useEffect(() => {
+    props.setData(
+      minCost,
+      performanceCost,
+      balanceCost,
+      selectedName,
+      performanceName,
+      balanceName
+    );
+  }, [selectedName, performanceName, balanceName]);
   // const noOfInsancesForCost = () => {
   //   if (props.pods > 110) {
   //     return props.pods / 110;

@@ -194,7 +194,7 @@ const SecondPage = (props) => {
   };
 
   //
-  props.setInstanceName(
+  props.setInstanceNameInApp(
     cost_InstanceName,
     balance_InstanceName,
     performance_InstanceName
