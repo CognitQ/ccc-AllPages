@@ -9,10 +9,23 @@ const SecondPage = (props) => {
   const [performanceCost, setPerformanceCost] = useState();
   const [balanceCost, setBalanceCost] = useState();
 
-  const getInstanceData = (instanceCost, PerformanceCost, BalanceCost) => {
+  const [instanceName, setInstanceName] = useState();
+  const [performanceName, setPerformanceName] = useState();
+  const [balanceName, setBalanceName] = useState();
+  const getInstanceData = (
+    instanceCost,
+    PerformanceCost,
+    BalanceCost,
+    instance_Name,
+    Performance_Name,
+    Balance_Name
+  ) => {
     setInstanceCost(instanceCost);
     setBalanceCost(BalanceCost);
     setPerformanceCost(PerformanceCost);
+    setInstanceName(instance_Name);
+    setBalanceName(Balance_Name);
+    setPerformanceName(Performance_Name);
   };
 
   // max Pods
@@ -179,6 +192,9 @@ const SecondPage = (props) => {
     const ratio = maxRamindeployment / maxVcpuindeployment;
     return ratio;
   };
+
+  //
+  props.setInstanceName(instanceName, balanceName, performanceName);
 
   return (
     <div>

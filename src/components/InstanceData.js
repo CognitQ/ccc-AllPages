@@ -25,6 +25,10 @@ export const InstanceData = (props) => {
   const [balance, setBalance] = useState(false);
   const [bestPeformance, setPeformance] = useState(false);
 
+  const [cost_Name, setCostName] = useState();
+  const [balance_Name, setBalanceName] = useState();
+  const [peformance_Name, setPeformanceName] = useState();
+
   const testing = () => {
     alert("tested");
   };
@@ -82,6 +86,7 @@ export const InstanceData = (props) => {
     .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
     .slice(0, 1)
     .map((d) => {
+      setCostName(d.InstanceType);
       return d.InstanceType;
     });
 
@@ -91,6 +96,7 @@ export const InstanceData = (props) => {
     )
     .slice(0, 1)
     .map((d) => {
+      setPeformanceName(d.InstanceType);
       return d.InstanceType;
     });
 
@@ -100,10 +106,18 @@ export const InstanceData = (props) => {
     )
     .slice(0, 1)
     .map((d) => {
+      setBalanceName(d.InstanceType);
       return d.InstanceType;
     });
 
-  props.setData(minCost, performanceCost, balanceCost);
+  // props.setData(
+  //   minCost,
+  //   performanceCost,
+  //   balanceCost,
+  //   cost_Name,
+  //   balance_Name,
+  //   peformance_Name
+  // );
   // const noOfInsancesForCost = () => {
   //   if (props.pods > 110) {
   //     return props.pods / 110;
@@ -140,7 +154,8 @@ export const InstanceData = (props) => {
             );
           })} */}
       {/* </ul> */}
-
+      {cost_Name}, {balance_Name}
+      {peformance_Name}
       <div className="graph">
         {/* <div className="innerGraph"> */}
         <button
@@ -188,7 +203,6 @@ export const InstanceData = (props) => {
           />
         </div>
       ) : null}
-
       {bestPeformance ? (
         <div>
           <Table

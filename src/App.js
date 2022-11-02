@@ -19,9 +19,19 @@ const App = () => {
   const [deploymentData, setDeployementData] = useState([]);
   const [demonsetData, setDemonsetData] = useState([]);
 
+  const [cost_IName, setCostIName] = useState();
+  const [balance_IName, setBalanceIName] = useState();
+  const [peformance_IName, setPeformanceIName] = useState();
+
   const getDataFromNav = (deploymentData, demonsetData) => {
     setDeployementData(deploymentData);
     setDemonsetData(demonsetData);
+  };
+
+  const getDataFromID = (cost_Name, balance_Name, performance_Name) => {
+    setBalanceIName(balance_Name);
+    setCostIName(cost_Name);
+    setPeformanceIName(performance_Name);
   };
 
   return (
@@ -30,17 +40,32 @@ const App = () => {
         <Route path="/" element={<Nav setData={getDataFromNav} />} />
         <Route
           path="/summary"
-          element={<SecondPage dpData={deploymentData} dsData={demonsetData} />}
+          element={
+            <SecondPage
+              dpData={deploymentData}
+              setInstanceName={getDataFromID}
+              dsData={demonsetData}
+            />
+          }
         />
         <Route path="/summary/Least/EksDetail" element={<EksDetails />} />
         <Route path="/summary/Least/AksDetail" element={<AksDetails />} />
         <Route path="/summary/Least/GkeDetail" element={<GkeDetails />} />
 
-        <Route path="/summary/Performance/EksDetail" element={<PerfEksDetail />} />
-        <Route path="/summary/Performance/AksDetail" element={<PerfAksDetail />} />
-        <Route path="/summary/Performance/GkeDetail" element={<PerfGkeDetail />} />
+        <Route
+          path="/summary/Performance/EksDetail"
+          element={<PerfEksDetail />}
+        />
+        <Route
+          path="/summary/Performance/AksDetail"
+          element={<PerfAksDetail />}
+        />
+        <Route
+          path="/summary/Performance/GkeDetail"
+          element={<PerfGkeDetail />}
+        />
 
-        <Route path="/summary/Balance/EksDetail" element={<BalEksDetail/>} />
+        <Route path="/summary/Balance/EksDetail" element={<BalEksDetail />} />
         <Route path="/summary/Balance/AksDetail" element={<BalAksDetail />} />
         <Route path="/summary/Balance/GkeDetail" element={<BalGkeDetail />} />
       </Routes>
