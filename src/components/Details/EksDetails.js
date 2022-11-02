@@ -1,13 +1,13 @@
 import React from "react";
-import "./DetailPage.css";
+import "./DetailPages.css";
 
-import { DetailCalculation } from "./DetailCalculation";
+import { DetCalculation } from "./DetCalculation";
 
 export const EksDetails = (props) => {
   const Name = String(props.instanceNameForDetails);
   return (
     <div>
-      <DetailCalculation
+      <DetCalculation
         modelName="Least Cost"
         cloudName="EKS"
         instanceName={Name}

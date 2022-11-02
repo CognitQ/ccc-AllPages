@@ -1,5 +1,5 @@
 import React from "react";
-import "./DetailPage.css";
+import "./DetailPages.css";
 import {Link} from "react-router-dom";
 
 export const PerfGkeDetail = () => {
