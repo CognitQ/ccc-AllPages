@@ -197,30 +197,12 @@ const SecondPage = (props) => {
       <div className="graph">
         <div className="innerGraph">
           <Graph workerCost={instanceCost} />
-          {/* <button
-            className="btn btn-primary btn-sm btnLeast"
-            onClick={showBestCost}
-          >
-            BestCost
-          </button> */}
         </div>
         <div className="innerGraph">
-          <Graph workerCost={instanceCost} />
-          {/* <button
-            className="btn btn-primary btn-sm btnLeast"
-            onClick={showBestPeformance}
-          >
-            BestPeformance
-          </button> */}
+          <Graph workerCost={performanceCost} />
         </div>
         <div className="innerGraph">
-          <Graph workerCost={instanceCost} />
-          {/* <button
-            className="btn btn-primary btn-sm btnLeast"
-            onClick={showBalance}
-          >
-            Balance
-          </button> */}
+          <Graph workerCost={balanceCost} />
         </div>
       </div>
 

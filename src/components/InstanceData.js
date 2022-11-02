@@ -1,12 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Table } from "./Table";
-// import "./InstanceData.css";
-import { navigate, useNavigate } from "react-router-dom";
+import "./InstanceData.css";
+// import { navigate, useNavigate } from "react-router-dom";
+
 export const InstanceData = (props) => {
   //code for fetch data
   const [data, fetchData] = useState([]);
-  // navigate("/summary");
 
   const getData = () => {
     fetch("http://localhost:4000/aws")
@@ -28,14 +28,14 @@ export const InstanceData = (props) => {
   const testing = () => {
     alert("tested");
   };
-  
+
   const showBestCost = () => {
     setBalance(false);
     setPeformance(false);
     setCost(true);
     alert("clicked");
   };
-  
+
   const showBalance = () => {
     setBalance(true);
     setPeformance(false);
@@ -47,25 +47,25 @@ export const InstanceData = (props) => {
     setPeformance(true);
     setCost(false);
   };
-  
+
   const filterdata = data.filter(
     (Idata) => Idata.vCPUs >= props.vcpu && Idata.MemoryInGiB >= props.ram
-    );
-    
-    const peformanceFilterdata = data.filter(
-      (Idata) =>
+  );
+
+  const peformanceFilterdata = data.filter(
+    (Idata) =>
       Idata.vCPUs >= props.peformanceVcpu &&
       Idata.MemoryInGiB >= props.peformanceRam
-      );
-      
-      const balanceFilterdata = data.filter(
-        (Idata) =>
+  );
+
+  const balanceFilterdata = data.filter(
+    (Idata) =>
       Idata.vCPUs >= props.balanceVcpu && Idata.MemoryInGiB >= props.balanceRam
-      );
-      const CostOfFilterdata = filterdata.map((c) => {
-        return parseFloat(c.OnDemandLinuxpricing_USDperHour);
-      });
-      
+  );
+  const CostOfFilterdata = filterdata.map((c) => {
+    return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+  });
+
   const CostOfPerformance = peformanceFilterdata.map((c) => {
     return parseFloat(c.OnDemandLinuxpricing_USDperHour);
   });
@@ -184,6 +184,7 @@ export const InstanceData = (props) => {
             aksCost={minCost}
             aksName={selectedName}
             ram={props.ram}
+            model="Cost"
           />
         </div>
       ) : null}
@@ -198,6 +199,7 @@ export const InstanceData = (props) => {
             aksCost={minCost}
             aksName={selectedName}
             ram={props.peformanceRam}
+            model="Performance"
           />
         </div>
       ) : null}
@@ -211,6 +213,7 @@ export const InstanceData = (props) => {
             aksCost={minCost}
             aksName={selectedName}
             ram={props.balanceRam}
+            model="Balance"
           />
         </div>
       ) : null}

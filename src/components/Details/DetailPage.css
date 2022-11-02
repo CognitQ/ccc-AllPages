@@ -1,8 +1,8 @@
 .mainbox { 
     text-align: center;
     overflow: auto;
-    width: 80%;
-    height: 500px;
+    width: 90%;
+    /* height: 500px; */
     border: 1px solid blue;
     box-sizing: border-box;
   }

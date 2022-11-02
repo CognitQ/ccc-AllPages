@@ -5,16 +5,34 @@ import { useNavigate } from "react-router-dom";
 export const Table = (props) => {
   const navigate = useNavigate();
 
-  const gotoEksDetails = () => {
-    navigate("/summary/Least/EksDetail");
+  const gotoEksDetails = (pricingModel) => {
+    if (pricingModel === "Cost") {
+      navigate("/summary/Least/EksDetail");
+    } else if (pricingModel === "Balance") {
+      navigate("/summary/Balance/EksDetail");
+    } else {
+      navigate("/summary/Performance/EksDetail");
+    }
   };
 
-  const gotoAksDetails = () => {
-    navigate("/summary/Least/AksDetail");
+  const gotoAksDetails = (pricingModel) => {
+    if (pricingModel === "Cost") {
+      navigate("/summary/Least/AksDetail");
+    } else if (pricingModel === "Balance") {
+      navigate("/summary/Balance/AksDetail");
+    } else {
+      navigate("/summary/Performance/AksDetail");
+    }
   };
 
-  const gotoGkeDetails = () => {
-    navigate("/summary/Least/GkeDetail");
+  const gotoGkeDetails = (pricingModel) => {
+    if (pricingModel === "Cost") {
+      navigate("/summary/Least/GkeDetail");
+    } else if (pricingModel === "Balance") {
+      navigate("/summary/Balance/GkeDetail");
+    } else {
+      navigate("/summary/Performance/GkeDetail");
+    }
   };
 
   // const total = props.cost + props.master;
@@ -46,7 +64,7 @@ export const Table = (props) => {
               <td>
                 <button
                   className="btn btn-link tButton"
-                  onClick={() => gotoEksDetails()}
+                  onClick={() => gotoEksDetails(props.model)}
                 >
                   show Details{" "}
                 </button>
@@ -62,7 +80,7 @@ export const Table = (props) => {
               <td>
                 <button
                   className="btn btn-link tButton"
-                  onClick={() => gotoAksDetails()}
+                  onClick={() => gotoAksDetails(props.model)}
                 >
                   show Details{" "}
                 </button>
@@ -78,7 +96,7 @@ export const Table = (props) => {
               <td>
                 <button
                   className="btn btn-link tButton"
-                  onClick={() => gotoGkeDetails()}
+                  onClick={() => gotoGkeDetails(props.model)}
                 >
                   show Details{" "}
                 </button>
