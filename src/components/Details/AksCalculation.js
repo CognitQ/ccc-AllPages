@@ -3,7 +3,7 @@ import "./DetailPages.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export const DetCalculation = (props) => {
+export const AksCalculation = (props) => {
   const [show, setShow] = useState(false);
 
   const [node, setNode] = useState(1);
@@ -94,25 +94,16 @@ export const DetCalculation = (props) => {
                         <th className="rth">Option</th>
                         <th className="rth">1 Year</th>
                         <th className="rth">3 Year</th>
-                        <th className="rth">5 Year</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="rtd">Upfront</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                      <tr className="rtd">
-                        <td>Partial</td>
-                        <td className="rtd">$</td>
+                        <td className="rtd">Monthly</td>
                         <td className="rtd">$</td>
                         <td className="rtd">$</td>
                       </tr>
                       <tr className="rtd">
-                        <td>Nonupfront</td>
-                        <td className="rtd">$</td>
+                        <td>UpFront</td>
                         <td className="rtd">$</td>
                         <td className="rtd">$</td>
                       </tr>
@@ -196,7 +187,7 @@ export const DetCalculation = (props) => {
 
           <table className="priceTable">
             <tr>
-              <th className="pth">EKS</th>
+              <th className="pth">AKS</th>
               <th className="pth">Instance Name</th>
               <th className="pth">vCPU</th>
               <th className="pth">RAM GiB</th>

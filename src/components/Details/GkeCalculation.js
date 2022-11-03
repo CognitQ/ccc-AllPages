@@ -3,7 +3,7 @@ import "./DetailPages.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export const DetCalculation = (props) => {
+export const GkeCalculation = (props) => {
   const [show, setShow] = useState(false);
 
   const [node, setNode] = useState(1);
@@ -94,28 +94,15 @@ export const DetCalculation = (props) => {
                         <th className="rth">Option</th>
                         <th className="rth">1 Year</th>
                         <th className="rth">3 Year</th>
-                        <th className="rth">5 Year</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="rtd">Upfront</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                      <tr className="rtd">
-                        <td>Partial</td>
-                        <td className="rtd">$</td>
+                        <td className="rtd">-</td>
                         <td className="rtd">$</td>
                         <td className="rtd">$</td>
                       </tr>
-                      <tr className="rtd">
-                        <td>Nonupfront</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
+                     
                     </tbody>
                   </table>
                 </div>
