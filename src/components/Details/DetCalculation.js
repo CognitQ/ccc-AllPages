@@ -65,7 +65,9 @@ export const DetCalculation = (props) => {
               value={node}
               onChange={(e) => setNode(e.target.value)}
               onBlur={(e) => {
-                "filed is required";
+                if (node === "") {
+                  setNode(1);
+                }
               }}
             />
           </div>
