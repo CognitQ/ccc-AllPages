@@ -22,7 +22,7 @@ export const InputForm = (props) => {
       minRam: "1",
       minRamUnit: "MiB",
       maxRam: "32",
-      maxRamUnit: "GiB",
+      maxRamUnit: "MiB",
       minVcpu: "1",
       maxVcpu: "16",
       storageUnit: "GiB",
@@ -218,20 +218,20 @@ export const InputForm = (props) => {
   return (
     <div className="main">
       {/* code Starting of Deployment Button */}
-      <div>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => setShow(!show)}
-        >
-          Deployments{" "}
-        </button>
+      <div className="addButtons">
         <button
           type="button"
           className="btn btn-secondary"
           onClick={handleAddFields}
         >
-          Add Deployment
+          Deployment +
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleAddDemonsetFields}
+        >
+          Demonset +
         </button>
       </div>
       {/* End of Deployment Button */}
@@ -348,8 +348,8 @@ export const InputForm = (props) => {
                             handleChangeInput(inputField.id, event)
                           }
                         >
-                          <option value="GiB">GiB</option>
                           <option value="MiB">MiB</option>
+                          <option value="GiB">GiB</option>
                         </select>
                       </div>
                     </div>
@@ -435,7 +435,7 @@ export const InputForm = (props) => {
 
           {/* Start of Demonset button code */}
 
-          <div>
+          {/* <div>
             <button
               type="button"
               onClick={() => setHide(!hide)}
@@ -450,7 +450,7 @@ export const InputForm = (props) => {
             >
               Demonset +
             </button>
-          </div>
+          </div> */}
           {/* End of Demonset button code */}
 
           {/* Start of Demonset hide and show + container code */}
@@ -822,6 +822,20 @@ export const InputForm = (props) => {
 
           {/* Start of clear all  and submit button code*/}
           <div className="submitbtn">
+            {/* <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleAddFields}
+        >
+          Deployment +
+        </button>
+          <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleAddDemonsetFields}
+            >
+              Demonset +
+            </button> */}
             <button
               type="submit"
               className="btn btn-primary"

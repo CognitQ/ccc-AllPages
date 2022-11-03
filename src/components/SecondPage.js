@@ -30,7 +30,7 @@ const SecondPage = (props) => {
 
   // max Pods
   const depolymentPods = props.dpData.map((object) => {
-    if (object.maxPods === "undefined") {
+    if (object.maxPods === "") {
       return parseInt(object.minPods);
     } else {
       return parseInt(object.maxPods);
@@ -42,7 +42,7 @@ const SecondPage = (props) => {
 
   // max Vcpu
   const depolymentVcpu = props.dpData.map((object) => {
-    if (object.maxVcpu === "undefined") {
+    if (object.maxVcpu === "") {
       return parseInt(object.minVcpu);
     } else {
       return parseInt(object.maxVcpu);
@@ -57,7 +57,7 @@ const SecondPage = (props) => {
     Vcpuindeployment + (Vcpuindeployment * 15) / 100;
 
   const demonsetVcpu = props.dsData.map((object) => {
-    if (object.demonMaxVcpu === "undefined") {
+    if (object.demonMaxVcpu === "") {
       return parseInt(object.minVcpu);
     } else {
       return parseInt(object.demonMaxVcpu);
@@ -85,7 +85,7 @@ const SecondPage = (props) => {
 
   // maxRam
   const depolymentRam = props.dpData.map((object) => {
-    if (object.maxRam === "undefined") {
+    if (object.maxRam === "") {
       if (object.minRamUnit === "GiB") {
         return parseInt(object.minRam) * 1024;
       } else {
@@ -111,7 +111,7 @@ const SecondPage = (props) => {
     (Ramindeployment + (Ramindeployment * 15) / 100) / 1024;
 
   const demonsetRam = props.dsData.map((object) => {
-    if (object.demonMaxRam === "undefined") {
+    if (object.demonMaxRam === "") {
       if (object.demonMinRamUnit === "GiB") {
         return parseInt(object.demonMinRam) * 1024;
       } else {
@@ -155,7 +155,7 @@ const SecondPage = (props) => {
 
   // Storage Starts
   const depolymentstorage = props.dpData.map((object) => {
-    if (object.storage === "undefined") {
+    if (object.storage === "") {
       return 0;
     } else {
       if (object.storageUnit === "GiB") {
@@ -171,7 +171,7 @@ const SecondPage = (props) => {
   const storageindeployment = Math.max(...depolymentstorage) / 1024;
 
   const demonsetStorage = props.dsData.map((object) => {
-    if (object.demonStorage === "undefined") {
+    if (object.demonStorage === "") {
       return 0;
     } else {
       if (object.demonStorageUnit === "GiB") {

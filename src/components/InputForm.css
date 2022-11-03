@@ -17,7 +17,7 @@
         box-shadow: 1px 2px 8px 2px rgb(0,0,0,0.5);
         border-radius: 10px;
         background-color: beige;
-        margin-top:15px;
+        margin-top:40px;
     }
     .box1 {
         height: 225px;
@@ -28,7 +28,11 @@
         background-color: beige;
         margin-top:15px;
     }
-    
+    .addButtons{
+        right:10px;
+        position:fixed;
+        top: 30px;
+    }
     
     .btn {
         margin: 10px;

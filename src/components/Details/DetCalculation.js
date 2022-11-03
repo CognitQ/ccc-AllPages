@@ -73,7 +73,7 @@ export const DetCalculation = (props) => {
           <div className="pricingModel">
             <button type="button" className="btn-primary">
               OnDemand
-            </button>
+            </button>{" "}
             <button type="button" className="btn-primary">
               Spot
             </button>{" "}
@@ -160,16 +160,19 @@ export const DetCalculation = (props) => {
               {/* <b>OnDemand Cost(Monthly): 773.8 USD</b> */}
               <label>
                 {intNode} instances * {onDemonadValue} USD * 24 hours in Day ={" "}
-                {intNode * onDemonadValue * 24} USD (Daily OnDemand cost)
+                {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily OnDemand
+                cost)
               </label>
               <label>
                 {intNode} instances * {onDemonadValue} USD * 730 hours in month
-                = {intNode * onDemonadValue * 730} USD (monthly OnDemand cost)
+                = {(intNode * onDemonadValue * 730).toFixed(3)} USD (monthly
+                OnDemand cost)
               </label>
             </label>
             <label>
               {intNode} instances * {onDemonadValue} USD * 8760 hours in year =
-              {intNode * onDemonadValue * 8760} USD (Yearly OnDemand cost)
+              {(intNode * onDemonadValue * 8760).toFixed(3)} USD (Yearly
+              OnDemand cost)
             </label>
           </div>
           <hr

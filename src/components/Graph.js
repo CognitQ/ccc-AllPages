@@ -7,7 +7,6 @@ import {
   CartesianGrid,
   LabelList,
   Legend,
-  //   Tooltip,
 } from "recharts";
 import "./Graph.css";
 
@@ -15,12 +14,11 @@ const Graph = ({ workerCost }) => {
   const cost = parseFloat(workerCost);
   // Sample data
   const dataLeast = [
-    { name: "EKS", MasterNode: 17, WorkerNode: { cost } },
-    { name: "AKS", MasterNode: 19, WorkerNode: 68 },
+    { name: "EKS", MasterNode: 17, WorkerNode: { workerCost } },
+    { name: "AKS", MasterNode: 19, WorkerNode: 69 },
     { name: "GKE", MasterNode: 15, WorkerNode: 45 },
   ];
 
-  const bardesign = () => {};
   return (
     <div className="container">
       <div>{cost}</div>
@@ -46,7 +44,10 @@ const Graph = ({ workerCost }) => {
               fontSize: "12px",
             }}
           />
-          <Bar dataKey="MasterNode" stackId="a" fill="blue" />
+          <Bar dataKey="MasterNode" stackId="a" fill="blue">
+            {" "}
+            <LabelList position="top" />
+          </Bar>
           <Bar dataKey="WorkerNode" stackId="a" fill="grey">
             <LabelList position="top" />
           </Bar>

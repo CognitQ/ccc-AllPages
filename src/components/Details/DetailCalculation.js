@@ -49,7 +49,7 @@ export const DetailCalculation = (props) => {
             <input type="number" />
           </div>
           <div className="option">
-            <button>OnDemand</button> <button>Spot</button>{" "}
+            <button>OnDemand</button>{" "} <button>Spot</button>{" "}
             <button>
               Reserved
               <select id="unit">
