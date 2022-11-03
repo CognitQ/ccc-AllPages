@@ -5,9 +5,12 @@ import { useState, useEffect } from "react";
 
 export const DetCalculation = (props) => {
   const [show, setShow] = useState(false);
+
+  const [node, setNode] = useState(1);
+  const intNode = parseInt(node);
+
   //code for fetch data
   const [data, fetchData] = useState([]);
-
   const getData = () => {
     fetch("http://localhost:4000/aws")
       .then((res) => res.json())
@@ -55,7 +58,16 @@ export const DetCalculation = (props) => {
           </div>
           <div className="rtop">
             <label> Total Nodes </label>
-            <input className="nodeText" type="number" />
+            <input
+              className="nodeText"
+              type="number"
+              min="1"
+              value={node}
+              onChange={(e) => setNode(e.target.value)}
+              onBlur={(e) => {
+                "filed is required";
+              }}
+            />
           </div>
 
           <div className="pricingModel">
@@ -147,17 +159,17 @@ export const DetCalculation = (props) => {
             <label>
               {/* <b>OnDemand Cost(Monthly): 773.8 USD</b> */}
               <label>
-                10 instances * 1.06 USD * 24 hours in Day = 25.44 USD (Daily
-                OnDemand cost)
+                {intNode} instances * {onDemonadValue} USD * 24 hours in Day ={" "}
+                {intNode * onDemonadValue * 24} USD (Daily OnDemand cost)
               </label>
               <label>
-                10 instances * 1.06 USD * 730 hours in month = 773.8 USD
-                (monthly OnDemand cost)
+                {intNode} instances * {onDemonadValue} USD * 730 hours in month
+                = {intNode * onDemonadValue * 730} USD (monthly OnDemand cost)
               </label>
             </label>
             <label>
-              10 instances * 1.06 USD * 8760 hours in year = 9285.6 USD (Yearly
-              OnDemand cost)
+              {intNode} instances * {onDemonadValue} USD * 8760 hours in year =
+              {intNode * onDemonadValue * 8760} USD (Yearly OnDemand cost)
             </label>
           </div>
           <hr

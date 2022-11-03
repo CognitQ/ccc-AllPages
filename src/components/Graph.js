@@ -15,7 +15,7 @@ const Graph = ({ workerCost }) => {
   const cost = parseFloat(workerCost);
   // Sample data
   const dataLeast = [
-    { name: "EKS", MasterNode: 17, WorkerNode: { workerCost } },
+    { name: "EKS", MasterNode: 17, WorkerNode: { cost } },
     { name: "AKS", MasterNode: 19, WorkerNode: 68 },
     { name: "GKE", MasterNode: 15, WorkerNode: 45 },
   ];
