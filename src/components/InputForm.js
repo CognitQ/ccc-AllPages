@@ -5,7 +5,7 @@ import "./InputForm.css";
 import { v4 as uuidv4 } from "uuid";
 
 export const InputForm = (props) => {
-  const [show, setShow] = useState(true); //code for deployment
+  const [show, setShow] = useState([{ id: uuidv4(), showContainer: true }]); //code for deployment
   const [hide, setHide] = useState(true); //code for Demonset
   const [deploymentValid, setDeploymentValid] = useState(false); //code for checking validity
   const [demonValid, setDemonValid] = useState(false); //code for checking validity
@@ -56,6 +56,17 @@ export const InputForm = (props) => {
       }
       return i;
     });
+  };
+
+  const handleDone = (id) => {
+    // const values = [...show];
+    // const hidecontainer = values.map((val) => {
+    //   if (val.id === id) {
+    //     return false;
+    //   }
+    //   return true;
+    // });
+    // setShow(...hidecontainer);
   };
 
   const handleReset = (id) => {
@@ -240,197 +251,201 @@ export const InputForm = (props) => {
       <center>
         <form method="POST" onSubmit={handleSubmit} className="form">
           {/* code of show and hide deployments + code of deplyment container */}
-          {show ? (
-            <div>
-              {inputFields.map((inputField) => (
-                <div key={inputField.id} className="incontainer">
-                  <div className="box">
-                    {/* <div className="detailform"> */}
-                    <input
-                      type="text"
-                      id="deploytxt"
-                      placeholder="  Deployment1"
-                      name="deployment"
-                      value={inputField.deployment}
-                      onChange={(event) =>
-                        handleChangeInput(inputField.id, event)
-                      }
-                      required
-                    />
-                    {/* </div> */}
-
-                    <button
-                      type="button"
-                      className="btn btn-danger btn-sm"
-                      id="delbtn"
-                      disabled={inputFields.length === 1}
-                      onClick={() => handleRemoveFields(inputField.id)}
-                    >
-                      Delete
-                    </button>
-
-                    <div className="pod">
-                      <div className="lpod">
-                        <label>* Min PODs </label>
-                        <input
-                          type="number"
-                          className="text"
-                          placeholder="1"
-                          name="minPods"
-                          value={inputField.minPods}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                          min="1"
-                          required
-                        />
-                      </div>
+          {show.map((i) =>
+            i.showContainer ? (
+              <div>
+                {inputFields.map((inputField) => (
+                  <div key={inputField.id} className="incontainer">
+                    <div className="box">
+                      {/* <div className="detailform"> */}
+                      <input
+                        type="text"
+                        id="deploytxt"
+                        placeholder="  Deployment1"
+                        name="deployment"
+                        value={inputField.deployment}
+                        onChange={(event) =>
+                          handleChangeInput(inputField.id, event)
+                        }
+                        required
+                      />
                       {/* </div> */}
 
-                      <div className="rpod">
-                        <label htmlFor="name">Max PODs</label>
-                        <input
-                          type="number"
-                          className="text"
-                          name="maxPods"
-                          value={inputField.maxPods}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                          min="2"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="ram">
-                      <div className="lram">
-                        <label htmlFor="name">* Min Ram</label>
-                        <input
-                          type="number"
-                          className="text"
-                          placeholder="1"
-                          min="1"
-                          name="minRam"
-                          value={inputField.minRam}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                          required
-                        />
-                        <select
-                          name="minRamUnit"
-                          id="unit"
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                        >
-                          <option value="MiB">MiB</option>
-                          <option value="GiB">GiB</option>
-                        </select>
-                      </div>
-
-                      <div className="rram">
-                        <label htmlFor="name">Max Ram</label>
-                        <input
-                          type="number"
-                          className="text"
-                          min="2"
-                          name="maxRam"
-                          value={inputField.maxRam}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                        />
-                        <select
-                          name="maxRamUnit"
-                          id="unit"
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                        >
-                          <option value="MiB">MiB</option>
-                          <option value="GiB">GiB</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="cpu">
-                      <div className="lcpu">
-                        <label htmlFor="name">* Min vCPU</label>
-                        <input
-                          type="number"
-                          className="text"
-                          placeholder="1"
-                          name="minVcpu"
-                          value={inputField.minVcpu}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                          min="1"
-                          required
-                        />
-                      </div>
-
-                      <div className="rcpu">
-                        <label htmlFor="name">Max vCPU</label>
-                        <input
-                          type="number"
-                          className="text"
-                          name="maxVcpu"
-                          value={inputField.maxVcpu}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                          min="2"
-                        />
-                      </div>
-                    </div>
-                    <div className="storage">
-                      <label htmlFor="name">* Storage</label>
-                      <input
-                        type="number"
-                        className="text"
-                        placeholder="1"
-                        name="storage"
-                        value={inputField.storage}
-                        onChange={(event) =>
-                          handleChangeInput(inputField.id, event)
-                        }
-                        min="1"
-                      />
-                      <select
-                        name="storageUnit"
-                        id="unit"
-                        onChange={(event) =>
-                          handleChangeInput(inputField.id, event)
-                        }
-                      >
-                        <option value="mb">MiB</option>
-                        <option value="gb">Gib</option>
-                        <option value="tb">TiB</option>
-                      </select>
-                    </div>
-                    <div className="subbtn">
-                      <button
-                        type="reset"
-                        onClick={() => handleReset(inputField.id)}
-                        className="btn btn-secondary"
-                      >
-                        Reset
-                      </button>
                       <button
                         type="button"
-                        className="btn btn-secondary"
-                        onClick={handleAddFields}
+                        className="btn btn-danger btn-sm"
+                        id="delbtn"
+                        disabled={inputFields.length === 1}
+                        onClick={() => handleRemoveFields(inputField.id)}
                       >
-                        Done
+                        Delete
                       </button>
+
+                      <div className="pod">
+                        <div className="lpod">
+                          <label>* Min PODs </label>
+                          <input
+                            type="number"
+                            className="text"
+                            placeholder="1"
+                            name="minPods"
+                            value={inputField.minPods}
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                            min="1"
+                            required
+                          />
+                        </div>
+                        {/* </div> */}
+
+                        <div className="rpod">
+                          <label htmlFor="name">Max PODs</label>
+                          <input
+                            type="number"
+                            className="text"
+                            name="maxPods"
+                            value={inputField.maxPods}
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                            min="2"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="ram">
+                        <div className="lram">
+                          <label htmlFor="name">* Min Ram</label>
+                          <input
+                            type="number"
+                            className="text"
+                            placeholder="1"
+                            min="1"
+                            name="minRam"
+                            value={inputField.minRam}
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                            required
+                          />
+                          <select
+                            name="minRamUnit"
+                            id="unit"
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                          >
+                            <option value="MiB">MiB</option>
+                            <option value="GiB">GiB</option>
+                          </select>
+                        </div>
+
+                        <div className="rram">
+                          <label htmlFor="name">Max Ram</label>
+                          <input
+                            type="number"
+                            className="text"
+                            min="2"
+                            name="maxRam"
+                            value={inputField.maxRam}
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                          />
+                          <select
+                            name="maxRamUnit"
+                            id="unit"
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                          >
+                            <option value="MiB">MiB</option>
+                            <option value="GiB">GiB</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="cpu">
+                        <div className="lcpu">
+                          <label htmlFor="name">* Min vCPU</label>
+                          <input
+                            type="number"
+                            className="text"
+                            placeholder="1"
+                            name="minVcpu"
+                            value={inputField.minVcpu}
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                            min="1"
+                            required
+                          />
+                        </div>
+
+                        <div className="rcpu">
+                          <label htmlFor="name">Max vCPU</label>
+                          <input
+                            type="number"
+                            className="text"
+                            name="maxVcpu"
+                            value={inputField.maxVcpu}
+                            onChange={(event) =>
+                              handleChangeInput(inputField.id, event)
+                            }
+                            min="2"
+                          />
+                        </div>
+                      </div>
+                      <div className="storage">
+                        <label htmlFor="name">* Storage</label>
+                        <input
+                          type="number"
+                          className="text"
+                          placeholder="1"
+                          name="storage"
+                          value={inputField.storage}
+                          onChange={(event) =>
+                            handleChangeInput(inputField.id, event)
+                          }
+                          min="1"
+                        />
+                        <select
+                          name="storageUnit"
+                          id="unit"
+                          onChange={(event) =>
+                            handleChangeInput(inputField.id, event)
+                          }
+                        >
+                          <option value="mb">MiB</option>
+                          <option value="gb">Gib</option>
+                          <option value="tb">TiB</option>
+                        </select>
+                      </div>
+                      <div className="subbtn">
+                        <button
+                          type="reset"
+                          onClick={() => handleReset(inputField.id)}
+                          className="btn btn-secondary"
+                        >
+                          Reset
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={handleDone(inputField.id)}
+                        >
+                          Done
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : null}
+                ))}
+              </div>
+            ) : (
+              <div>deployment</div>
+            )
+          )}
           {/* End of show and hide of deployment code + deployment container */}
 
           {/* Start of Demonset button code */}
