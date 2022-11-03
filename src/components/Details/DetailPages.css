@@ -3,7 +3,7 @@
     text-align: center;
     overflow: auto;
     width: 980px;
-    height: 550px;
+    height: fit-content;
     /* border: 1px solid blue; */
     box-sizing: border-box;
     box-shadow: black;

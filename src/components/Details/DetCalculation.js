@@ -3,9 +3,8 @@ import "./DetailPages.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-
 export const DetCalculation = (props) => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   //code for fetch data
   const [data, fetchData] = useState([]);
 
@@ -26,9 +25,14 @@ export const DetCalculation = (props) => {
     (name) => name.InstanceType === props.instanceName
   );
 
+  const onDemonadValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+    });
+
   return (
     <div>
-
       <nav>
         <ul>
           <li>
@@ -39,7 +43,6 @@ export const DetCalculation = (props) => {
           </li>
         </ul>
       </nav>
-
 
       <center>
         <div className="mainbox">
@@ -56,15 +59,25 @@ export const DetCalculation = (props) => {
           </div>
 
           <div className="pricingModel">
-            <button type="button" className="btn-primary">OnDemand</button>
-            <button type="button" className="btn-primary">Spot</button>{" "}
-
-            <button type="button" className="btn-primary" onClick={() => setShow(!show)}>  Reserved </button>
+            <button type="button" className="btn-primary">
+              OnDemand
+            </button>
+            <button type="button" className="btn-primary">
+              Spot
+            </button>{" "}
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => setShow(!show)}
+            >
+              {" "}
+              Reserved{" "}
+            </button>
             <div>
-              {
-                show ? <div className="Table">
+              {show ? (
+                <div className="Table">
                   <table>
-                    <thead >
+                    <thead>
                       <tr>
                         <th className="rth">Option</th>
                         <th className="rth">1 Year</th>
@@ -93,13 +106,11 @@ export const DetCalculation = (props) => {
                       </tr>
                     </tbody>
                   </table>
-                </div> : null
-              }
+                </div>
+              ) : null}
             </div>
-
           </div>
           <table className="priceTable">
-
             <tr>
               <th className="pth">{props.cloudName}</th>
               <th className="pth">Instance Name</th>
@@ -118,28 +129,35 @@ export const DetCalculation = (props) => {
                     <td className="ptd">{parseFloat(i.vCPUs)}</td>
                     <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
                     <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.OnDemandLinuxpricing_USDperHour)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
+                    </td>
                   </>
                 );
               })}
             </tr>
-
           </table>
           <div className="monthlyCost">
             <label>
-              <b>OnDemand Cost(Monthly): 773.8 USD</b>
+              <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
             </label>
           </div>
 
           <div className="calculation">
             <label>
               {/* <b>OnDemand Cost(Monthly): 773.8 USD</b> */}
-              <label>10 instances * 1.06 USD * 24 hours in Day = 25.44 USD (Daily OnDemand cost)
+              <label>
+                10 instances * 1.06 USD * 24 hours in Day = 25.44 USD (Daily
+                OnDemand cost)
               </label>
-              <label>10 instances * 1.06 USD * 730 hours in month = 773.8 USD (monthly OnDemand cost)
+              <label>
+                10 instances * 1.06 USD * 730 hours in month = 773.8 USD
+                (monthly OnDemand cost)
               </label>
             </label>
-            <label>10 instances * 1.06 USD * 8760 hours in year = 9285.6 USD (Yearly OnDemand cost)
+            <label>
+              10 instances * 1.06 USD * 8760 hours in year = 9285.6 USD (Yearly
+              OnDemand cost)
             </label>
           </div>
           <hr
@@ -151,9 +169,9 @@ export const DetCalculation = (props) => {
 
           <div className="nodeHeading">
             <label>
-              < h6>
+              <h6>
                 <b>No. of Master Nodes/HA</b>
-              </ h6>
+              </h6>
             </label>
           </div>
           <div className="rtop">
@@ -162,7 +180,6 @@ export const DetCalculation = (props) => {
           </div>
 
           <table className="priceTable">
-
             <tr>
               <th className="pth">EKS</th>
               <th className="pth">Instance Name</th>
@@ -180,7 +197,6 @@ export const DetCalculation = (props) => {
               <td className="ptd"></td>
               <td className="ptd">1.06</td>
             </tr>
-
           </table>
           <div className="monthlyCost">
             <label>
@@ -190,12 +206,18 @@ export const DetCalculation = (props) => {
 
           <div className="calculation">
             <label>
-              <label>10 instances x 1.06 USD x 24 hours in Day = 25.44 USD (Daily OnDemand cost)
+              <label>
+                10 instances x 1.06 USD x 24 hours in Day = 25.44 USD (Daily
+                OnDemand cost)
               </label>
-              <label>10 instances x 1.06 USD x 730 hours in month = 773.8 USD (monthly OnDemand cost)
+              <label>
+                10 instances x 1.06 USD x 730 hours in month = 773.8 USD
+                (monthly OnDemand cost)
               </label>
             </label>
-            <label>10 instances x 1.06 USD x 8760 hours in year = 9285.6 USD (Yearly OnDemand cost)
+            <label>
+              10 instances x 1.06 USD x 8760 hours in year = 9285.6 USD (Yearly
+              OnDemand cost)
             </label>
           </div>
           <div>
@@ -216,6 +238,3 @@ export const DetCalculation = (props) => {
     </div>
   );
 };
-
-
-

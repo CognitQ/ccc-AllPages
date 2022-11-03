@@ -12,6 +12,7 @@ import {
 import "./Graph.css";
 
 const Graph = ({ workerCost }) => {
+  const cost = parseFloat(workerCost);
   // Sample data
   const dataLeast = [
     { name: "EKS", MasterNode: 17, WorkerNode: { workerCost } },
@@ -22,7 +23,7 @@ const Graph = ({ workerCost }) => {
   const bardesign = () => {};
   return (
     <div className="container">
-      <div>{workerCost}</div>
+      <div>{cost}</div>
       <div className="barbox" style={{ display: "flex", flexDirection: "row" }}>
         <BarChart width={300} height={250} data={dataLeast} barSize={22}>
           <CartesianGrid />
