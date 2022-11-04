@@ -11,6 +11,31 @@ export const DetCalculation = (props) => {
 
   const totalNoNodes = props.totalNodes;
 
+  // max Pods
+  // const depolymentPods = props.detailForNodes.map((object) => {
+  //   if (object.maxPods === "") {
+  //     return parseInt(object.minPods);
+  //   } else {
+  //     return parseInt(object.maxPods);
+  //   }
+  // });
+
+  // const noOfNodesPerDep = depolymentPods.map((i) => {
+  //   if (parseFloat(i / 110) <= 1) {
+  //     return 1;
+  //   } else if (i % 110 === 0) {
+  //     return i / 110;
+  //   } else {
+  //     return Math.floor(i / 110 + 1);
+  //   }
+  // });
+
+  // const totalNoNodes = noOfNodesPerDep.reduce(
+  //   (result, number) => result + number
+  // );
+
+  //end of pods
+
   //code for fetch data
   const [data, fetchData] = useState([]);
   const getData = () => {
@@ -49,7 +74,7 @@ export const DetCalculation = (props) => {
           </li>
         </ul>
       </nav>
-
+      <h3>nodes ={totalNoNodes}</h3>
       <center>
         <div className="mainbox">
           <div className="heading">

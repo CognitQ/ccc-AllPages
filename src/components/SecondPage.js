@@ -28,7 +28,7 @@ const SecondPage = (props) => {
     setPerformanceName(Performance_Name);
   };
 
-// end Max Pods
+  // end Max Pods
 
   // max Vcpu
   const depolymentVcpu = props.dpData.map((object) => {
@@ -183,6 +183,29 @@ const SecondPage = (props) => {
     return ratio;
   };
 
+  // calculation for nodes
+  const depolymentPods = props.dpData.map((object) => {
+    if (object.maxPods === "") {
+      return parseInt(object.minPods);
+    } else {
+      return parseInt(object.maxPods);
+    }
+  });
+
+  const noOfNodesPerDep = depolymentPods.map((i) => {
+    if (parseFloat(i / 110) <= 1) {
+      return 1;
+    } else if (i % 110 === 0) {
+      return i / 110;
+    } else {
+      return Math.floor(i / 110 + 1);
+    }
+  });
+
+  const totalNoNodes = noOfNodesPerDep.reduce(
+    (result, number) => result + number
+  );
+
   //
   props.setInstanceNameInApp(
     cost_InstanceName,
@@ -204,6 +227,8 @@ const SecondPage = (props) => {
           </ul>
         </nav>
       </div>
+
+      <div>Total Nodes = {totalNoNodes}</div>
       <div className="graph">
         <div className="innerGraph">
           <Graph workerCost={instanceCost} />
