@@ -5,8 +5,7 @@ import { DetCalculation } from "./DetCalculation";
 
 export const EksDetails = (props) => {
   const Name = String(props.instanceNameForDetails);
-
-  const pods = props.detailForPods;
+  // const 
 
   return (
     <div>
@@ -14,9 +13,8 @@ export const EksDetails = (props) => {
         modelName="Least Cost"
         cloudName="GKE"
         instanceName={Name}
-        detailForNodes={pods}
+        totalNodes={props.detailForPods}
       />
-      <h2>pods ={pods}</h2>
     </div>
   );
 };
