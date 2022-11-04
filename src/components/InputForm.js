@@ -433,236 +433,13 @@ export const InputForm = (props) => {
           ) : null}
           {/* End of show and hide of deployment code + deployment container */}
 
-          {/* Start of Demonset button code */}
-
-          {/* <div>
-            <button
-              type="button"
-              onClick={() => setHide(!hide)}
-              className="btn btn-secondary"
-            >
-              Demonset
-            </button>{" "}
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleAddDemonsetFields}
-            >
-              Demonset +
-            </button>
-          </div> */}
-          {/* End of Demonset button code */}
-
           {/* Start of Demonset hide and show + container code */}
 
           {hide ? (
             <div>
               {demonsetInputFields.map((demonsetInputField) => (
                 <div key={demonsetInputField.id} className="incontainer">
-                  {/* <div className="row g-3">
-                    <div className="detailform">
-                      <span>*</span>
-                      <input
-                        type="text"
-                        className="form-control-plaintext"
-                        placeholder="Demonset"
-                        name="demonset"
-                        value={demonsetInputField.demonset}
-                        onChange={(event) =>
-                          handleChangeDemonInput(demonsetInputField.id, event)
-                        }
-                      />
-                    </div>
-
-                    <div className="closebtn">
-                      <button
-                        type="button"
-                        className="btn btn-outline-primar"
-                        disabled={demonsetInputFields.length === 1}
-                        onClick={() =>
-                          handleDemonRemoveFields(demonsetInputField.id)
-                        }
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fillRule="currentColor"
-                          className="bi bi-trash"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                          <path
-                            fillRule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-
-                    <div className="lanetwo">
-                      <div className="maininputs">
-                        <span>*</span>
-                        <label> Min RAM </label>
-                        <input
-                          type="number"
-                          placeholder="1"
-                          name="demonMinRam"
-                          value={demonsetInputField.demonMinRam}
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                          min="1"
-                          required="required"
-                        />
-                      </div>
-
-                      <div className="unit">
-                        <select
-                          name="demonMinRamUnit"
-                          id="unit"
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                        >
-                          <option value="MiB">MiB</option>
-                          <option value="GiB">GiB</option>
-                        </select>
-                      </div>
-
-                      <div className="max maininputstwo">
-                        <label> Max RAM </label>
-                        <input
-                          type="number"
-                          name="demonMaxRam"
-                          value={demonsetInputField.demonMaxRam}
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                          min="2"
-                        />
-                      </div>
-
-                      <div className="unittwo">
-                        <select
-                          name="demonMaxRamUnit"
-                          id="unit"
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                        >
-                          <option value="MiB">MiB</option>
-                          <option value="GiB">GiB</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="lanetwo">
-                      <div className="maininputs">
-                        <span>*</span>
-                        <label> Min vCPU </label>
-                        <input
-                          type="number"
-                          placeholder="1"
-                          name="demonMinVcpu"
-                          value={demonsetInputField.demonMinVcpu}
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                          min="1"
-                          required="required"
-                        />
-                      </div>
-
-                      <div className="maininputstwo ">
-                        <label> Max vCPU </label>
-                        <input
-                          type="number"
-                          name="demonMaxVcpu"
-                          value={demonsetInputField.demonMaxVcpu}
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                          min="2"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="lanetwo">
-                      <div className="maininputs">
-                        <label> Storage </label>
-                        <input
-                          type="number"
-                          name="demonStorage"
-                          value={demonsetInputField.demonStorage}
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                          min="1"
-                          required="required"
-                        />
-                      </div>
-
-                      <div className="unit">
-                        <select
-                          name="demonStorageUnit"
-                          id="unit"
-                          onChange={(event) =>
-                            handleChangeDemonInput(demonsetInputField.id, event)
-                          }
-                        >
-                          <option value="GiB">GiB</option>
-                          <option value="TB">TB</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="reset">
-                      <button
-                        type="reset"
-                        onClick={() => handleDemonReset(demonsetInputField.id)}
-                        className="btn btn-outline-primar"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="30"
-                          height="30"
-                          fillRule="currentColor"
-                          className="bi bi-bootstrap-reboot"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M1.161 8a6.84 6.84 0 1 0 6.842-6.84.58.58 0 1 1 0-1.16 8 8 0 1 1-6.556 3.412l-.663-.577a.58.58 0 0 1 .227-.997l2.52-.69a.58.58 0 0 1 .728.633l-.332 2.592a.58.58 0 0 1-.956.364l-.643-.56A6.812 6.812 0 0 0 1.16 8z" />
-                          <path d="M6.641 11.671V8.843h1.57l1.498 2.828h1.314L9.377 8.665c.897-.3 1.427-1.106 1.427-2.1 0-1.37-.943-2.246-2.456-2.246H5.5v7.352h1.141zm0-3.75V5.277h1.57c.881 0 1.416.499 1.416 1.32 0 .84-.504 1.324-1.386 1.324h-1.6z" />
-                        </svg>
-                        <br />
-                        Reset
-                      </button>
-                    </div>
-
-                    <div className="reset">
-                      <button
-                        type="button"
-                        className="btn btn-outline-primar"
-                        onClick={handleAddDemonsetFields}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="30"
-                          height="30"
-                          fillRule="currentColor"
-                          className="bi bi-check2-circle"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
-                          <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
-                        </svg>
-                        <br />
-                        Done
-                      </button>
-                    </div>
-                  </div> */}
                   <div className="box1">
-                    {/* <div className="detailform"> */}
                     <input
                       type="text"
                       id="deploytxt"
@@ -674,7 +451,6 @@ export const InputForm = (props) => {
                       }
                       required
                     />
-                    {/* </div> */}
 
                     <button
                       type="button"
@@ -822,20 +598,6 @@ export const InputForm = (props) => {
 
           {/* Start of clear all  and submit button code*/}
           <div className="submitbtn">
-            {/* <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={handleAddFields}
-        >
-          Deployment +
-        </button>
-          <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleAddDemonsetFields}
-            >
-              Demonset +
-            </button> */}
             <button
               type="submit"
               className="btn btn-primary"

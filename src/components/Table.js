@@ -36,7 +36,7 @@ export const Table = (props) => {
   };
 
   // const total = props.cost + props.master;
-  const total = props.cost + 2;
+  const total = props.eksCost + 2;
 
   return (
     <div>

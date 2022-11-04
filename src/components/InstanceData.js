@@ -113,24 +113,6 @@ export const InstanceData = (props) => {
       balanceName
     );
   }, [selectedName, performanceName, balanceName]);
-  // const noOfInsancesForCost = () => {
-  //   if (props.pods > 110) {
-  //     return props.pods / 110;
-  //   } else {
-  //     return 1;
-  //   }
-  // };
-
-  // const noOfInstancesPerformance = () => {
-  //   if (props.pods > 77) {
-  //     return props.pods / 77;
-  //   } else {
-  //     return 1;
-  //   }
-  // };
-
-  // const bestCost = minCost * noOfInsancesForCost() * 730;
-  // const bestpeformance = minCost * noOfInstancesPerformance() * 730;
 
   return (
     <div>

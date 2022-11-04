@@ -28,17 +28,7 @@ const SecondPage = (props) => {
     setPerformanceName(Performance_Name);
   };
 
-  // max Pods
-  const depolymentPods = props.dpData.map((object) => {
-    if (object.maxPods === "") {
-      return parseInt(object.minPods);
-    } else {
-      return parseInt(object.maxPods);
-    }
-  });
-
-  const maxPodsindeployment = Math.max(...depolymentPods);
-  // end Max Pods
+// end Max Pods
 
   // max Vcpu
   const depolymentVcpu = props.dpData.map((object) => {
@@ -228,7 +218,6 @@ const SecondPage = (props) => {
 
       <div>
         <InstanceData
-          pods={maxPodsindeployment}
           ram={maxRamindeployment}
           vcpu={maxVcpuindeployment}
           setData={getInstanceData}

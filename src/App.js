@@ -50,7 +50,12 @@ const App = () => {
         />
         <Route
           path="/summary/Least/EksDetail"
-          element={<EksDetails instanceNameForDetails={cost_IName} />}
+          element={
+            <EksDetails
+              detailForPods={deploymentData}
+              instanceNameForDetails={cost_IName}
+            />
+          }
         />
         <Route path="/summary/Least/AksDetail" element={<AksDetails />} />
         <Route path="/summary/Least/GkeDetail" element={<GkeDetails />} />

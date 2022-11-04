@@ -6,8 +6,10 @@ import { useState, useEffect } from "react";
 export const DetCalculation = (props) => {
   const [show, setShow] = useState(false);
 
-  const [node, setNode] = useState(1);
+  const [node, setNode] = useState();
   const intNode = parseInt(node);
+
+  const totalNoNodes = props.totalNodes;
 
   //code for fetch data
   const [data, fetchData] = useState([]);
@@ -22,6 +24,7 @@ export const DetCalculation = (props) => {
 
   useEffect(() => {
     getData();
+    setNode(totalNoNodes);
   }, []);
 
   const filterInstaceName = data.filter(
@@ -61,7 +64,7 @@ export const DetCalculation = (props) => {
             <input
               className="nodeText"
               type="number"
-              min="1"
+              min={totalNoNodes}
               value={node}
               onChange={(e) => setNode(e.target.value)}
               onBlur={(e) => {
