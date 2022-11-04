@@ -17,7 +17,9 @@ export const EksDetails = (props) => {
   });
 
   const noOfNodesPerDep = depolymentPods.map((i) => {
-    if (parseFloat(i / 110) <= 1) {
+    if (i % 1 === 0) {
+      return Math.parseInt(i / 110);
+    } else if (parseFloat(i / 110) <= 1) {
       return 1;
     } else {
       return Math.floor(i / 110 + 1);
