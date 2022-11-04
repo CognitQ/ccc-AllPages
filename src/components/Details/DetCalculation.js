@@ -9,6 +9,16 @@ export const DetCalculation = (props) => {
   const [node, setNode] = useState();
   const intNode = parseInt(node);
 
+  const [OnDemand, setOnDemand] = useState(true);
+  const [Spot, setSpot] = useState(false);
+
+  const [Upfront1Y, setUpfront1Y] = useState(false);
+  const [Partial1Y, setPartial1Y] = useState(false);
+  const [NoUpfront1Y, setNoUpfront1Y] = useState(false);
+  const [Upfront3Y, setUpfront3Y] = useState(false);
+  const [Partial3Y, setPartial3Y] = useState(false);
+  const [NoUpfront3Y, setNoUpfront3Y] = useState(false);
+
   const totalNoNodes = props.totalNodes;
 
   //code for fetch data
@@ -36,6 +46,91 @@ export const DetCalculation = (props) => {
     .map((c) => {
       return parseFloat(c.OnDemandLinuxpricing_USDperHour);
     });
+
+
+  const OnDemandClick = () => {
+    setOnDemand(true);
+    setSpot(false);
+    setUpfront1Y(false);
+    setPartial1Y(false);
+    setNoUpfront1Y(false);
+    setUpfront3Y(false);
+    setPartial3Y(false);
+    setNoUpfront3Y(false);
+    setShow(false);
+  }
+  const OnSpotClick = () => {
+    setOnDemand(false);
+    setSpot(true);
+    setUpfront1Y(false);
+    setPartial1Y(false);
+    setNoUpfront1Y(false);
+    setUpfront3Y(false);
+    setPartial3Y(false);
+    setNoUpfront3Y(false);
+    setShow(false);
+  }
+
+  const Upfront1y = () => {
+    setOnDemand(false);
+    setSpot(false);
+    setUpfront1Y(true);
+    setPartial1Y(false);
+    setNoUpfront1Y(false);
+    setUpfront3Y(false);
+    setPartial3Y(false);
+    setNoUpfront3Y(false);
+  }
+  const Partial1y = () => {
+    setOnDemand(false);
+    setSpot(false);
+    setUpfront1Y(false);
+    setPartial1Y(true);
+    setNoUpfront1Y(false);
+    setUpfront3Y(false);
+    setPartial3Y(false);
+    setNoUpfront3Y(false);
+  }
+  const NoUpfront1y = () => {
+    setOnDemand(false);
+    setSpot(false);
+    setUpfront1Y(false);
+    setPartial1Y(false);
+    setNoUpfront1Y(true);
+    setUpfront3Y(false);
+    setPartial3Y(false);
+    setNoUpfront3Y(false);
+  }
+  const Upfront3y = () => {
+    setOnDemand(false);
+    setSpot(false);
+    setUpfront1Y(false);
+    setPartial1Y(false);
+    setNoUpfront1Y(false);
+    setUpfront3Y(true);
+    setPartial3Y(false);
+    setNoUpfront3Y(false);
+  }
+  const Partial3y = () => {
+    setOnDemand(false);
+    setSpot(false);
+    setUpfront1Y(false);
+    setPartial1Y(false);
+    setNoUpfront1Y(false);
+    setUpfront3Y(false);
+    setPartial3Y(true);
+    setNoUpfront3Y(false);
+  }
+  const NoUpfront3y = () => {
+    setOnDemand(false);
+    setSpot(false);
+    setUpfront1Y(false);
+    setPartial1Y(false);
+    setNoUpfront1Y(false);
+    setUpfront3Y(false);
+    setPartial3Y(false);
+    setNoUpfront3Y(true);
+  }
 
   return (
     <div>
@@ -73,11 +168,13 @@ export const DetCalculation = (props) => {
             />
           </div>
 
+
           <div className="pricingModel">
-            <button type="button" className="btn-primary">
+            <button type="button" className="btn-primary" onClick={OnDemandClick}>
               OnDemand
             </button>{" "}
-            <button type="button" className="btn-primary">
+            <button type="button" className="btn-primary" onClick={OnSpotClick} >
+
               Spot
             </button>{" "}
             <button
@@ -90,37 +187,13 @@ export const DetCalculation = (props) => {
             </button>
             <div>
               {show ? (
-                <div className="Table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th className="rth">Option</th>
-                        <th className="rth">1 Year</th>
-                        <th className="rth">3 Year</th>
-                        <th className="rth">5 Year</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="rtd">Upfront</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                      <tr className="rtd">
-                        <td>Partial</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                      <tr className="rtd">
-                        <td>Nonupfront</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="reserveButton">
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront1y}>1Year-UpFront</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Partial1y}>1Year-Partial</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={NoUpfront1y}>1Year-NoUpFront</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront3y}>3Year-UpFront</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Partial3y}>3Year-Partial</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={NoUpfront3y}>3Year-NoUpFront</button>
                 </div>
               ) : null}
             </div>
@@ -137,6 +210,9 @@ export const DetCalculation = (props) => {
 
             <tr>
               <th className="pth">NODE</th>
+              
+                {OnDemand ? 
+                (<>
               {filterInstaceName.map((i) => {
                 return (
                   <>
@@ -146,10 +222,63 @@ export const DetCalculation = (props) => {
                     <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
                     <td className="ptd">
                       {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
-                    </td>
+                    </td> 
                   </>
                 );
               })}
+              </>
+
+) : null}
+
+                {Spot ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
+
+                ) : null}
+                {Upfront1Y ? (
+
+                  <div><h3>Upfont 1 year</h3>
+                  </div>
+                ) : null}
+
+                {Partial1Y ? (
+
+                  <div><h3>partial 1 year</h3>
+                  </div>
+                ) : null}
+                {NoUpfront1Y ? (
+
+                  <div><h3>no upfront 1 year</h3>
+                  </div>
+                ) : null}
+
+                {Upfront3Y ? (
+
+                  <div><h3>Spot</h3>
+                  </div>
+                ) : null}
+                {Partial3Y ? (
+
+                  <div><h3>Spot</h3>
+                  </div>
+                ) : null}
+                {NoUpfront3Y ? (
+
+                  <div><h3>Spot</h3>
+                  </div>
+                ) : null}
             </tr>
           </table>
           <div className="monthlyCost">
