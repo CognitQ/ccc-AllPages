@@ -21,6 +21,7 @@ export const InstanceData = (props) => {
     getData();
   }, []);
 
+  // WorkerNode calculation Starts  here
   const [bestCost, setCost] = useState(true);
   const [balance, setBalance] = useState(false);
   const [bestPeformance, setPeformance] = useState(false);
@@ -113,24 +114,68 @@ export const InstanceData = (props) => {
       balanceName
     );
   }, [selectedName, performanceName, balanceName]);
+  // WorkerNode calculation ends here
+
+  // MasterNode calculation Starts here
+
+  const nodes = props.totalNodes / 2;
+  const MsVcpu = 2 * nodes;
+  const MsRam = 5 * nodes;
+
+  const Msfilterdata = data.filter(
+    (Idata) =>
+      Idata.DedicatedHostSupport === "TRUE" &&
+      Idata.vCPUs >= MsVcpu &&
+      Idata.MemoryInGiB >= MsRam
+  );
+
+  const MsFilterByCost = Msfilterdata.map((c) => {
+    return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+  });
+
+  const MsCost = Math.min.apply(null, MsFilterByCost);
+
+  const MsNodeName = Msfilterdata.filter(
+    (Instance) => Instance.OnDemandLinuxpricing_USDperHour === MsCost
+  )
+    .slice(0, 1)
+    .map((d) => {
+      return d.InstanceType;
+    });
+
+  // MasterNode calculation Ends here
 
   return (
     <div>
-      {/* <ul> */}
-      {/* {filterdata
-          .filter(
-            (Instance) => Instance.OnDemandLinuxpricing_USDperHour === minCost
-          )
+      <ul>
+        {MsFilterByCost
+          // .filter(
+          //   (Instance) =>
+          //     Instance.DedicatedHostSupport === "TRUE" &&
+          //     Instance.vCPUs >= MsVcpu &&
+          //     Instance.MemoryInGiB >= MsRam
+          // &&
+          // Instance.OnDemandLinuxpricing_USDperHour ===
+          // )
           .slice(0, 1)
           .map((d) => {
             return (
-              <li key={d.id}>
-                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
-                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
+              <li>
+                {/* <li key={d.id}> */}
+                {/* name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour} */}
+                {d}
               </li>
             );
-          })} */}
-      {/* </ul> */}
+          })}
+      </ul>
+      <h3>node / 2 = {nodes}</h3>
+      <h3>Msvcpu = {MsVcpu}</h3>
+      <h3>MsRam = {MsRam}</h3>
+
+      <h3>
+        Ms ={MsNodeName} cost={MsCost}
+      </h3>
 
       <div className="graph">
         {/* <div className="innerGraph"> */}
@@ -190,6 +235,7 @@ export const InstanceData = (props) => {
             aksName={selectedName}
             ram={props.peformanceRam}
             model="Performance"
+            eksMasterName={MsNodeName}
           />
         </div>
       ) : null}

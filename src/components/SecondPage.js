@@ -205,8 +205,9 @@ const SecondPage = (props) => {
   const totalNoNodes = noOfNodesPerDep.reduce(
     (result, number) => result + number
   );
+  // calculation for nodes ends
 
-  //
+  // sending data back to app page
   props.setInstanceNameInApp(
     cost_InstanceName,
     balance_InstanceName,
@@ -228,7 +229,6 @@ const SecondPage = (props) => {
         </nav>
       </div>
 
-      <div>Total Nodes = {totalNoNodes}</div>
       <div className="graph">
         <div className="innerGraph">
           <Graph workerCost={instanceCost} />
@@ -250,6 +250,7 @@ const SecondPage = (props) => {
           peformanceRam={ramindeploymentforPerformance}
           balanceVcpu={VcpuindeploymentforBalance}
           balanceRam={ramindeploymentforBalance}
+          totalNodes={totalNoNodes}
         />
       </div>
     </div>
