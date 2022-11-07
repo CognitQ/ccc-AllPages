@@ -34,7 +34,7 @@ export const EksDetails = (props) => {
     <div>
       <DetCalculation
         modelName="Least Cost"
-        cloudName="GKE"
+        cloudName="EKS"
         instanceName={Name}
         totalNodes={totalNoNodes}
       />

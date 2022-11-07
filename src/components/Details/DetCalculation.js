@@ -44,7 +44,14 @@ export const DetCalculation = (props) => {
   const onDemonadValue = data
     .filter((name) => name.InstanceType === props.instanceName)
     .map((c) => {
-      return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+      return parseFloat(c.OnDemandLinuxpricing_USDperHour),
+      parseFloat(c.spot_USDperHour),
+      parseFloat(c.reserved1yearUpfront_USDperHour),
+      parseFloat(c.reserved1yearPartial_USDperHour),
+      parseFloat(c.reserved1yearNoUpfront_USDperHour),
+      parseFloat(c.reserved3yearUpfront_USDperHour),
+      parseFloat(c.reserved3yearPartial_USDperHour),
+      parseFloat(c.reserved3yearNoUpfront_USDperHour);
     });
 
 
@@ -174,7 +181,6 @@ export const DetCalculation = (props) => {
               OnDemand
             </button>{" "}
             <button type="button" className="btn-primary" onClick={OnSpotClick} >
-
               Spot
             </button>{" "}
             <button
@@ -228,7 +234,7 @@ export const DetCalculation = (props) => {
               })}
               </>
 
-) : null}
+              ) : null}
 
                 {Spot ? (<>
               {filterInstaceName.map((i) => {
@@ -239,7 +245,7 @@ export const DetCalculation = (props) => {
                     <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
                     <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
                     <td className="ptd">
-                      {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
+                      {parseFloat(i.spot_USDperHour)}
                     </td> 
                   </>
                 );
@@ -247,37 +253,107 @@ export const DetCalculation = (props) => {
               </>
 
                 ) : null}
-                {Upfront1Y ? (
+                {Upfront1Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved1yearUpfront_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
 
-                  <div><h3>Upfont 1 year</h3>
-                  </div>
                 ) : null}
 
-                {Partial1Y ? (
-
-                  <div><h3>partial 1 year</h3>
-                  </div>
+                {Partial1Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved1yearPartial_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
                 ) : null}
-                {NoUpfront1Y ? (
-
-                  <div><h3>no upfront 1 year</h3>
-                  </div>
+                
+                {NoUpfront1Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved1yearNoUpfront_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
                 ) : null}
 
-                {Upfront3Y ? (
-
-                  <div><h3>Spot</h3>
-                  </div>
+                {Upfront3Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved3yearUpfront_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
                 ) : null}
-                {Partial3Y ? (
-
-                  <div><h3>Spot</h3>
-                  </div>
+                
+                {Partial3Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved3yearPartial_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
                 ) : null}
-                {NoUpfront3Y ? (
-
-                  <div><h3>Spot</h3>
-                  </div>
+                
+                {NoUpfront3Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved3yearNoUpfront_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
                 ) : null}
             </tr>
           </table>

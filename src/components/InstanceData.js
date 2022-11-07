@@ -25,15 +25,15 @@ export const InstanceData = (props) => {
   const [balance, setBalance] = useState(false);
   const [bestPeformance, setPeformance] = useState(false);
 
-  const testing = () => {
-    alert("tested");
-  };
+  // const testing = () => {
+  //   alert("tested");
+  // };
 
   const showBestCost = () => {
     setBalance(false);
     setPeformance(false);
     setCost(true);
-    alert("clicked");
+    // alert("clicked");
   };
 
   const showBalance = () => {
@@ -134,10 +134,11 @@ export const InstanceData = (props) => {
 
       <div className="graph">
         {/* <div className="innerGraph"> */}
+        
         <button
           className="btn btn-primary btn-sm btnLeast"
-          onClick={testing}
-          // onClick={showBalance}
+          // onClick={testing}
+          onClick={showBestCost}
           type="button"
         >
           BestCost

@@ -6,8 +6,18 @@ import { useState, useEffect } from "react";
 export const AksCalculation = (props) => {
   const [show, setShow] = useState(false);
 
-  const [node, setNode] = useState(1);
+  const [node, setNode] = useState();
   const intNode = parseInt(node);
+
+  const [OnDemand, setOnDemand] = useState(true);
+const [Spot, setSpot] = useState(false);
+
+const [Monthly1Y, setMonthly1Y] = useState(false);
+const [Upfront1Y, setUpfront1Y] = useState(false);
+const [Monthly3Y, setMonthly3Y] = useState(false);
+const [Upfront3Y, setUpfront3Y] = useState(false);
+
+  const totalNoNodes = props.totalNodes;
 
   //code for fetch data
   const [data, fetchData] = useState([]);
@@ -22,6 +32,7 @@ export const AksCalculation = (props) => {
 
   useEffect(() => {
     getData();
+    setNode(totalNoNodes);
   }, []);
 
   const filterInstaceName = data.filter(
@@ -31,8 +42,71 @@ export const AksCalculation = (props) => {
   const onDemonadValue = data
     .filter((name) => name.InstanceType === props.instanceName)
     .map((c) => {
-      return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+      return parseFloat(c.OnDemandLinuxpricing_USDperHour),
+      parseFloat(c.spot_USDperHour),
+      parseFloat(c.reserved1yearUpfront_USDperHour),
+      parseFloat(c.reserved1yearPartial_USDperHour),
+      parseFloat(c.reserved1yearNoUpfront_USDperHour),
+      parseFloat(c.reserved3yearUpfront_USDperHour),
+      parseFloat(c.reserved3yearPartial_USDperHour),
+      parseFloat(c.reserved3yearNoUpfront_USDperHour);
     });
+
+
+
+    const OnDemandClick = () => {
+      setOnDemand(true);
+      setSpot(false);
+      setMonthly1Y(false);
+      setUpfront1Y(false);
+      setMonthly3Y(false);
+      setUpfront3Y(false);
+      setShow(false);
+    }
+    const OnSpotClick = () => {
+      setOnDemand(false);
+      setSpot(true);
+      setMonthly1Y(false);
+      setUpfront1Y(false);
+      setMonthly3Y(false);
+      setUpfront3Y(false);
+      setShow(false);
+    }
+    
+    const Monthly1yClick=()=>{
+      setOnDemand(false);
+      setSpot(false);
+      setMonthly1Y(true);
+      setUpfront1Y(false);
+      setMonthly3Y(false);
+      setUpfront3Y(false);
+    }
+    
+    const Upfront1yClick = () => {
+      setOnDemand(false);
+      setSpot(false);
+      setMonthly1Y(false);
+      setUpfront1Y(true);
+      setMonthly3Y(false);
+      setUpfront3Y(false);
+    }
+    const Monthly3yClick = () => {
+      setOnDemand(false);
+      setSpot(false);
+      setMonthly1Y(false);
+      setUpfront1Y(false);
+      setMonthly3Y(true);
+      setUpfront3Y(false);
+    }
+    const Upfront3yClick = () => {
+      setOnDemand(false);
+      setSpot(false);
+      setMonthly1Y(false);
+      setUpfront1Y(false);
+      setMonthly3Y(false);
+      setUpfront3Y(true);
+    }
+        
 
   return (
     <div>
@@ -61,7 +135,7 @@ export const AksCalculation = (props) => {
             <input
               className="nodeText"
               type="number"
-              min="1"
+              min={totalNoNodes}
               value={node}
               onChange={(e) => setNode(e.target.value)}
               onBlur={(e) => {
@@ -70,11 +144,12 @@ export const AksCalculation = (props) => {
             />
           </div>
 
+
           <div className="pricingModel">
-            <button type="button" className="btn-primary">
+            <button type="button" className="btn-primary" onClick={OnDemandClick}>
               OnDemand
             </button>{" "}
-            <button type="button" className="btn-primary">
+            <button type="button" className="btn-primary" onClick={OnSpotClick} >
               Spot
             </button>{" "}
             <button
@@ -87,28 +162,11 @@ export const AksCalculation = (props) => {
             </button>
             <div>
               {show ? (
-                <div className="Table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th className="rth">Option</th>
-                        <th className="rth">1 Year</th>
-                        <th className="rth">3 Year</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="rtd">Monthly</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                      <tr className="rtd">
-                        <td>UpFront</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="reserveButton">
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Monthly1yClick}>1Year-UpFront</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront1yClick}>1Year-Partial</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Monthly3yClick}>1Year-NoUpFront</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront3yClick}>3Year-UpFront</button>
                 </div>
               ) : null}
             </div>
@@ -125,6 +183,9 @@ export const AksCalculation = (props) => {
 
             <tr>
               <th className="pth">NODE</th>
+              
+                {OnDemand ? 
+                (<>
               {filterInstaceName.map((i) => {
                 return (
                   <>
@@ -134,10 +195,101 @@ export const AksCalculation = (props) => {
                     <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
                     <td className="ptd">
                       {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
-                    </td>
+                    </td> 
                   </>
                 );
               })}
+              </>
+
+              ) : null}
+
+                {Spot ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.spot_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
+
+                ) : null}
+                {Monthly1Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved1yearUpfront_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
+
+                ) : null}
+
+                {Upfront1Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved1yearPartial_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
+                ) : null}
+                
+                {Monthly3Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved1yearNoUpfront_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
+                ) : null}
+
+                {Upfront3Y ? (<>
+              {filterInstaceName.map((i) => {
+                return (
+                  <>
+                    <td className="ptd">{i.InstanceType}</td>
+                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                    <td className="ptd">
+                      {parseFloat(i.reserved3yearUpfront_USDperHour)}
+                    </td> 
+                  </>
+                );
+              })}
+              </>
+                ) : null}
+                
+            
             </tr>
           </table>
           <div className="monthlyCost">
@@ -187,7 +339,7 @@ export const AksCalculation = (props) => {
 
           <table className="priceTable">
             <tr>
-              <th className="pth">AKS</th>
+              <th className="pth">EKS</th>
               <th className="pth">Instance Name</th>
               <th className="pth">vCPU</th>
               <th className="pth">RAM GiB</th>
@@ -244,3 +396,13 @@ export const AksCalculation = (props) => {
     </div>
   );
 };
+
+
+
+
+
+
+
+
+
+
