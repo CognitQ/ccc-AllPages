@@ -171,7 +171,7 @@ export const InstanceData = (props) => {
       </h3> */}
 
       <div className="graph">
-        {/* <div className="innerGraph"> */}
+        <div className="innerGraph">
 
         <button
           className="btn btn-primary btn-sm btnLeast"
@@ -181,7 +181,7 @@ export const InstanceData = (props) => {
         >
           BestCost
         </button>
-        {/* </div> */}
+        </div>
         <div className="innerGraph">
           <button
             type="button"
@@ -193,7 +193,7 @@ export const InstanceData = (props) => {
             BestPeformance
           </button>
         </div>
-        {/* <div className="innerGraph"> */}
+        <div className="innerGraph">
         <button
           className="btn btn-primary btn-sm btnLeast"
           // onClick={testing}
@@ -202,7 +202,7 @@ export const InstanceData = (props) => {
         >
           Balance
         </button>
-        {/* </div> */}
+        </div>
       </div>
       {bestCost ? (
         <div>
