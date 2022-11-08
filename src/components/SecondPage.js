@@ -241,6 +241,7 @@ const SecondPage = (props) => {
       <div className="graph">
         <div className="innerGraph">
           <Graph workerCost={instanceCost} masterCost={MsCost} />
+          {/* <Graph workerCost="77" masterCost="47" /> */}
         </div>
         <div className="innerGraph">
           <Graph workerCost={performanceCost} />
