@@ -12,8 +12,8 @@ import {
 import "./Graph.css";
 
 const Graph = ({ masterCost, workerCost }) => {
-  const cost = parseFloat(workerCost) * 730;
-  const Mscost = parseFloat(masterCost) * 730;
+  const cost = parseFloat(workerCost);
+  const Mscost = parseFloat(masterCost);
   // Sample data
   const dataLeast = [
     {
@@ -57,10 +57,10 @@ const Graph = ({ masterCost, workerCost }) => {
           />
           <Bar dataKey="MasterNode" stackId="a" fill="blue">
             {" "}
-            <LabelList position="top" />
+            <LabelList dataKey="MasterNode" position="top" />
           </Bar>
           <Bar dataKey="WorkerNode" stackId="a" fill="grey">
-            <LabelList position="top" />
+            <LabelList dataKey="WorkerNode" position="top" />
           </Bar>
         </BarChart>
       </div>
