@@ -70,16 +70,7 @@ export const DetCalculation = (props) => {
   const onDemonadValue = data
     .filter((name) => name.InstanceType === props.instanceName)
     .map((c) => {
-      return (
-        parseFloat(c.OnDemandLinuxpricing_USDperHour),
-        parseFloat(c.spot_USDperHour),
-        parseFloat(c.reserved1yearUpfront_USDperHour),
-        parseFloat(c.reserved1yearPartial_USDperHour),
-        parseFloat(c.reserved1yearNoUpfront_USDperHour),
-        parseFloat(c.reserved3yearUpfront_USDperHour),
-        parseFloat(c.reserved3yearPartial_USDperHour),
-        parseFloat(c.reserved3yearNoUpfront_USDperHour)
-      );
+      return parseFloat(c.OnDemandLinuxpricing_USDperHour);
     });
 
   const OnDemandClick = () => {
@@ -167,18 +158,18 @@ export const DetCalculation = (props) => {
   };
 
   // masternode filtering
-  const MsNodeFIlter = data.filter(
-    (name) => name.InstanceType === props.MsNode
-  );
+  const MsNodeFIlter = data.filter((name) => name.InstanceType == props.MsNode);
 
-  const Ms_Cost = MsNodeFIlter.filter((d) => {
-    return d.OnDemandLinuxpricing_USDperHour;
-  });
+  const Ms_Cost = data
+    .filter((name) => name.InstanceType === props.MsNode)
+    .map((c) => {
+      return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+    });
 
   const Ms_No_Nodes = () => {
     if (Ms_node % 2 == 0) {
       alert("Number of Master nodes cant be even or blank");
-      setMsNode(1);
+      setMsNode(parseInt(Ms_node) + 1);
     }
   };
 
@@ -451,7 +442,6 @@ export const DetCalculation = (props) => {
 
           <div className="calculation">
             <label>
-              {/* <b>OnDemand Cost(Monthly): 773.8 USD</b> */}
               <label>
                 {intNode} instances * {onDemonadValue} USD * 24 hours in Day ={" "}
                 {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily OnDemand
@@ -477,6 +467,7 @@ export const DetCalculation = (props) => {
           />
 
           {/* Master Node Started */}
+
           <div className="nodeHeading">
             <label>
               <h6>
@@ -521,24 +512,27 @@ export const DetCalculation = (props) => {
           </table>
           <div className="monthlyCost">
             <label>
-              <b>MasterNode Cost(Monthly): {Ms_Cost * 730} USD</b>
+              <b>MasterNode Cost(Monthly): {(Ms_Cost * 730).toFixed(3)} USD</b>
             </label>
           </div>
 
           <div className="calculation">
             <label>
               <label>
-                10 instances x 1.06 USD x 24 hours in Day = 25.44 USD (Daily
-                OnDemand cost)
+                {Ms_node} instances x {Ms_Cost} USD x 24 hours in Day ={" "}
+                {(Ms_node * Ms_Cost * 24).toFixed(3)}
+                USD (Daily OnDemand cost)
               </label>
               <label>
-                10 instances x 1.06 USD x 730 hours in month = 773.8 USD
-                (monthly OnDemand cost)
+                {Ms_node} instances x {Ms_Cost} USD x 730 hours in month ={" "}
+                {(Ms_node * Ms_Cost * 730).toFixed(3)}
+                USD (monthly OnDemand cost)
               </label>
             </label>
             <label>
-              10 instances x 1.06 USD x 8760 hours in year = 9285.6 USD (Yearly
-              OnDemand cost)
+              {Ms_node} instances x {Ms_Cost} USD x 8760 hours in year ={" "}
+              {(Ms_node * Ms_Cost * 8760).toFixed(3)}
+              USD (Yearly OnDemand cost)
             </label>
           </div>
           <div>
@@ -551,7 +545,14 @@ export const DetCalculation = (props) => {
           </div>
           <div className="finalCost">
             <label>
-              <b>Total Cost(Monthly) = 6497.00 USD</b>
+              <b>
+                Total Cost(Monthly) ={" "}
+                {(
+                  intNode * onDemonadValue * 730 +
+                  Ms_Cost * Ms_node * 730
+                ).toFixed(3)}{" "}
+                USD
+              </b>
             </label>
           </div>
         </div>

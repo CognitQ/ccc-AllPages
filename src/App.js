@@ -83,7 +83,13 @@ const App = () => {
 
         <Route
           path="/summary/Balance/EksDetail"
-          element={<BalEksDetail instanceNameForDetails={balance_IName} />}
+          element={
+            <BalEksDetail
+              detailForPods={deploymentData}
+              instanceNameForDetails={balance_IName}
+              masterNodeName={master_IName}
+            />
+          }
         />
         <Route path="/summary/Balance/AksDetail" element={<BalAksDetail />} />
         <Route path="/summary/Balance/GkeDetail" element={<BalGkeDetail />} />
