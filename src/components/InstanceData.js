@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Table } from "./Table";
 import "./InstanceData.css";
-// import { navigate, useNavigate } from "react-router-dom";
 
 export const InstanceData = (props) => {
   //code for fetch data
@@ -25,10 +24,6 @@ export const InstanceData = (props) => {
   const [bestCost, setCost] = useState(true);
   const [balance, setBalance] = useState(false);
   const [bestPeformance, setPeformance] = useState(false);
-
-  // const testing = () => {
-  //   alert("tested");
-  // };
 
   const showBestCost = () => {
     setBalance(false);
@@ -133,10 +128,10 @@ export const InstanceData = (props) => {
     return parseFloat(c.OnDemandLinuxpricing_USDperHour);
   });
 
-  const MsCost = Math.min.apply(null, MsFilterByCost);
+  const MsCost = Math.min(...MsFilterByCost);
 
   const MsNodeName = Msfilterdata.filter(
-    (Instance) => Instance.OnDemandLinuxpricing_USDperHour === MsCost
+    (Instance) => Instance.OnDemandLinuxpricing_USDperHour == MsCost
   )
     .slice(0, 1)
     .map((d) => {
@@ -147,39 +142,35 @@ export const InstanceData = (props) => {
 
   return (
     <div>
-      <ul>
+      {/* <ul>
         {MsFilterByCost
-          // .filter(
-          //   (Instance) =>
-          //     Instance.DedicatedHostSupport === "TRUE" &&
-          //     Instance.vCPUs >= MsVcpu &&
-          //     Instance.MemoryInGiB >= MsRam
-          // &&
-          // Instance.OnDemandLinuxpricing_USDperHour ===
-          // )
+          .filter(
+            (Instance) =>
+              Instance.DedicatedHostSupport === "TRUE" &&
+              Instance.vCPUs >= MsVcpu &&
+              Instance.MemoryInGiB >= MsRam
+          )
           .slice(0, 1)
           .map((d) => {
             return (
-              <li>
-                {/* <li key={d.id}> */}
-                {/* name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
-                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour} */}
-                {d}
+                <li key={d.id}>
+                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
               </li>
             );
           })}
-      </ul>
-      <h3>node / 2 = {nodes}</h3>
+      </ul> */}
+      {/* <h3>node / 2 = {nodes}</h3>
       <h3>Msvcpu = {MsVcpu}</h3>
       <h3>MsRam = {MsRam}</h3>
 
       <h3>
-        Ms ={MsNodeName} cost={MsCost}
-      </h3>
+        cost={MsCost}
+      </h3> */}
 
       <div className="graph">
         {/* <div className="innerGraph"> */}
-        
+
         <button
           className="btn btn-primary btn-sm btnLeast"
           // onClick={testing}
@@ -216,8 +207,14 @@ export const InstanceData = (props) => {
           <Table
             eksCost={minCost}
             eksName={selectedName}
+            eksMasterCost={MsCost}
+            eksMasterName={MsNodeName}
             gkeCost={minCost}
             gkeName={selectedName}
+            gkeMasterName={MsNodeName}
+            gkeMasterCost={MsCost}
+            aksMasterCost={MsCost}
+            aksMasterName={MsNodeName}
             aksCost={minCost}
             aksName={selectedName}
             ram={props.ram}
@@ -230,8 +227,13 @@ export const InstanceData = (props) => {
           <Table
             eksCost={performanceCost}
             eksName={performanceName}
+            eksMasterCost={MsCost}
             gkeCost={minCost}
             gkeName={selectedName}
+            gkeMasterName={MsNodeName}
+            gkeMasterCost={MsCost}
+            aksMasterCost={MsCost}
+            aksMasterName={MsNodeName}
             aksCost={minCost}
             aksName={selectedName}
             ram={props.peformanceRam}
@@ -245,8 +247,12 @@ export const InstanceData = (props) => {
           <Table
             eksCost={balanceCost}
             eksName={balanceName}
+            eksMasterCost={MsCost}
+            eksMasterName={MsNodeName}
             gkeCost={minCost}
             gkeName={selectedName}
+            gkeMasterCost={MsCost}
+            aksMasterCost={MsCost}
             aksCost={minCost}
             aksName={selectedName}
             ram={props.balanceRam}

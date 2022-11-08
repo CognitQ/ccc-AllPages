@@ -35,8 +35,7 @@ export const Table = (props) => {
     }
   };
 
-  // const total = props.cost + props.master;
-  const total = props.eksCost + 2;
+  const total = (props.eksCost + props.eksMasterCost).toFixed(3);
 
   return (
     <div>
@@ -59,10 +58,10 @@ export const Table = (props) => {
             <tr>
               <th scope="row">EKS</th>
               <td>{props.eksName}</td>
-              <td>{props.eksCost}</td>
-              <td>Master Node Type</td>
-              <td>2</td>
-              <td>{total}</td>
+              <td>{props.eksCost * 730}</td>
+              <td>{props.eksMasterName}</td>
+              <td>{props.eksMasterCost * 730}</td>
+              <td>{total * 730}</td>
               <td>
                 <button
                   className="btn btn-link tButton"
@@ -74,12 +73,12 @@ export const Table = (props) => {
             </tr>
 
             <tr>
-              <th scope="row">AKS</th>
+              <th scope="row">Gke</th>
               <td>{props.gkeName}</td>
-              <td>{props.gkeCost}</td>
-              <td>Master Node Type</td>
-              <td>2</td>
-              <td>{total}</td>
+              <td>{props.gkeCost * 730}</td>
+              <td>{props.gkeMasterName}</td>
+              <td>{props.gkeMasterCost * 730}</td>
+              <td>{total * 730}</td>
               <td>
                 <button
                   className="btn btn-link tButton"
@@ -91,12 +90,12 @@ export const Table = (props) => {
             </tr>
 
             <tr>
-              <th scope="row">GKE</th>
+              <th scope="row">Aks</th>
               <td>{props.aksName}</td>
-              <td>{props.aksCost}</td>
-              <td>Master Node Type</td>
-              <td>2</td>
-              <td>{total}</td>
+              <td>{props.aksCost * 730}</td>
+              <td>{props.aksMasterName}</td>
+              <td>{props.aksMasterCost * 730}</td>
+              <td>{total * 730}</td>
               <td>
                 <button
                   className="btn btn-link tButton"
