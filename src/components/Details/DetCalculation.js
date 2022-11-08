@@ -9,6 +9,9 @@ export const DetCalculation = (props) => {
   const [node, setNode] = useState();
   const intNode = parseInt(node);
 
+  const [Ms_node, setMsNode] = useState();
+  const intMsNode = parseInt(Ms_node);
+
   const [OnDemand, setOnDemand] = useState(true);
   const [Spot, setSpot] = useState(false);
 
@@ -19,8 +22,8 @@ export const DetCalculation = (props) => {
   const [Partial3Y, setPartial3Y] = useState(false);
   const [NoUpfront3Y, setNoUpfront3Y] = useState(false);
 
-  const totalNoNodes = props.totalNodes;
   // const totalNoNodes = props.totalNodes;
+
   // max Pods
   const depolymentPods = props.totalNodes.map((object) => {
     if (object.maxPods === "") {
@@ -56,7 +59,8 @@ export const DetCalculation = (props) => {
 
   useEffect(() => {
     getData();
-    setNode(totalNoNodes);
+    setNode(TotalNoNodes);
+    setMsNode(1);
   }, []);
 
   const filterInstaceName = data.filter(
@@ -66,16 +70,17 @@ export const DetCalculation = (props) => {
   const onDemonadValue = data
     .filter((name) => name.InstanceType === props.instanceName)
     .map((c) => {
-      return parseFloat(c.OnDemandLinuxpricing_USDperHour),
-      parseFloat(c.spot_USDperHour),
-      parseFloat(c.reserved1yearUpfront_USDperHour),
-      parseFloat(c.reserved1yearPartial_USDperHour),
-      parseFloat(c.reserved1yearNoUpfront_USDperHour),
-      parseFloat(c.reserved3yearUpfront_USDperHour),
-      parseFloat(c.reserved3yearPartial_USDperHour),
-      parseFloat(c.reserved3yearNoUpfront_USDperHour);
+      return (
+        parseFloat(c.OnDemandLinuxpricing_USDperHour),
+        parseFloat(c.spot_USDperHour),
+        parseFloat(c.reserved1yearUpfront_USDperHour),
+        parseFloat(c.reserved1yearPartial_USDperHour),
+        parseFloat(c.reserved1yearNoUpfront_USDperHour),
+        parseFloat(c.reserved3yearUpfront_USDperHour),
+        parseFloat(c.reserved3yearPartial_USDperHour),
+        parseFloat(c.reserved3yearNoUpfront_USDperHour)
+      );
     });
-
 
   const OnDemandClick = () => {
     setOnDemand(true);
@@ -87,7 +92,7 @@ export const DetCalculation = (props) => {
     setPartial3Y(false);
     setNoUpfront3Y(false);
     setShow(false);
-  }
+  };
   const OnSpotClick = () => {
     setOnDemand(false);
     setSpot(true);
@@ -98,7 +103,7 @@ export const DetCalculation = (props) => {
     setPartial3Y(false);
     setNoUpfront3Y(false);
     setShow(false);
-  }
+  };
 
   const Upfront1y = () => {
     setOnDemand(false);
@@ -109,7 +114,7 @@ export const DetCalculation = (props) => {
     setUpfront3Y(false);
     setPartial3Y(false);
     setNoUpfront3Y(false);
-  }
+  };
   const Partial1y = () => {
     setOnDemand(false);
     setSpot(false);
@@ -119,7 +124,7 @@ export const DetCalculation = (props) => {
     setUpfront3Y(false);
     setPartial3Y(false);
     setNoUpfront3Y(false);
-  }
+  };
   const NoUpfront1y = () => {
     setOnDemand(false);
     setSpot(false);
@@ -129,7 +134,7 @@ export const DetCalculation = (props) => {
     setUpfront3Y(false);
     setPartial3Y(false);
     setNoUpfront3Y(false);
-  }
+  };
   const Upfront3y = () => {
     setOnDemand(false);
     setSpot(false);
@@ -139,7 +144,7 @@ export const DetCalculation = (props) => {
     setUpfront3Y(true);
     setPartial3Y(false);
     setNoUpfront3Y(false);
-  }
+  };
   const Partial3y = () => {
     setOnDemand(false);
     setSpot(false);
@@ -149,7 +154,7 @@ export const DetCalculation = (props) => {
     setUpfront3Y(false);
     setPartial3Y(true);
     setNoUpfront3Y(false);
-  }
+  };
   const NoUpfront3y = () => {
     setOnDemand(false);
     setSpot(false);
@@ -159,7 +164,23 @@ export const DetCalculation = (props) => {
     setUpfront3Y(false);
     setPartial3Y(false);
     setNoUpfront3Y(true);
-  }
+  };
+
+  // masternode filtering
+  const MsNodeFIlter = data.filter(
+    (name) => name.InstanceType === props.MsNode
+  );
+
+  const Ms_Cost = MsNodeFIlter.filter((d) => {
+    return d.OnDemandLinuxpricing_USDperHour;
+  });
+
+  const Ms_No_Nodes = () => {
+    if (Ms_node % 2 == 0) {
+      alert("Number of Master nodes cant be even or blank");
+      setMsNode(1);
+    }
+  };
 
   return (
     <div>
@@ -188,21 +209,26 @@ export const DetCalculation = (props) => {
             <input
               className="nodeText"
               type="number"
-              min={totalNoNodes}
+              min={TotalNoNodes}
               value={node}
               onChange={(e) => setNode(e.target.value)}
               onBlur={(e) => {
-                "filed is required";
+                alert(
+                  "your pods need at least " + { TotalNoNodes } + " node to run"
+                );
               }}
             />
           </div>
 
-
           <div className="pricingModel">
-            <button type="button" className="btn-primary" onClick={OnDemandClick}>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={OnDemandClick}
+            >
               OnDemand
             </button>{" "}
-            <button type="button" className="btn-primary" onClick={OnSpotClick} >
+            <button type="button" className="btn-primary" onClick={OnSpotClick}>
               Spot
             </button>{" "}
             <button
@@ -216,12 +242,48 @@ export const DetCalculation = (props) => {
             <div>
               {show ? (
                 <div className="reserveButton">
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront1y}>1Year-UpFront</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Partial1y}>1Year-Partial</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={NoUpfront1y}>1Year-NoUpFront</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront3y}>3Year-UpFront</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Partial3y}>3Year-Partial</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={NoUpfront3y}>3Year-NoUpFront</button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Upfront1y}
+                  >
+                    1Year-UpFront
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Partial1y}
+                  >
+                    1Year-Partial
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={NoUpfront1y}
+                  >
+                    1Year-NoUpFront
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Upfront3y}
+                  >
+                    3Year-UpFront
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Partial3y}
+                  >
+                    3Year-Partial
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={NoUpfront3y}
+                  >
+                    3Year-NoUpFront
+                  </button>
                 </div>
               ) : null}
             </div>
@@ -238,145 +300,147 @@ export const DetCalculation = (props) => {
 
             <tr>
               <th className="pth">NODE</th>
-              
-                {OnDemand ? 
-                (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
 
+              {OnDemand ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
               ) : null}
 
-                {Spot ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.spot_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
+              {Spot ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.spot_USDperHour)}</td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
+              {Upfront1Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.reserved1yearUpfront_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
 
-                ) : null}
-                {Upfront1Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved1yearUpfront_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
+              {Partial1Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.reserved1yearPartial_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
 
-                ) : null}
+              {NoUpfront1Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.reserved1yearNoUpfront_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
 
-                {Partial1Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved1yearPartial_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
-                
-                {NoUpfront1Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved1yearNoUpfront_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
+              {Upfront3Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.reserved3yearUpfront_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
 
-                {Upfront3Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved3yearUpfront_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
-                
-                {Partial3Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved3yearPartial_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
-                
-                {NoUpfront3Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved3yearNoUpfront_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
+              {Partial3Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.reserved3yearPartial_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
+
+              {NoUpfront3Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.reserved3yearNoUpfront_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
             </tr>
           </table>
           <div className="monthlyCost">
@@ -412,6 +476,7 @@ export const DetCalculation = (props) => {
             }}
           />
 
+          {/* Master Node Started */}
           <div className="nodeHeading">
             <label>
               <h6>
@@ -421,7 +486,14 @@ export const DetCalculation = (props) => {
           </div>
           <div className="rtop">
             <label> Master Nodes </label>
-            <input className="nodeText" type="number" />
+            <input
+              className="nodeText"
+              type="number"
+              min="1"
+              value={Ms_node}
+              onChange={(e) => setMsNode(e.target.value)}
+              onBlur={Ms_No_Nodes}
+            />
           </div>
 
           <table className="priceTable">
@@ -436,16 +508,20 @@ export const DetCalculation = (props) => {
 
             <tr>
               <th className="pth">NODE</th>
-              <td className="ptd">e2-standard-4</td>
-              <td className="ptd">4</td>
-              <td className="ptd">16</td>
-              <td className="ptd"></td>
-              <td className="ptd">1.06</td>
+              <td className="ptd">{props.MsNode}</td>
+              {MsNodeFIlter.map((d) => (
+                <>
+                  <td className="ptd">{d.vCPUs} </td>
+                  <td className="ptd">{d.MemoryInGiB}</td>
+                  <td className="ptd">{d.StorageInGiB}</td>
+                  <td className="ptd">{d.OnDemandLinuxpricing_USDperHour}</td>
+                </>
+              ))}
             </tr>
           </table>
           <div className="monthlyCost">
             <label>
-              <b>MasterNode Cost(Monthly): 773.8 USD</b>
+              <b>MasterNode Cost(Monthly): {Ms_Cost * 730} USD</b>
             </label>
           </div>
 

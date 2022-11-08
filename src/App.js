@@ -22,16 +22,23 @@ const App = () => {
   const [cost_IName, setCostIName] = useState();
   const [balance_IName, setBalanceIName] = useState();
   const [peformance_IName, setPeformanceIName] = useState();
+  const [master_IName, setMasterIName] = useState();
 
   const getDataFromNav = (deploymentData, demonsetData) => {
     setDeployementData(deploymentData);
     setDemonsetData(demonsetData);
   };
 
-  const getDataFromID = (cost_Name, balance_Name, performance_Name) => {
+  const getDataFromID = (
+    cost_Name,
+    balance_Name,
+    performance_Name,
+    master_Name
+  ) => {
     setBalanceIName(balance_Name);
     setCostIName(cost_Name);
     setPeformanceIName(performance_Name);
+    setMasterIName(master_Name);
   };
 
   return (
@@ -54,6 +61,7 @@ const App = () => {
             <EksDetails
               detailForPods={deploymentData}
               instanceNameForDetails={cost_IName}
+              masterNodeName={master_IName}
             />
           }
         />

@@ -7,21 +7,26 @@ import {
   CartesianGrid,
   LabelList,
   Legend,
+  Tooltip,
 } from "recharts";
 import "./Graph.css";
 
-const Graph = ({ workerCost }) => {
-  const cost = parseFloat(workerCost);
+const Graph = ({ masterCost, workerCost }) => {
+  const cost = parseFloat(workerCost) * 730;
+  const Mscost = parseFloat(masterCost) * 730;
   // Sample data
   const dataLeast = [
-    { name: "EKS", MasterNode: 17, WorkerNode: { workerCost } },
+    {
+      name: "EKS",
+      MasterNode: Mscost,
+      WorkerNode: cost,
+    },
     { name: "AKS", MasterNode: 19, WorkerNode: 69 },
     { name: "GKE", MasterNode: 15, WorkerNode: 45 },
   ];
 
   return (
     <div className="container">
-      <div>{cost}</div>
       <div className="barbox" style={{ display: "flex", flexDirection: "row" }}>
         <BarChart width={300} height={250} data={dataLeast} barSize={22}>
           <CartesianGrid />
@@ -30,7 +35,13 @@ const Graph = ({ workerCost }) => {
             tick={false}
             label={{ value: "Price $", angle: -90, position: "Left" }}
           />
-          {/* <Tooltip wrapperStyle={{ width: 78, backgroundColor: '#ccc', fontSize:'8px'}}/> */}
+          {/* <Tooltip
+            wrapperStyle={{
+              width: 78,
+              backgroundColor: "#ccc",
+              fontSize: "8px",
+            }}
+          /> */}
           <Legend
             width={70}
             wrapperStyle={{

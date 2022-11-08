@@ -5,8 +5,9 @@ import { DetCalculation } from "./DetCalculation";
 
 export const EksDetails = (props) => {
   const Name = String(props.instanceNameForDetails);
-  // const 
+  const MsName = String(props.masterNodeName);
 
+  // const
   return (
     <div>
       <DetCalculation
@@ -14,6 +15,7 @@ export const EksDetails = (props) => {
         cloudName="EKS"
         instanceName={Name}
         totalNodes={props.detailForPods}
+        MsNode={MsName}
       />
     </div>
   );

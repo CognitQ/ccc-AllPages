@@ -3,22 +3,28 @@ import "./SecondPage.css";
 import { Link } from "react-router-dom";
 import { InstanceData } from "./InstanceData";
 import Graph from "./Graph";
+import { Legend } from "recharts";
 
 const SecondPage = (props) => {
   const [instanceCost, setInstanceCost] = useState();
   const [performanceCost, setPerformanceCost] = useState();
   const [balanceCost, setBalanceCost] = useState();
+  const [MsCost, setMsCost] = useState();
 
+  const [cost_MsName, setMsName] = useState();
   const [cost_InstanceName, setInstanceName] = useState();
   const [performance_InstanceName, setPerformanceName] = useState();
   const [balance_InstanceName, setBalanceName] = useState();
+
   const getInstanceData = (
     instanceCost,
     PerformanceCost,
     BalanceCost,
     instance_Name,
     Performance_Name,
-    Balance_Name
+    Balance_Name,
+    MasterCost,
+    MasterName
   ) => {
     setInstanceCost(instanceCost);
     setBalanceCost(BalanceCost);
@@ -26,6 +32,8 @@ const SecondPage = (props) => {
     setInstanceName(instance_Name);
     setBalanceName(Balance_Name);
     setPerformanceName(Performance_Name);
+    setMsCost(MasterCost);
+    setMsName(MasterName);
   };
 
   // end Max Pods
@@ -211,7 +219,8 @@ const SecondPage = (props) => {
   props.setInstanceNameInApp(
     cost_InstanceName,
     balance_InstanceName,
-    performance_InstanceName
+    performance_InstanceName,
+    cost_MsName
   );
 
   return (
@@ -231,7 +240,7 @@ const SecondPage = (props) => {
 
       <div className="graph">
         <div className="innerGraph">
-          <Graph workerCost={instanceCost} />
+          <Graph workerCost={instanceCost} masterCost={MsCost} />
         </div>
         <div className="innerGraph">
           <Graph workerCost={performanceCost} />

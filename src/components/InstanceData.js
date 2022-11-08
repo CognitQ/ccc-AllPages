@@ -99,16 +99,6 @@ export const InstanceData = (props) => {
       return d.InstanceType;
     });
 
-  useEffect(() => {
-    props.setData(
-      minCost,
-      performanceCost,
-      balanceCost,
-      selectedName,
-      performanceName,
-      balanceName
-    );
-  }, [selectedName, performanceName, balanceName]);
   // WorkerNode calculation ends here
 
   // MasterNode calculation Starts here
@@ -139,6 +129,18 @@ export const InstanceData = (props) => {
     });
 
   // MasterNode calculation Ends here
+  useEffect(() => {
+    props.setData(
+      minCost,
+      performanceCost,
+      balanceCost,
+      selectedName,
+      performanceName,
+      balanceName,
+      MsCost,
+      MsNodeName
+    );
+  }, [selectedName, performanceName, balanceName, MsNodeName]);
 
   return (
     <div>
@@ -146,20 +148,20 @@ export const InstanceData = (props) => {
         {MsFilterByCost
           .filter(
             (Instance) =>
-              Instance.DedicatedHostSupport === "TRUE" &&
+            Instance.DedicatedHostSupport === "TRUE" &&
               Instance.vCPUs >= MsVcpu &&
               Instance.MemoryInGiB >= MsRam
           )
           .slice(0, 1)
           .map((d) => {
             return (
-                <li key={d.id}>
-                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
-                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
+              <li key={d.id}>
+              name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+              {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
               </li>
-            );
-          })}
-      </ul> */}
+              );
+            })}
+          </ul> */}
       {/* <h3>node / 2 = {nodes}</h3>
       <h3>Msvcpu = {MsVcpu}</h3>
       <h3>MsRam = {MsRam}</h3>
