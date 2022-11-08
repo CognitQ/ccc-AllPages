@@ -20,6 +20,28 @@ export const DetCalculation = (props) => {
   const [NoUpfront3Y, setNoUpfront3Y] = useState(false);
 
   const totalNoNodes = props.totalNodes;
+  // const totalNoNodes = props.totalNodes;
+  // max Pods
+  const depolymentPods = props.totalNodes.map((object) => {
+    if (object.maxPods === "") {
+      return parseInt(object.minPods);
+    } else {
+      return parseInt(object.maxPods);
+    }
+  });
+  const noOfNodesPerDep = depolymentPods.map((i) => {
+    if (parseFloat(i / 110) <= 1) {
+      return 1;
+    } else if (i % 110 === 0) {
+      return i / 110;
+    } else {
+      return Math.floor(i / 110 + 1);
+    }
+  });
+  const TotalNoNodes = noOfNodesPerDep.reduce(
+    (result, number) => result + number
+  );
+  //end of pods
 
   //code for fetch data
   const [data, fetchData] = useState([]);

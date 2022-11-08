@@ -45,11 +45,12 @@ export const Table = (props) => {
           <thead className="tHead">
             <tr>
               <th scope="col" className="tHeading">
-                Least Price {props.ram}
+                {props.model} {props.ram}
               </th>
-              <th scope="col">Instance Type</th>
-              <th scope="col">Cost Of Worker Nodes Per month($)</th>
-              <th scope="col">Cost of Master Node Per month($)</th>
+              <th scope="col">Worker Node Type</th>
+              <th scope="col">Cost Of WorkerNodes Per month($)</th>
+              <th scope="col">Master Node Type</th>
+              <th scope="col">Cost of MasterNodes Per month($)</th>
               <th scope="col">Grand Total Per month($)</th>
               <th scope="col"></th>
             </tr>
@@ -59,6 +60,7 @@ export const Table = (props) => {
               <th scope="row">EKS</th>
               <td>{props.eksName}</td>
               <td>{props.eksCost}</td>
+              <td>Master Node Type</td>
               <td>2</td>
               <td>{total}</td>
               <td>
@@ -75,6 +77,7 @@ export const Table = (props) => {
               <th scope="row">AKS</th>
               <td>{props.gkeName}</td>
               <td>{props.gkeCost}</td>
+              <td>Master Node Type</td>
               <td>2</td>
               <td>{total}</td>
               <td>
@@ -91,6 +94,7 @@ export const Table = (props) => {
               <th scope="row">GKE</th>
               <td>{props.aksName}</td>
               <td>{props.aksCost}</td>
+              <td>Master Node Type</td>
               <td>2</td>
               <td>{total}</td>
               <td>

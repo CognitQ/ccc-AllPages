@@ -1,8 +1,9 @@
-
-.innerGraph{
+.innerGraph {
     /* -ms-flex: 1;    */
     flex: 1;
 }
-    .graph{
-        display: flex;
-    }
+
+.graph {
+    display: flex;
+}
+
