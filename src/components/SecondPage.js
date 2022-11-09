@@ -3,7 +3,6 @@ import "./SecondPage.css";
 import { Link } from "react-router-dom";
 import { InstanceData } from "./InstanceData";
 import Graph from "./Graph";
-import { Legend } from "recharts";
 
 const SecondPage = (props) => {
   const [instanceCost, setInstanceCost] = useState();
@@ -186,10 +185,6 @@ const SecondPage = (props) => {
 
   //  storage ends
 
-  const calculateRatio = () => {
-    const ratio = maxRamindeployment / maxVcpuindeployment;
-    return ratio;
-  };
 
   // calculation for nodes
   const depolymentPods = props.dpData.map((object) => {

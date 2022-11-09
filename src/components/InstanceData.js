@@ -4,7 +4,7 @@ import { Table } from "./Table";
 import "./InstanceData.css";
 
 export const InstanceData = (props) => {
-  //code for fetch data
+  //code for fetch aws data
   const [data, fetchData] = useState([]);
 
   const getData = () => {
@@ -19,6 +19,25 @@ export const InstanceData = (props) => {
   useEffect(() => {
     getData();
   }, []);
+// aws fetching ends
+
+//code for fetch aks aksData
+const [aksData, fetchAksData] = useState([]);
+
+const getAksData = () => {
+  fetch("http://localhost:4000/aks")
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      fetchAksData(res);
+    });
+};
+
+useEffect(() => {
+  getAksData();
+}, []);
+// aks fetching ends
+
 
   // WorkerNode calculation Starts  here
   const [bestCost, setCost] = useState(true);
