@@ -9,15 +9,44 @@ export const AksCalculation = (props) => {
   const [node, setNode] = useState();
   const intNode = parseInt(node);
 
+  const [Ms_node, setMsNode] = useState();
+  const intMsNode = parseInt(Ms_node);
+
   const [OnDemand, setOnDemand] = useState(true);
-const [Spot, setSpot] = useState(false);
 
-const [Monthly1Y, setMonthly1Y] = useState(false);
-const [Upfront1Y, setUpfront1Y] = useState(false);
-const [Monthly3Y, setMonthly3Y] = useState(false);
-const [Upfront3Y, setUpfront3Y] = useState(false);
+  const [Upfront1Y, setUpfront1Y] = useState(false);
+  const [Upfront3Y, setUpfront3Y] = useState(false);
 
-  const totalNoNodes = props.totalNodes;
+  // const totalNoNodes = props.totalNodes;
+
+  // max Pods
+  const depolymentPods = props.totalNodes.map((object) => {
+    if (object.maxPods === "") {
+      return parseInt(object.minPods);
+    } else {
+      return parseInt(object.maxPods);
+    }
+  });
+  const noOfNodesPerDep = depolymentPods.map((i) => {
+    if (parseFloat(i / 110) <= 1) {
+      return 1;
+    } else if (i % 110 === 0) {
+      return i / 110;
+    } else {
+      return Math.floor(i / 110 + 1);
+    }
+  });
+  const TotalNoNodes = noOfNodesPerDep.reduce(
+    (result, number) => result + number
+  );
+
+  const nodevalue = () => {
+    if (node < TotalNoNodes) {
+      alert("Least Nodes Must be " + TotalNoNodes);
+      setNode(TotalNoNodes);
+    }
+  };
+  //end of pods
 
   //code for fetch data
   const [data, fetchData] = useState([]);
@@ -32,7 +61,8 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
 
   useEffect(() => {
     getData();
-    setNode(totalNoNodes);
+    setNode(TotalNoNodes);
+    setMsNode(1);
   }, []);
 
   const filterInstaceName = data.filter(
@@ -42,71 +72,57 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
   const onDemonadValue = data
     .filter((name) => name.InstanceType === props.instanceName)
     .map((c) => {
-      return parseFloat(c.OnDemandLinuxpricing_USDperHour),
-      parseFloat(c.spot_USDperHour),
-      parseFloat(c.reserved1yearUpfront_USDperHour),
-      parseFloat(c.reserved1yearPartial_USDperHour),
-      parseFloat(c.reserved1yearNoUpfront_USDperHour),
-      parseFloat(c.reserved3yearUpfront_USDperHour),
-      parseFloat(c.reserved3yearPartial_USDperHour),
-      parseFloat(c.reserved3yearNoUpfront_USDperHour);
+      return parseFloat(c.PayAsYouGo);
     });
 
+  const onUpfront1YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.OneYearSavingsPlan);
+    });
 
+  const onUpfront3YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.ThreeYearSavingsPlan);
+    });
 
-    const OnDemandClick = () => {
-      setOnDemand(true);
-      setSpot(false);
-      setMonthly1Y(false);
-      setUpfront1Y(false);
-      setMonthly3Y(false);
-      setUpfront3Y(false);
-      setShow(false);
+  const OnDemandClick = () => {
+    setOnDemand(true);
+    setUpfront1Y(false);
+    setUpfront3Y(false);
+    setShow(false);
+  };
+
+  const Upfront1y = () => {
+    setOnDemand(false);
+    setUpfront1Y(true);
+    setUpfront3Y(false);
+    setShow(false);
+  };
+
+  const Upfront3y = () => {
+    setShow(false);
+    setOnDemand(false);
+    setUpfront1Y(false);
+    setUpfront3Y(true);
+  };
+
+  // masternode filtering
+  const MsNodeFIlter = data.filter((name) => name.InstanceType == props.MsNode);
+
+  const Ms_Cost = data
+    .filter((name) => name.InstanceType === props.MsNode)
+    .map((c) => {
+      return parseFloat(c.PayAsYouGo);
+    });
+
+  const Ms_No_Nodes = () => {
+    if (Ms_node % 2 == 0) {
+      setMsNode(parseInt(Ms_node) + 1);
+      alert("Number of Master nodes cant be even or blank");
     }
-    const OnSpotClick = () => {
-      setOnDemand(false);
-      setSpot(true);
-      setMonthly1Y(false);
-      setUpfront1Y(false);
-      setMonthly3Y(false);
-      setUpfront3Y(false);
-      setShow(false);
-    }
-    
-    const Monthly1yClick=()=>{
-      setOnDemand(false);
-      setSpot(false);
-      setMonthly1Y(true);
-      setUpfront1Y(false);
-      setMonthly3Y(false);
-      setUpfront3Y(false);
-    }
-    
-    const Upfront1yClick = () => {
-      setOnDemand(false);
-      setSpot(false);
-      setMonthly1Y(false);
-      setUpfront1Y(true);
-      setMonthly3Y(false);
-      setUpfront3Y(false);
-    }
-    const Monthly3yClick = () => {
-      setOnDemand(false);
-      setSpot(false);
-      setMonthly1Y(false);
-      setUpfront1Y(false);
-      setMonthly3Y(true);
-      setUpfront3Y(false);
-    }
-    const Upfront3yClick = () => {
-      setOnDemand(false);
-      setSpot(false);
-      setMonthly1Y(false);
-      setUpfront1Y(false);
-      setMonthly3Y(false);
-      setUpfront3Y(true);
-    }
-        
+  };
 
   return (
     <div>
@@ -135,22 +151,20 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
             <input
               className="nodeText"
               type="number"
-              min={totalNoNodes}
+              min={TotalNoNodes}
               value={node}
               onChange={(e) => setNode(e.target.value)}
-              onBlur={(e) => {
-                "filed is required";
-              }}
+              onBlur={nodevalue}
             />
           </div>
 
-
           <div className="pricingModel">
-            <button type="button" className="btn-primary" onClick={OnDemandClick}>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={OnDemandClick}
+            >
               OnDemand
-            </button>{" "}
-            <button type="button" className="btn-primary" onClick={OnSpotClick} >
-              Spot
             </button>{" "}
             <button
               type="button"
@@ -163,10 +177,21 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
             <div>
               {show ? (
                 <div className="reserveButton">
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Monthly1yClick}>1Year-UpFront</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront1yClick}>1Year-Partial</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Monthly3yClick}>1Year-NoUpFront</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onClick={Upfront3yClick}>3Year-UpFront</button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Upfront1y}
+                  >
+                    1Year-UpFront
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Upfront3y}
+                  >
+                    3Year-UpFront
+                  </button>
                 </div>
               ) : null}
             </div>
@@ -183,139 +208,143 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
 
             <tr>
               <th className="pth">NODE</th>
-              
-                {OnDemand ? 
-                (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
 
+              {OnDemand ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.PayAsYouGo)}</td>
+                      </>
+                    );
+                  })}
+                </>
               ) : null}
 
-                {Spot ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.spot_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
+              {Upfront1Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.OneYearSavingsPlan)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
 
-                ) : null}
-                {Monthly1Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved1yearUpfront_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-
-                ) : null}
-
-                {Upfront1Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved1yearPartial_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
-                
-                {Monthly3Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved1yearNoUpfront_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
-
-                {Upfront3Y ? (<>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.reserved3yearUpfront_USDperHour)}
-                    </td> 
-                  </>
-                );
-              })}
-              </>
-                ) : null}
-                
-            
+              {Upfront3Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
+                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.ThreeYearSavingsPlan)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
             </tr>
           </table>
           <div className="monthlyCost">
             <label>
-              <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
+              {OnDemand ? (
+                <>
+                  <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
+                </>
+              ) : null}
+
+              {Upfront1Y ? (
+                <>
+                  <b>onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730} USD</b>
+                </>
+              ) : null}
+
+              {Upfront3Y ? (
+                <>
+                  <b>onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730} USD</b>
+                </>
+              ) : null}
             </label>
           </div>
 
           <div className="calculation">
             <label>
-              {/* <b>OnDemand Cost(Monthly): 773.8 USD</b> */}
-              <label>
-                {intNode} instances * {onDemonadValue} USD * 24 hours in Day ={" "}
-                {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily OnDemand
-                cost)
-              </label>
-              <label>
-                {intNode} instances * {onDemonadValue} USD * 730 hours in month
-                = {(intNode * onDemonadValue * 730).toFixed(3)} USD (monthly
-                OnDemand cost)
-              </label>
-            </label>
-            <label>
-              {intNode} instances * {onDemonadValue} USD * 8760 hours in year =
-              {(intNode * onDemonadValue * 8760).toFixed(3)} USD (Yearly
-              OnDemand cost)
+              {OnDemand ? (
+                <>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 24 hours in Day
+                    = {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily
+                    OnDemand cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 730 hours in
+                    month = {(intNode * onDemonadValue * 730).toFixed(3)} USD
+                    (monthly OnDemand cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 8760 hours in
+                    year ={(intNode * onDemonadValue * 8760).toFixed(3)} USD
+                    (Yearly OnDemand cost)
+                  </label>
+                </>
+              ) : null}
+
+              {Upfront1Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 24 hours in
+                    Day = {(intNode * onUpfront1YValue * 24).toFixed(3)} USD
+                    (Daily Upfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 730 hours in
+                    month = {(intNode * onUpfront1YValue * 730).toFixed(3)} USD
+                    (monthly Upfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 8760 hours in
+                    year ={(intNode * onUpfront1YValue * 8760).toFixed(3)} USD
+                    (Yearly OnUpfront1Y cost)
+                  </label>
+                </>
+              ) : null}
+
+              {Upfront3Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 24 hours in
+                    Day = {(intNode * onUpfront3YValue * 24).toFixed(3)} USD
+                    (Daily Upfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 730 hours in
+                    month = {(intNode * onUpfront3YValue * 730).toFixed(3)} USD
+                    (monthly Upfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 8760 hours in
+                    year ={(intNode * onUpfront3YValue * 8760).toFixed(3)} USD
+                    (Yearly OnUpfront3Y cost)
+                  </label>
+                </>
+              ) : null}
             </label>
           </div>
           <hr
@@ -324,6 +353,8 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
               height: "1.5px",
             }}
           />
+
+          {/* Master Node Started */}
 
           <div className="nodeHeading">
             <label>
@@ -334,7 +365,14 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
           </div>
           <div className="rtop">
             <label> Master Nodes </label>
-            <input className="nodeText" type="number" />
+            <input
+              className="nodeText"
+              type="number"
+              min="1"
+              value={Ms_node}
+              onChange={(e) => setMsNode(e.target.value)}
+              onBlur={Ms_No_Nodes}
+            />
           </div>
 
           <table className="priceTable">
@@ -349,33 +387,40 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
 
             <tr>
               <th className="pth">NODE</th>
-              <td className="ptd">e2-standard-4</td>
-              <td className="ptd">4</td>
-              <td className="ptd">16</td>
-              <td className="ptd"></td>
-              <td className="ptd">1.06</td>
+              <td className="ptd">{props.MsNode}</td>
+              {MsNodeFIlter.map((d) => (
+                <>
+                  <td className="ptd">{d.vCPUs} </td>
+                  <td className="ptd">{d.MemoryInGiB}</td>
+                  <td className="ptd">{d.StorageInGiB}</td>
+                  <td className="ptd">{d.PayAsYouGo}</td>
+                </>
+              ))}
             </tr>
           </table>
           <div className="monthlyCost">
             <label>
-              <b>MasterNode Cost(Monthly): 773.8 USD</b>
+              <b>MasterNode Cost(Monthly): {(Ms_Cost * 730).toFixed(3)} USD</b>
             </label>
           </div>
 
           <div className="calculation">
             <label>
               <label>
-                10 instances x 1.06 USD x 24 hours in Day = 25.44 USD (Daily
-                OnDemand cost)
+                {Ms_node} instances x {Ms_Cost} USD x 24 hours in Day ={" "}
+                {(Ms_node * Ms_Cost * 24).toFixed(3)}
+                USD (Daily OnDemand cost)
               </label>
               <label>
-                10 instances x 1.06 USD x 730 hours in month = 773.8 USD
-                (monthly OnDemand cost)
+                {Ms_node} instances x {Ms_Cost} USD x 730 hours in month ={" "}
+                {(Ms_node * Ms_Cost * 730).toFixed(3)}
+                USD (monthly OnDemand cost)
               </label>
             </label>
             <label>
-              10 instances x 1.06 USD x 8760 hours in year = 9285.6 USD (Yearly
-              OnDemand cost)
+              {Ms_node} instances x {Ms_Cost} USD x 8760 hours in year ={" "}
+              {(Ms_node * Ms_Cost * 8760).toFixed(3)}
+              USD (Yearly OnDemand cost)
             </label>
           </div>
           <div>
@@ -388,7 +433,44 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
           </div>
           <div className="finalCost">
             <label>
-              <b>Total Cost(Monthly) = 6497.00 USD</b>
+              {OnDemand ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onDemonadValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+
+              {Upfront1Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onUpfront1YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+
+              {Upfront3Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onUpfront3YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
             </label>
           </div>
         </div>
@@ -396,13 +478,3 @@ const [Upfront3Y, setUpfront3Y] = useState(false);
     </div>
   );
 };
-
-
-
-
-
-
-
-
-
-

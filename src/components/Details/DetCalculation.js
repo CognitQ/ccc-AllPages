@@ -44,6 +44,13 @@ export const DetCalculation = (props) => {
   const TotalNoNodes = noOfNodesPerDep.reduce(
     (result, number) => result + number
   );
+
+  const nodevalue = () => {
+    if (node < TotalNoNodes) {
+      alert("Least Nodes Must be " + TotalNoNodes);
+      setNode(TotalNoNodes);
+    }
+  };
   //end of pods
 
   //code for fetch data
@@ -71,6 +78,48 @@ export const DetCalculation = (props) => {
     .filter((name) => name.InstanceType === props.instanceName)
     .map((c) => {
       return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+    });
+
+  const onSpotValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.spot_USDperHour);
+    });
+
+  const onUpfront1YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.reserved1yearUpfront_USDperHour);
+    });
+
+  const onPartial1YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.reserved1yearPartial_USDperHour);
+    });
+
+  const onNoUpfront1YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.reserved1yearNoUpfront_USDperHour);
+    });
+
+  const onUpfront3YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.reserved3yearUpfront_USDperHour);
+    });
+
+  const onPartial3YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.reserved3yearPartial_USDperHour);
+    });
+
+  const onNoUpfront3YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.reserved3yearNoUpfront_USDperHour);
     });
 
   const OnDemandClick = () => {
@@ -168,8 +217,8 @@ export const DetCalculation = (props) => {
 
   const Ms_No_Nodes = () => {
     if (Ms_node % 2 == 0) {
-      alert("Number of Master nodes cant be even or blank");
       setMsNode(parseInt(Ms_node) + 1);
+      alert("Number of Master nodes cant be even or blank");
     }
   };
 
@@ -203,11 +252,7 @@ export const DetCalculation = (props) => {
               min={TotalNoNodes}
               value={node}
               onChange={(e) => setNode(e.target.value)}
-              onBlur={(e) => {
-                alert(
-                  "your pods need at least " + { TotalNoNodes } + " node to run"
-                );
-              }}
+              onBlur={nodevalue}
             />
           </div>
 
@@ -436,27 +481,207 @@ export const DetCalculation = (props) => {
           </table>
           <div className="monthlyCost">
             <label>
-              <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
+              {OnDemand ? (
+                <>
+                  <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
+                </>
+              ) : null}
+              {Spot ? (
+                <>
+                  <b>onSpot Cost(Monthly): {onSpotValue * 730} USD</b>
+                </>
+              ) : null}
+              {Upfront1Y ? (
+                <>
+                  <b>onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730} USD</b>
+                </>
+              ) : null}
+              {Partial1Y ? (
+                <>
+                  <b>onPartial1Y Cost(Monthly): {onPartial1YValue * 730} USD</b>
+                </>
+              ) : null}
+              {NoUpfront1Y ? (
+                <>
+                  <b>
+                    onNoUpfront1Y Cost(Monthly): {onNoUpfront1YValue * 730} USD
+                  </b>
+                </>
+              ) : null}
+              {Upfront3Y ? (
+                <>
+                  <b>onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730} USD</b>
+                </>
+              ) : null}
+              {Partial3Y ? (
+                <>
+                  <b>onPartial3Y Cost(Monthly): {onPartial3YValue * 730} USD</b>
+                </>
+              ) : null}
+              {NoUpfront3Y ? (
+                <>
+                  <b>
+                    onNoUpfront3Y Cost(Monthly): {onNoUpfront3YValue * 730} USD
+                  </b>
+                </>
+              ) : null}
             </label>
           </div>
 
           <div className="calculation">
             <label>
-              <label>
-                {intNode} instances * {onDemonadValue} USD * 24 hours in Day ={" "}
-                {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily OnDemand
-                cost)
-              </label>
-              <label>
-                {intNode} instances * {onDemonadValue} USD * 730 hours in month
-                = {(intNode * onDemonadValue * 730).toFixed(3)} USD (monthly
-                OnDemand cost)
-              </label>
-            </label>
-            <label>
-              {intNode} instances * {onDemonadValue} USD * 8760 hours in year =
-              {(intNode * onDemonadValue * 8760).toFixed(3)} USD (Yearly
-              OnDemand cost)
+              {OnDemand ? (
+                <>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 24 hours in Day
+                    = {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily
+                    OnDemand cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 730 hours in
+                    month = {(intNode * onDemonadValue * 730).toFixed(3)} USD
+                    (monthly OnDemand cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 8760 hours in
+                    year ={(intNode * onDemonadValue * 8760).toFixed(3)} USD
+                    (Yearly OnDemand cost)
+                  </label>
+                </>
+              ) : null}
+              {Spot ? (
+                <>
+                  <label>
+                    {intNode} instances * {onSpotValue} USD * 24 hours in Day ={" "}
+                    {(intNode * onSpotValue * 24).toFixed(3)} USD (Daily Spot
+                    cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onSpotValue} USD * 730 hours in month
+                    = {(intNode * onSpotValue * 730).toFixed(3)} USD (monthly
+                    Spot cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onSpotValue} USD * 8760 hours in year
+                    ={(intNode * onSpotValue * 8760).toFixed(3)} USD (Yearly
+                    OnSpot cost)
+                  </label>
+                </>
+              ) : null}
+              {Upfront1Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 24 hours in
+                    Day = {(intNode * onUpfront1YValue * 24).toFixed(3)} USD
+                    (Daily Upfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 730 hours in
+                    month = {(intNode * onUpfront1YValue * 730).toFixed(3)} USD
+                    (monthly Upfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 8760 hours in
+                    year ={(intNode * onUpfront1YValue * 8760).toFixed(3)} USD
+                    (Yearly OnUpfront1Y cost)
+                  </label>
+                </>
+              ) : null}
+              {Partial1Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onPartial1YValue} USD * 24 hours in
+                    Day = {(intNode * onPartial1YValue * 24).toFixed(3)} USD
+                    (Daily Partial1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onPartial1YValue} USD * 730 hours in
+                    month = {(intNode * onPartial1YValue * 730).toFixed(3)} USD
+                    (monthly Partial1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onPartial1YValue} USD * 8760 hours in
+                    year ={(intNode * onPartial1YValue * 8760).toFixed(3)} USD
+                    (Yearly OnPartial1Y cost)
+                  </label>
+                </>
+              ) : null}
+              {NoUpfront1Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onNoUpfront1YValue} USD * 24 hours in
+                    Day = {(intNode * onNoUpfront1YValue * 24).toFixed(3)} USD
+                    (Daily NoUpfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onNoUpfront1YValue} USD * 730 hours
+                    in month = {(intNode * onNoUpfront1YValue * 730).toFixed(3)}{" "}
+                    USD (monthly NoUpfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onNoUpfront1YValue} USD * 8760 hours
+                    in year ={(intNode * onNoUpfront1YValue * 8760).toFixed(3)}{" "}
+                    USD (Yearly OnNoUpfront1Y cost)
+                  </label>
+                </>
+              ) : null}
+              {Upfront3Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 24 hours in
+                    Day = {(intNode * onUpfront3YValue * 24).toFixed(3)} USD
+                    (Daily Upfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 730 hours in
+                    month = {(intNode * onUpfront3YValue * 730).toFixed(3)} USD
+                    (monthly Upfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 8760 hours in
+                    year ={(intNode * onUpfront3YValue * 8760).toFixed(3)} USD
+                    (Yearly OnUpfront3Y cost)
+                  </label>
+                </>
+              ) : null}
+              {Partial3Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onPartial3YValue} USD * 24 hours in
+                    Day = {(intNode * onPartial3YValue * 24).toFixed(3)} USD
+                    (Daily Partial3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onPartial3YValue} USD * 730 hours in
+                    month = {(intNode * onPartial3YValue * 730).toFixed(3)} USD
+                    (monthly Partial3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onPartial3YValue} USD * 8760 hours in
+                    year ={(intNode * onPartial3YValue * 8760).toFixed(3)} USD
+                    (Yearly OnPartial3Y cost)
+                  </label>
+                </>
+              ) : null}
+              {NoUpfront3Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onNoUpfront3YValue} USD * 24 hours in
+                    Day = {(intNode * onNoUpfront3YValue * 24).toFixed(3)} USD
+                    (Daily NoUpfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onNoUpfront3YValue} USD * 730 hours
+                    in month = {(intNode * onNoUpfront3YValue * 730).toFixed(3)}{" "}
+                    USD (monthly NoUpfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onNoUpfront3YValue} USD * 8760 hours
+                    in year ={(intNode * onNoUpfront3YValue * 8760).toFixed(3)}{" "}
+                    USD (Yearly OnNoUpfront3Y cost)
+                  </label>
+                </>
+              ) : null}
             </label>
           </div>
           <hr
@@ -545,14 +770,102 @@ export const DetCalculation = (props) => {
           </div>
           <div className="finalCost">
             <label>
-              <b>
-                Total Cost(Monthly) ={" "}
-                {(
-                  intNode * onDemonadValue * 730 +
-                  Ms_Cost * Ms_node * 730
-                ).toFixed(3)}{" "}
-                USD
-              </b>
+              {OnDemand ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onDemonadValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+              {Spot ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onSpotValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+              {Upfront1Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onUpfront1YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+              {Partial1Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onPartial1YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+              {NoUpfront1Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onNoUpfront1YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+              {Upfront3Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onUpfront3YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+              {Partial3Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onPartial3YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+              {NoUpfront3Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onNoUpfront3YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
             </label>
           </div>
         </div>

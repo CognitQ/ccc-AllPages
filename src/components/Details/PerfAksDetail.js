@@ -5,12 +5,17 @@ import { AksCalculation } from "./AksCalculation";
 
 export const PerfAksDetail = (props) => {
   const Name = String(props.instanceNameForDetails);
+  const MsName = String(props.masterNodeName);
+
+  // const
   return (
     <div>
       <AksCalculation
         modelName="Least Cost"
-        cloudName="AKS"
+        cloudName="EKS"
         instanceName={Name}
+        totalNodes={props.detailForPods}
+        MsNode={MsName}
       />
     </div>
   );

@@ -84,7 +84,7 @@ export const Table = (props) => {
               <td>
                 <button
                   className="btn btn-link tButton"
-                  onClick={() => gotoAksDetails(props.model)}
+                  onClick={() => gotoGkeDetails(props.model)}
                 >
                   show Details{" "}
                 </button>
@@ -101,7 +101,7 @@ export const Table = (props) => {
               <td>
                 <button
                   className="btn btn-link tButton"
-                  onClick={() => gotoGkeDetails(props.model)}
+                  onClick={() => gotoAksDetails(props.model)}
                 >
                   show Details{" "}
                 </button>
