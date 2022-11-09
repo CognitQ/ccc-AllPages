@@ -6,13 +6,51 @@ import { useState, useEffect } from "react";
 export const GkeCalculation = (props) => {
   const [show, setShow] = useState(false);
 
-  const [node, setNode] = useState(1);
+  const [node, setNode] = useState();
   const intNode = parseInt(node);
+
+  const [Ms_node, setMsNode] = useState();
+
+  const [OnDemand, setOnDemand] = useState(true);
+
+  const [Upfront1Y, setUpfront1Y] = useState(false);
+  const [Upfront3Y, setUpfront3Y] = useState(false);
+
+  // const totalNoNodes = props.totalNodes;
+
+  // max Pods
+  const depolymentPods = props.totalNodes.map((object) => {
+    if (object.maxPods === "") {
+      return parseInt(object.minPods);
+    } else {
+      return parseInt(object.maxPods);
+    }
+  });
+  const noOfNodesPerDep = depolymentPods.map((i) => {
+    if (parseFloat(i / 110) <= 1) {
+      return 1;
+    } else if (i % 110 === 0) {
+      return i / 110;
+    } else {
+      return Math.floor(i / 110 + 1);
+    }
+  });
+  const TotalNoNodes = noOfNodesPerDep.reduce(
+    (result, number) => result + number
+  );
+
+  const nodevalue = () => {
+    if (node < TotalNoNodes) {
+      alert("Least Nodes Must be " + TotalNoNodes);
+      setNode(TotalNoNodes);
+    }
+  };
+  //end of pods
 
   //code for fetch data
   const [data, fetchData] = useState([]);
   const getData = () => {
-    fetch("http://localhost:4000/aws")
+    fetch("http://localhost:4000/gcp")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
@@ -22,6 +60,8 @@ export const GkeCalculation = (props) => {
 
   useEffect(() => {
     getData();
+    setNode(TotalNoNodes);
+    setMsNode(1);
   }, []);
 
   const filterInstaceName = data.filter(
@@ -31,8 +71,57 @@ export const GkeCalculation = (props) => {
   const onDemonadValue = data
     .filter((name) => name.InstanceType === props.instanceName)
     .map((c) => {
-      return parseFloat(c.OnDemandLinuxpricing_USDperHour);
+      return parseFloat(c.LinuxOnDemandCost_USDperHour);
     });
+
+  const onUpfront1YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.Linux1YearCUDCost_USDperHour);
+    });
+
+  const onUpfront3YValue = data
+    .filter((name) => name.InstanceType === props.instanceName)
+    .map((c) => {
+      return parseFloat(c.Linux3YearCUDCost_USDperHour);
+    });
+
+  const OnDemandClick = () => {
+    setOnDemand(true);
+    setUpfront1Y(false);
+    setUpfront3Y(false);
+    setShow(false);
+  };
+
+  const Upfront1y = () => {
+    setOnDemand(false);
+    setUpfront1Y(true);
+    setUpfront3Y(false);
+   
+  };
+
+  const Upfront3y = () => {
+   
+    setOnDemand(false);
+    setUpfront1Y(false);
+    setUpfront3Y(true);
+  };
+
+  // masternode filtering
+  const MsNodeFIlter = data.filter((name) => name.InstanceType == props.MsNode);
+
+  const Ms_Cost = data
+    .filter((name) => name.InstanceType === props.MsNode)
+    .map((c) => {
+      return parseFloat(c.LinuxOnDemandCost_USDperHour);
+    });
+
+  const Ms_No_Nodes = () => {
+    if (Ms_node % 2 == 0) {
+      setMsNode(parseInt(Ms_node) + 1);
+      alert("Number of Master nodes cant be even or blank");
+    }
+  };
 
   return (
     <div>
@@ -46,7 +135,6 @@ export const GkeCalculation = (props) => {
           </li>
         </ul>
       </nav>
-
       <center>
         <div className="mainbox">
           <div className="heading">
@@ -61,21 +149,20 @@ export const GkeCalculation = (props) => {
             <input
               className="nodeText"
               type="number"
-              min="1"
+              min={TotalNoNodes}
               value={node}
               onChange={(e) => setNode(e.target.value)}
-              onBlur={(e) => {
-                "filed is required";
-              }}
+              onBlur={nodevalue}
             />
           </div>
 
           <div className="pricingModel">
-            <button type="button" className="btn-primary">
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={OnDemandClick}
+            >
               OnDemand
-            </button>{" "}
-            <button type="button" className="btn-primary">
-              Spot
             </button>{" "}
             <button
               type="button"
@@ -87,24 +174,22 @@ export const GkeCalculation = (props) => {
             </button>
             <div>
               {show ? (
-                <div className="Table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th className="rth">Option</th>
-                        <th className="rth">1 Year</th>
-                        <th className="rth">3 Year</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="rtd">-</td>
-                        <td className="rtd">$</td>
-                        <td className="rtd">$</td>
-                      </tr>
-                     
-                    </tbody>
-                  </table>
+                <div className="reserveButton">
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Upfront1y}
+                  >
+                    1Year-UpFront
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onClick={Upfront3y}
+                  >
+                    3Year-UpFront
+                  </button>
                 </div>
               ) : null}
             </div>
@@ -113,53 +198,159 @@ export const GkeCalculation = (props) => {
             <tr>
               <th className="pth">{props.cloudName}</th>
               <th className="pth">Instance Name</th>
-              <th className="pth">vCPU</th>
+              <th className="pth">vCPUs</th>
               <th className="pth">RAM GiB</th>
-              <th className="pth">Storage GiB</th>
               <th className="pth">Cost Per Hour(USD)</th>
             </tr>
 
             <tr>
               <th className="pth">NODE</th>
-              {filterInstaceName.map((i) => {
-                return (
-                  <>
-                    <td className="ptd">{i.InstanceType}</td>
-                    <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                    <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                    <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
-                    <td className="ptd">
-                      {parseFloat(i.OnDemandLinuxpricing_USDperHour)}
-                    </td>
-                  </>
-                );
-              })}
+
+              {OnDemand ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.Memory)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.LinuxOnDemandCost_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
+
+              {Upfront1Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.Memory)}</td>
+
+                        <td className="ptd">
+                          {parseFloat(i.Linux1YearCUDCost_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
+
+              {Upfront3Y ? (
+                <>
+                  {filterInstaceName.map((i) => {
+                    return (
+                      <>
+                        <td className="ptd">{i.InstanceType}</td>
+                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
+                        <td className="ptd">{parseFloat(i.Memory)}</td>
+
+                        <td className="ptd">
+                          {parseFloat(i.Linux3YearCUDCost_USDperHour)}
+                        </td>
+                      </>
+                    );
+                  })}
+                </>
+              ) : null}
             </tr>
           </table>
           <div className="monthlyCost">
             <label>
-              <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
+              {OnDemand ? (
+                <>
+                  <b>
+                    OnDemand Cost(Monthly): {onDemonadValue * 730 * node} USD
+                  </b>
+                </>
+              ) : null}
+
+              {Upfront1Y ? (
+                <>
+                  <b>
+                    onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730 * node}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+
+              {Upfront3Y ? (
+                <>
+                  <b>
+                    onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730 * node}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
             </label>
           </div>
 
           <div className="calculation">
             <label>
-              {/* <b>OnDemand Cost(Monthly): 773.8 USD</b> */}
-              <label>
-                {intNode} instances * {onDemonadValue} USD * 24 hours in Day ={" "}
-                {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily OnDemand
-                cost)
-              </label>
-              <label>
-                {intNode} instances * {onDemonadValue} USD * 730 hours in month
-                = {(intNode * onDemonadValue * 730).toFixed(3)} USD (monthly
-                OnDemand cost)
-              </label>
-            </label>
-            <label>
-              {intNode} instances * {onDemonadValue} USD * 8760 hours in year =
-              {(intNode * onDemonadValue * 8760).toFixed(3)} USD (Yearly
-              OnDemand cost)
+              {OnDemand ? (
+                <>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 24 hours in Day
+                    = {(intNode * onDemonadValue * 24).toFixed(3)} USD (Daily
+                    OnDemand cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 730 hours in
+                    month = {(intNode * onDemonadValue * 730).toFixed(3)} USD
+                    (monthly OnDemand cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onDemonadValue} USD * 8760 hours in
+                    year ={(intNode * onDemonadValue * 8760).toFixed(3)} USD
+                    (Yearly OnDemand cost)
+                  </label>
+                </>
+              ) : null}
+
+              {Upfront1Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 24 hours in
+                    Day = {(intNode * onUpfront1YValue * 24).toFixed(3)} USD
+                    (Daily Upfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 730 hours in
+                    month = {(intNode * onUpfront1YValue * 730).toFixed(3)} USD
+                    (monthly Upfront1Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront1YValue} USD * 8760 hours in
+                    year ={(intNode * onUpfront1YValue * 8760).toFixed(3)} USD
+                    (Yearly OnUpfront1Y cost)
+                  </label>
+                </>
+              ) : null}
+
+              {Upfront3Y ? (
+                <>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 24 hours in
+                    Day = {(intNode * onUpfront3YValue * 24).toFixed(3)} USD
+                    (Daily Upfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 730 hours in
+                    month = {(intNode * onUpfront3YValue * 730).toFixed(3)} USD
+                    (monthly Upfront3Y cost)
+                  </label>
+                  <label>
+                    {intNode} instances * {onUpfront3YValue} USD * 8760 hours in
+                    year ={(intNode * onUpfront3YValue * 8760).toFixed(3)} USD
+                    (Yearly OnUpfront3Y cost)
+                  </label>
+                </>
+              ) : null}
             </label>
           </div>
           <hr
@@ -168,6 +359,8 @@ export const GkeCalculation = (props) => {
               height: "1.5px",
             }}
           />
+
+          {/* Master Node Started */}
 
           <div className="nodeHeading">
             <label>
@@ -178,48 +371,63 @@ export const GkeCalculation = (props) => {
           </div>
           <div className="rtop">
             <label> Master Nodes </label>
-            <input className="nodeText" type="number" />
+            <input
+              className="nodeText"
+              type="number"
+              min="1"
+              value={Ms_node}
+              onChange={(e) => setMsNode(e.target.value)}
+              onBlur={Ms_No_Nodes}
+            />
           </div>
 
           <table className="priceTable">
             <tr>
-              <th className="pth">EKS</th>
+              <th className="pth">GKE</th>
               <th className="pth">Instance Name</th>
-              <th className="pth">vCPU</th>
+              <th className="pth">vCPUs</th>
               <th className="pth">RAM GiB</th>
-              <th className="pth">Storage GiB</th>
               <th className="pth">Cost Per Hour(USD)</th>
             </tr>
 
             <tr>
               <th className="pth">NODE</th>
-              <td className="ptd">e2-standard-4</td>
-              <td className="ptd">4</td>
-              <td className="ptd">16</td>
-              <td className="ptd"></td>
-              <td className="ptd">1.06</td>
+              <td className="ptd">{props.MsNode}</td>
+              {MsNodeFIlter.map((d) => (
+                <>
+                  <td className="ptd">{d.vCPUs} </td>
+                  <td className="ptd">{d.Memory}</td>
+                  <td className="ptd">{d.LinuxOnDemandCost_USDperHour}</td>
+                </>
+              ))}
             </tr>
           </table>
           <div className="monthlyCost">
             <label>
-              <b>MasterNode Cost(Monthly): 773.8 USD</b>
+              <b>
+                MasterNode Cost(Monthly): {(Ms_Cost * 730 * Ms_node).toFixed(3)}{" "}
+                USD
+              </b>
             </label>
           </div>
 
           <div className="calculation">
             <label>
               <label>
-                10 instances x 1.06 USD x 24 hours in Day = 25.44 USD (Daily
-                OnDemand cost)
+                {Ms_node} instances x {Ms_Cost} USD x 24 hours in Day ={" "}
+                {(Ms_node * Ms_Cost * 24).toFixed(3)}
+                USD (Daily OnDemand cost)
               </label>
               <label>
-                10 instances x 1.06 USD x 730 hours in month = 773.8 USD
-                (monthly OnDemand cost)
+                {Ms_node} instances x {Ms_Cost} USD x 730 hours in month ={" "}
+                {(Ms_node * Ms_Cost * 730).toFixed(3)}
+                USD (monthly OnDemand cost)
               </label>
             </label>
             <label>
-              10 instances x 1.06 USD x 8760 hours in year = 9285.6 USD (Yearly
-              OnDemand cost)
+              {Ms_node} instances x {Ms_Cost} USD x 8760 hours in year ={" "}
+              {(Ms_node * Ms_Cost * 8760).toFixed(3)}
+              USD (Yearly OnDemand cost)
             </label>
           </div>
           <div>
@@ -232,7 +440,44 @@ export const GkeCalculation = (props) => {
           </div>
           <div className="finalCost">
             <label>
-              <b>Total Cost(Monthly) = 6497.00 USD</b>
+              {OnDemand ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onDemonadValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+
+              {Upfront1Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onUpfront1YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
+
+              {Upfront3Y ? (
+                <>
+                  <b>
+                    Total Cost(Monthly) ={" "}
+                    {(
+                      intNode * onUpfront3YValue * 730 +
+                      Ms_Cost * Ms_node * 730
+                    ).toFixed(3)}{" "}
+                    USD
+                  </b>
+                </>
+              ) : null}
             </label>
           </div>
         </div>

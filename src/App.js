@@ -29,6 +29,11 @@ const App = () => {
   const [akspeformance_IName, setaksPeformanceIName] = useState();
   const [aksmaster_IName, setaksMasterIName] = useState();
 
+  const [gkecost_IName, setGkeCostIName] = useState();
+  const [gkebalance_IName, setGkeBalanceIName] = useState();
+  const [gkepeformance_IName, setGkePeformanceIName] = useState();
+  const [gkemaster_IName, setGkeMasterIName] = useState();
+
   const getDataFromNav = (deploymentData, demonsetData) => {
     setDeployementData(deploymentData);
     setDemonsetData(demonsetData);
@@ -39,19 +44,31 @@ const App = () => {
     balance_Name,
     performance_Name,
     master_Name,
+
     akscost_Name,
     aksbalance_Name,
     aksperformance_Name,
-    aksmaster_Name
+    aksmaster_Name,
+
+    gkecost_Name,
+    gkebalance_Name,
+    gkeperformance_Name,
+    gkemaster_Name
   ) => {
     setBalanceIName(balance_Name);
     setCostIName(cost_Name);
     setPeformanceIName(performance_Name);
     setMasterIName(master_Name);
+
     setaksBalanceIName(aksbalance_Name);
     setaksCostIName(akscost_Name);
     setaksPeformanceIName(aksperformance_Name);
     setaksMasterIName(aksmaster_Name);
+
+    setGkeBalanceIName(gkebalance_Name);
+    setGkeCostIName(gkecost_Name);
+    setGkePeformanceIName(gkeperformance_Name);
+    setGkeMasterIName(gkemaster_Name);
   };
 
   return (
@@ -93,8 +110,8 @@ const App = () => {
           element={
             <GkeDetails
               detailForPods={deploymentData}
-              instanceNameForDetails={akscost_IName}
-              masterNodeName={aksmaster_IName}
+              instanceNameForDetails={gkecost_IName}
+              masterNodeName={gkemaster_IName}
             />
           }
         />
@@ -124,8 +141,8 @@ const App = () => {
           element={
             <PerfGkeDetail
               detailForPods={deploymentData}
-              masterNodeName={master_IName}
-              instanceNameForDetails={peformance_IName}
+              masterNodeName={gkemaster_IName}
+              instanceNameForDetails={gkepeformance_IName}
             />
           }
         />
@@ -155,8 +172,8 @@ const App = () => {
           element={
             <BalGkeDetail
               detailForPods={deploymentData}
-              instanceNameForDetails={balance_IName}
-              masterNodeName={master_IName}
+              instanceNameForDetails={gkebalance_IName}
+              masterNodeName={gkemaster_IName}
             />
           }
         />

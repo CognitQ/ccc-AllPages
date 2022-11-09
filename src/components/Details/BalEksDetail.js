@@ -10,7 +10,7 @@ export const BalEksDetail = (props) => {
   return (
     <div>
       <DetCalculation
-        modelName="Least Cost"
+        modelName="Balance Cost"
         cloudName="EKS"
         instanceName={Name}
         totalNodes={props.detailForPods}

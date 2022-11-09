@@ -10,7 +10,7 @@ export const PerfEksDetail = (props) => {
   return (
     <div>
       <DetCalculation
-        modelName="Least Cost"
+        modelName="Performance Cost"
         cloudName="EKS"
         instanceName={Name}
         totalNodes={props.detailForPods}

@@ -42,7 +42,7 @@ export const InstanceData = (props) => {
   const [gkeData, fetchGkeData] = useState([]);
 
   const getGkeData = () => {
-    fetch("http://localhost:4000/Gke")
+    fetch("http://localhost:4000/gcp")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
@@ -64,7 +64,6 @@ export const InstanceData = (props) => {
     setBalance(false);
     setPeformance(false);
     setCost(true);
-    // alert("clicked");
   };
 
   const showBalance = () => {
@@ -239,6 +238,85 @@ export const InstanceData = (props) => {
 
   // AKsMasterNode calculation Ends here
 
+  // gke Worker Node
+
+  const gkeFilterdata = gkeData.filter(
+    (Idata) => Idata.vCPUs >= props.vcpu && Idata.Memory >= props.ram
+  );
+
+  const gkePeformanceFilterdata = gkeData.filter(
+    (Idata) =>
+      Idata.vCPUs >= props.peformanceVcpu && Idata.Memory >= props.peformanceRam
+  );
+
+  const gkeBalanceFilterdata = gkeData.filter(
+    (Idata) =>
+      Idata.vCPUs >= props.balanceVcpu && Idata.Memory >= props.balanceRam
+  );
+  const gkeCostOfFilterdata = gkeFilterdata.map((c) => {
+    return parseFloat(c.LinuxOnDemandCost_USDperHour);
+  });
+
+  const gkeCostOfPerformance = gkePeformanceFilterdata.map((c) => {
+    return parseFloat(c.LinuxOnDemandCost_USDperHour);
+  });
+
+  const gkeCostOfBalance = gkeBalanceFilterdata.map((c) => {
+    return parseFloat(c.LinuxOnDemandCost_USDperHour);
+  });
+
+  const gkeMinCost = Math.min(...gkeCostOfFilterdata);
+  const gkePerformanceCost = Math.min(...gkeCostOfPerformance);
+  const gkeBalanceCost = Math.min(...gkeCostOfBalance);
+
+  const gkeselectedName = gkeFilterdata
+    .filter((Instance) => Instance.LinuxOnDemandCost_USDperHour == gkeMinCost)
+    .slice(0, 1)
+    .map((d) => {
+      return d.InstanceType;
+    });
+
+  const gkePerformanceName = gkePeformanceFilterdata
+    .filter(
+      (Instance) => Instance.LinuxOnDemandCost_USDperHour == gkePerformanceCost
+    )
+    .slice(0, 1)
+    .map((d) => {
+      return d.InstanceType;
+    });
+
+  const gkeBalanceName = gkeBalanceFilterdata
+    .filter(
+      (Instance) => Instance.LinuxOnDemandCost_USDperHour == gkeBalanceCost
+    )
+    .slice(0, 1)
+    .map((d) => {
+      return d.InstanceType;
+    });
+
+  // gkeWorkerNode calculation ends here
+
+  // gkeMasterNode calculation Starts here
+
+  const gkeMsfilterdata = gkeData.filter(
+    (Idata) => Idata.vCPUs >= MsVcpu && Idata.Memory >= MsRam
+  );
+
+  const gkeMsFilterByCost = gkeMsfilterdata.map((c) => {
+    return parseFloat(c.LinuxOnDemandCost_USDperHour);
+  });
+
+  const gkeMsCost = Math.min(...gkeMsFilterByCost);
+
+  const gkeMsNodeName = gkeMsfilterdata
+    .filter((Instance) => Instance.LinuxOnDemandCost_USDperHour == gkeMsCost)
+    .slice(0, 1)
+    .map((d) => {
+      return d.InstanceType;
+    });
+
+  // gkeMasterNode calculation Ends here
+
   useEffect(() => {
     props.setData(
       minCost,
@@ -249,6 +327,7 @@ export const InstanceData = (props) => {
       balanceName,
       MsCost,
       MsNodeName,
+      
       aksMinCost,
       aksPerformanceCost,
       aksBalanceCost,
@@ -256,7 +335,16 @@ export const InstanceData = (props) => {
       aksPerformanceName,
       aksBalanceName,
       aksMsCost,
-      aksMsNodeName
+      aksMsNodeName,
+
+      gkeMinCost,
+      gkePerformanceCost,
+      gkeBalanceCost,
+      gkeselectedName,
+      gkePerformanceName,
+      gkeBalanceName,
+      gkeMsCost,
+      gkeMsNodeName
     );
   }, [selectedName, performanceName, balanceName, MsNodeName]);
 
@@ -328,10 +416,10 @@ export const InstanceData = (props) => {
             eksName={selectedName}
             eksMasterCost={MsCost}
             eksMasterName={MsNodeName}
-            gkeCost={minCost}
-            gkeName={selectedName}
-            gkeMasterName={MsNodeName}
-            gkeMasterCost={MsCost}
+            gkeMasterCost={gkeMsCost}
+            gkeMasterName={gkeMsNodeName}
+            gkeCost={gkeMinCost}
+            gkeName={gkeselectedName}
             aksMasterCost={aksMsCost}
             aksMasterName={aksMsNodeName}
             aksCost={aksMinCost}
@@ -347,17 +435,17 @@ export const InstanceData = (props) => {
             eksCost={performanceCost}
             eksName={performanceName}
             eksMasterCost={MsCost}
-            gkeCost={minCost}
-            gkeName={selectedName}
-            gkeMasterName={MsNodeName}
-            gkeMasterCost={MsCost}
+            eksMasterName={MsNodeName}
+            gkeMasterCost={gkeMsCost}
+            gkeMasterName={gkeMsNodeName}
+            gkeCost={gkePerformanceCost}
+            gkeName={gkePerformanceName}
             aksMasterCost={aksMsCost}
             aksMasterName={aksMsNodeName}
             aksCost={aksPerformanceCost}
             aksName={aksPerformanceName}
             ram={props.peformanceRam}
             model="Performance"
-            eksMasterName={MsNodeName}
           />
         </div>
       ) : null}
@@ -368,9 +456,10 @@ export const InstanceData = (props) => {
             eksName={balanceName}
             eksMasterCost={MsCost}
             eksMasterName={MsNodeName}
-            gkeCost={minCost}
-            gkeName={selectedName}
-            gkeMasterCost={MsCost}
+            gkeMasterCost={gkeMsCost}
+            gkeMasterName={gkeMsNodeName}
+            gkeCost={gkeBalanceCost}
+            gkeName={gkeBalanceName}
             aksMasterCost={aksMsCost}
             aksMasterName={aksMsNodeName}
             aksCost={aksBalanceCost}

@@ -12,7 +12,7 @@ export const AksDetails = (props) => {
     <div>
       <AksCalculation
         modelName="Least Cost"
-        cloudName="EKS"
+        cloudName="AKS"
         instanceName={Name}
         totalNodes={props.detailForPods}
         MsNode={MsName}

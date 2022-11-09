@@ -10,7 +10,6 @@ export const AksCalculation = (props) => {
   const intNode = parseInt(node);
 
   const [Ms_node, setMsNode] = useState();
-  const intMsNode = parseInt(Ms_node);
 
   const [OnDemand, setOnDemand] = useState(true);
 
@@ -51,7 +50,7 @@ export const AksCalculation = (props) => {
   //code for fetch data
   const [data, fetchData] = useState([]);
   const getData = () => {
-    fetch("http://localhost:4000/aws")
+    fetch("http://localhost:4000/aks")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
@@ -66,23 +65,23 @@ export const AksCalculation = (props) => {
   }, []);
 
   const filterInstaceName = data.filter(
-    (name) => name.InstanceType === props.instanceName
+    (name) => name.Instance === props.instanceName
   );
 
   const onDemonadValue = data
-    .filter((name) => name.InstanceType === props.instanceName)
+    .filter((name) => name.Instance === props.instanceName)
     .map((c) => {
       return parseFloat(c.PayAsYouGo);
     });
 
   const onUpfront1YValue = data
-    .filter((name) => name.InstanceType === props.instanceName)
+    .filter((name) => name.Instance === props.instanceName)
     .map((c) => {
       return parseFloat(c.OneYearSavingsPlan);
     });
 
   const onUpfront3YValue = data
-    .filter((name) => name.InstanceType === props.instanceName)
+    .filter((name) => name.Instance === props.instanceName)
     .map((c) => {
       return parseFloat(c.ThreeYearSavingsPlan);
     });
@@ -109,10 +108,10 @@ export const AksCalculation = (props) => {
   };
 
   // masternode filtering
-  const MsNodeFIlter = data.filter((name) => name.InstanceType == props.MsNode);
+  const MsNodeFIlter = data.filter((name) => name.Instance == props.MsNode);
 
   const Ms_Cost = data
-    .filter((name) => name.InstanceType === props.MsNode)
+    .filter((name) => name.Instance === props.MsNode)
     .map((c) => {
       return parseFloat(c.PayAsYouGo);
     });
@@ -136,7 +135,6 @@ export const AksCalculation = (props) => {
           </li>
         </ul>
       </nav>
-
       <center>
         <div className="mainbox">
           <div className="heading">
@@ -200,7 +198,7 @@ export const AksCalculation = (props) => {
             <tr>
               <th className="pth">{props.cloudName}</th>
               <th className="pth">Instance Name</th>
-              <th className="pth">vCPU</th>
+              <th className="pth">Cores</th>
               <th className="pth">RAM GiB</th>
               <th className="pth">Storage GiB</th>
               <th className="pth">Cost Per Hour(USD)</th>
@@ -214,10 +212,10 @@ export const AksCalculation = (props) => {
                   {filterInstaceName.map((i) => {
                     return (
                       <>
-                        <td className="ptd">{i.InstanceType}</td>
-                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">{i.Instance}</td>
+                        <td className="ptd">{parseFloat(i.Cores)}</td>
+                        <td className="ptd">{parseFloat(i.RAM)}</td>
+                        <td className="ptd">{parseFloat(i.TemporaryStorage)}</td>
                         <td className="ptd">{parseFloat(i.PayAsYouGo)}</td>
                       </>
                     );
@@ -230,10 +228,10 @@ export const AksCalculation = (props) => {
                   {filterInstaceName.map((i) => {
                     return (
                       <>
-                        <td className="ptd">{i.InstanceType}</td>
-                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">{i.Instance}</td>
+                        <td className="ptd">{parseFloat(i.Cores)}</td>
+                        <td className="ptd">{parseFloat(i.RAM)}</td>
+                        <td className="ptd">{parseFloat(i.TemporaryStorage)}</td>
                         <td className="ptd">
                           {parseFloat(i.OneYearSavingsPlan)}
                         </td>
@@ -248,10 +246,10 @@ export const AksCalculation = (props) => {
                   {filterInstaceName.map((i) => {
                     return (
                       <>
-                        <td className="ptd">{i.InstanceType}</td>
-                        <td className="ptd">{parseFloat(i.vCPUs)}</td>
-                        <td className="ptd">{parseFloat(i.MemoryInGiB)}</td>
-                        <td className="ptd">{parseFloat(i.StorageInGiB)}</td>
+                        <td className="ptd">{i.Instance}</td>
+                        <td className="ptd">{parseFloat(i.Cores)}</td>
+                        <td className="ptd">{parseFloat(i.RAM)}</td>
+                        <td className="ptd">{parseFloat(i.TemporaryStorage)}</td>
                         <td className="ptd">
                           {parseFloat(i.ThreeYearSavingsPlan)}
                         </td>
@@ -266,19 +264,27 @@ export const AksCalculation = (props) => {
             <label>
               {OnDemand ? (
                 <>
-                  <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
+                  <b>
+                    OnDemand Cost(Monthly): {onDemonadValue * 730 * node} USD
+                  </b>
                 </>
               ) : null}
 
               {Upfront1Y ? (
                 <>
-                  <b>onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730} USD</b>
+                  <b>
+                    onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730 * node}{" "}
+                    USD
+                  </b>
                 </>
               ) : null}
 
               {Upfront3Y ? (
                 <>
-                  <b>onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730} USD</b>
+                  <b>
+                    onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730 * node}{" "}
+                    USD
+                  </b>
                 </>
               ) : null}
             </label>
@@ -379,7 +385,7 @@ export const AksCalculation = (props) => {
             <tr>
               <th className="pth">EKS</th>
               <th className="pth">Instance Name</th>
-              <th className="pth">vCPU</th>
+              <th className="pth">Cores</th>
               <th className="pth">RAM GiB</th>
               <th className="pth">Storage GiB</th>
               <th className="pth">Cost Per Hour(USD)</th>
@@ -391,8 +397,8 @@ export const AksCalculation = (props) => {
               {MsNodeFIlter.map((d) => (
                 <>
                   <td className="ptd">{d.vCPUs} </td>
-                  <td className="ptd">{d.MemoryInGiB}</td>
-                  <td className="ptd">{d.StorageInGiB}</td>
+                  <td className="ptd">{d.RAM}</td>
+                  <td className="ptd">{d.TemporaryStorage}</td>
                   <td className="ptd">{d.PayAsYouGo}</td>
                 </>
               ))}
@@ -400,7 +406,7 @@ export const AksCalculation = (props) => {
           </table>
           <div className="monthlyCost">
             <label>
-              <b>MasterNode Cost(Monthly): {(Ms_Cost * 730).toFixed(3)} USD</b>
+              <b>MasterNode Cost(Monthly): {(Ms_Cost * 730 * Ms_node).toFixed(3)} USD</b>
             </label>
           </div>
 

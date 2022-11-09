@@ -25,6 +25,15 @@ const SecondPage = (props) => {
   const [aksperformance_InstanceName, setAksPerformanceName] = useState();
   const [aksbalance_InstanceName, setAksBalanceName] = useState();
 
+  const [gkeinstanceCost, setGkeInstanceCost] = useState();
+  const [gkeperformanceCost, setGkePerformanceCost] = useState();
+  const [gkebalanceCost, setGkeBalanceCost] = useState();
+  const [gkeMsCost, setGkeMsCost] = useState();
+  const [gkecost_MsName, setGkeMsName] = useState();
+  const [gkecost_InstanceName, setGkeInstanceName] = useState();
+  const [gkeperformance_InstanceName, setGkePerformanceName] = useState();
+  const [gkebalance_InstanceName, setGkeBalanceName] = useState();
+
   const getInstanceData = (
     instanceCost,
     PerformanceCost,
@@ -34,6 +43,7 @@ const SecondPage = (props) => {
     Balance_Name,
     MasterCost,
     MasterName,
+
     aksinstanceCost,
     aksPerformanceCost,
     aksBalanceCost,
@@ -41,7 +51,16 @@ const SecondPage = (props) => {
     aksPerformance_Name,
     aksBalance_Name,
     aksMasterCost,
-    aksMasterName
+    aksMasterName,
+
+    gkeinstanceCost,
+    gkePerformanceCost,
+    gkeBalanceCost,
+    gkeinstance_Name,
+    gkePerformance_Name,
+    gkeBalance_Name,
+    gkeMasterCost,
+    gkeMasterName
   ) => {
     setInstanceCost(instanceCost);
     setBalanceCost(BalanceCost);
@@ -51,6 +70,7 @@ const SecondPage = (props) => {
     setPerformanceName(Performance_Name);
     setMsCost(MasterCost);
     setMsName(MasterName);
+
     setAksInstanceCost(aksinstanceCost);
     setAksBalanceCost(aksBalanceCost);
     setAksPerformanceCost(aksPerformanceCost);
@@ -59,6 +79,15 @@ const SecondPage = (props) => {
     setAksPerformanceName(aksPerformance_Name);
     setAksMsCost(aksMasterCost);
     setAksMsName(aksMasterName);
+
+    setGkeInstanceCost(gkeinstanceCost);
+    setGkeBalanceCost(gkeBalanceCost);
+    setGkePerformanceCost(gkePerformanceCost);
+    setGkeInstanceName(gkeinstance_Name);
+    setGkeBalanceName(gkeBalance_Name);
+    setGkePerformanceName(gkePerformance_Name);
+    setGkeMsCost(gkeMasterCost);
+    setGkeMsName(gkeMasterName);
   };
 
   // end Max Pods
@@ -241,10 +270,16 @@ const SecondPage = (props) => {
     balance_InstanceName,
     performance_InstanceName,
     cost_MsName,
+
     akscost_InstanceName,
     aksbalance_InstanceName,
     aksperformance_InstanceName,
-    akscost_MsName
+    akscost_MsName,
+
+    gkecost_InstanceName,
+    gkebalance_InstanceName,
+    gkeperformance_InstanceName,
+    gkecost_MsName
   );
 
   return (
@@ -265,32 +300,32 @@ const SecondPage = (props) => {
       <div className="graph">
         <div className="innerGraph">
           <Graph
-            workerCost={instanceCost}
-            masterCost={MsCost}
+            workerCost={instanceCost * 730}
+            masterCost={MsCost * 730}
             aksworkerCost={aksinstanceCost}
             aksmasterCost={aksMsCost}
-            gkeworkerCost={aksinstanceCost}
-            gkemasterCost={aksMsCost}
+            gkeworkerCost={gkeinstanceCost * 730}
+            gkemasterCost={gkeMsCost * 730}
           />
         </div>
         <div className="innerGraph">
           <Graph
-            workerCost={performanceCost}
-            masterCost={MsCost}
+            workerCost={performanceCost * 730}
+            masterCost={MsCost * 730}
             aksworkerCost={aksperformanceCost}
             aksmasterCost={aksMsCost}
-            gkeworkerCost={aksperformanceCost}
-            gkemasterCost={aksMsCost}
+            gkeworkerCost={gkeperformanceCost * 730}
+            gkemasterCost={gkeMsCost * 730}
           />
         </div>
         <div className="innerGraph">
           <Graph
-            workerCost={balanceCost}
-            masterCost={MsCost}
+            workerCost={balanceCost * 730}
+            masterCost={MsCost * 730}
             aksworkerCost={aksbalanceCost}
             aksmasterCost={aksMsCost}
-            gkeworkerCost={aksbalanceCost}
-            gkemasterCost={aksMsCost}
+            gkeworkerCost={gkebalanceCost * 730}
+            gkemasterCost={gkeMsCost * 730}
           />
         </div>
       </div>

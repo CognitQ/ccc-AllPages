@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   LabelList,
   Legend,
-  // Tooltip,
+  Tooltip,
 } from "recharts";
 import "./Graph.css";
 
@@ -39,13 +39,13 @@ const Graph = (props) => {
             tick={false}
             label={{ value: "Price $", angle: -90, position: "Left" }}
           />
-          {/* <Tooltip
+          <Tooltip
             wrapperStyle={{
-              width: 78,
+              width: "fit-content",
               backgroundColor: "#ccc",
               fontSize: "8px",
             }}
-          /> */}
+          />
           <Legend
             width={70}
             wrapperStyle={{

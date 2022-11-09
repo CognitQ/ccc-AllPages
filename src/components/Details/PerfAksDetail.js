@@ -11,8 +11,8 @@ export const PerfAksDetail = (props) => {
   return (
     <div>
       <AksCalculation
-        modelName="Least Cost"
-        cloudName="EKS"
+        modelName="Performance Cost"
+        cloudName="AKS"
         instanceName={Name}
         totalNodes={props.detailForPods}
         MsNode={MsName}

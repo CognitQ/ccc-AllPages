@@ -483,45 +483,45 @@ export const DetCalculation = (props) => {
             <label>
               {OnDemand ? (
                 <>
-                  <b>OnDemand Cost(Monthly): {onDemonadValue * 730} USD</b>
+                  <b>OnDemand Cost(Monthly): {onDemonadValue * 730 * node} USD</b>
                 </>
               ) : null}
               {Spot ? (
                 <>
-                  <b>onSpot Cost(Monthly): {onSpotValue * 730} USD</b>
+                  <b>onSpot Cost(Monthly): {onSpotValue * 730 * node} USD</b>
                 </>
               ) : null}
               {Upfront1Y ? (
                 <>
-                  <b>onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730} USD</b>
+                  <b>onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730 * node} USD</b>
                 </>
               ) : null}
               {Partial1Y ? (
                 <>
-                  <b>onPartial1Y Cost(Monthly): {onPartial1YValue * 730} USD</b>
+                  <b>onPartial1Y Cost(Monthly): {onPartial1YValue * 730 * node} USD</b>
                 </>
               ) : null}
               {NoUpfront1Y ? (
                 <>
                   <b>
-                    onNoUpfront1Y Cost(Monthly): {onNoUpfront1YValue * 730} USD
+                    onNoUpfront1Y Cost(Monthly): {onNoUpfront1YValue * 730 * node} USD
                   </b>
                 </>
               ) : null}
               {Upfront3Y ? (
                 <>
-                  <b>onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730} USD</b>
+                  <b>onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730 * node} USD</b>
                 </>
               ) : null}
               {Partial3Y ? (
                 <>
-                  <b>onPartial3Y Cost(Monthly): {onPartial3YValue * 730} USD</b>
+                  <b>onPartial3Y Cost(Monthly): {onPartial3YValue * 730 * node} USD</b>
                 </>
               ) : null}
               {NoUpfront3Y ? (
                 <>
                   <b>
-                    onNoUpfront3Y Cost(Monthly): {onNoUpfront3YValue * 730} USD
+                    onNoUpfront3Y Cost(Monthly): {onNoUpfront3YValue * 730 * node} USD
                   </b>
                 </>
               ) : null}
@@ -737,7 +737,7 @@ export const DetCalculation = (props) => {
           </table>
           <div className="monthlyCost">
             <label>
-              <b>MasterNode Cost(Monthly): {(Ms_Cost * 730).toFixed(3)} USD</b>
+              <b>MasterNode Cost(Monthly): {(Ms_Cost * 730 * Ms_node).toFixed(3)} USD</b>
             </label>
           </div>
 

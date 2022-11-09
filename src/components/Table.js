@@ -37,7 +37,7 @@ export const Table = (props) => {
 
   const ekstotal = ((props.eksCost + props.eksMasterCost) * 730).toFixed(3);
   const gketotal = ((props.gkeCost + props.gkeMasterCost) * 730).toFixed(3);
-  const akstotal = ((props.aksCost + props.aksMasterCost) * 730).toFixed(3);
+  const akstotal = (props.aksCost + props.aksMasterCost).toFixed(3);
 
   return (
     <div>
@@ -94,9 +94,9 @@ export const Table = (props) => {
             <tr>
               <th scope="row">Aks</th>
               <td>{props.aksName}</td>
-              <td>{(props.aksCost * 730).toFixed(3)}</td>
+              <td>{props.aksCost.toFixed(3)}</td>
               <td>{props.aksMasterName}</td>
-              <td>{(props.aksMasterCost * 730).toFixed(3)}</td>
+              <td>{props.aksMasterCost.toFixed(3)}</td>
               <td>{akstotal}</td>
               <td>
                 <button
