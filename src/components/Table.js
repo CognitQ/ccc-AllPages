@@ -35,7 +35,9 @@ export const Table = (props) => {
     }
   };
 
-  const total = ((props.eksCost + props.eksMasterCost) * 730).toFixed(3);
+  const ekstotal = ((props.eksCost + props.eksMasterCost) * 730).toFixed(3);
+  const gketotal = ((props.gkeCost + props.gkeMasterCost) * 730).toFixed(3);
+  const akstotal = ((props.aksCost + props.aksMasterCost) * 730).toFixed(3);
 
   return (
     <div>
@@ -61,7 +63,7 @@ export const Table = (props) => {
               <td>{(props.eksCost * 730).toFixed(3)}</td>
               <td>{props.eksMasterName}</td>
               <td>{(props.eksMasterCost * 730).toFixed(3)}</td>
-              <td>{total}</td>
+              <td>{ekstotal}</td>
               <td>
                 <button
                   className="btn btn-link tButton"
@@ -78,7 +80,7 @@ export const Table = (props) => {
               <td>{props.gkeCost * 730}</td>
               <td>{props.gkeMasterName}</td>
               <td>{(props.gkeMasterCost * 730).toFixed(3)}</td>
-              <td>{total}</td>
+              <td>{gketotal}</td>
               <td>
                 <button
                   className="btn btn-link tButton"
@@ -95,7 +97,7 @@ export const Table = (props) => {
               <td>{(props.aksCost * 730).toFixed(3)}</td>
               <td>{props.aksMasterName}</td>
               <td>{(props.aksMasterCost * 730).toFixed(3)}</td>
-              <td>{total}</td>
+              <td>{akstotal}</td>
               <td>
                 <button
                   className="btn btn-link tButton"

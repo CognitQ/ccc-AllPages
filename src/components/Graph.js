@@ -14,6 +14,10 @@ import "./Graph.css";
 const Graph = (props) => {
   const cost = parseFloat(props.workerCost);
   const Mscost = parseFloat(props.masterCost);
+  const akscost = parseFloat(props.aksworkerCost);
+  const aksMscost = parseFloat(props.aksmasterCost);
+  const gkecost = parseFloat(props.gkeworkerCost);
+  const gkeMscost = parseFloat(props.gkemasterCost);
   // Sample data
   const dataLeast = [
     {
@@ -21,8 +25,8 @@ const Graph = (props) => {
       MasterNode: Mscost,
       WorkerNode: cost,
     },
-    { name: "AKS", MasterNode: 19, WorkerNode: 69 },
-    { name: "GKE", MasterNode: 15, WorkerNode: 45 },
+    { name: "AKS", MasterNode: aksMscost, WorkerNode: akscost },
+    { name: "GKE", MasterNode: gkeMscost, WorkerNode: gkecost },
   ];
 
   return (

@@ -24,6 +24,11 @@ const App = () => {
   const [peformance_IName, setPeformanceIName] = useState();
   const [master_IName, setMasterIName] = useState();
 
+  const [akscost_IName, setaksCostIName] = useState();
+  const [aksbalance_IName, setaksBalanceIName] = useState();
+  const [akspeformance_IName, setaksPeformanceIName] = useState();
+  const [aksmaster_IName, setaksMasterIName] = useState();
+
   const getDataFromNav = (deploymentData, demonsetData) => {
     setDeployementData(deploymentData);
     setDemonsetData(demonsetData);
@@ -33,12 +38,20 @@ const App = () => {
     cost_Name,
     balance_Name,
     performance_Name,
-    master_Name
+    master_Name,
+    akscost_Name,
+    aksbalance_Name,
+    aksperformance_Name,
+    aksmaster_Name
   ) => {
     setBalanceIName(balance_Name);
     setCostIName(cost_Name);
     setPeformanceIName(performance_Name);
     setMasterIName(master_Name);
+    setaksBalanceIName(aksbalance_Name);
+    setaksCostIName(akscost_Name);
+    setaksPeformanceIName(aksperformance_Name);
+    setaksMasterIName(aksmaster_Name);
   };
 
   return (
@@ -65,20 +78,56 @@ const App = () => {
             />
           }
         />
-        <Route path="/summary/Least/AksDetail" element={<AksDetails />} />
-        <Route path="/summary/Least/GkeDetail" element={<GkeDetails />} />
+        <Route
+          path="/summary/Least/AksDetail"
+          element={
+            <AksDetails
+              detailForPods={deploymentData}
+              instanceNameForDetails={akscost_IName}
+              masterNodeName={aksmaster_IName}
+            />
+          }
+        />
+        <Route
+          path="/summary/Least/GkeDetail"
+          element={
+            <GkeDetails
+              detailForPods={deploymentData}
+              instanceNameForDetails={akscost_IName}
+              masterNodeName={aksmaster_IName}
+            />
+          }
+        />
 
         <Route
           path="/summary/Performance/EksDetail"
-          element={<PerfEksDetail instanceNameForDetails={peformance_IName} />}
+          element={
+            <PerfEksDetail
+              detailForPods={deploymentData}
+              masterNodeName={master_IName}
+              instanceNameForDetails={peformance_IName}
+            />
+          }
         />
         <Route
           path="/summary/Performance/AksDetail"
-          element={<PerfAksDetail />}
+          element={
+            <PerfAksDetail
+              detailForPods={deploymentData}
+              masterNodeName={aksmaster_IName}
+              instanceNameForDetails={akspeformance_IName}
+            />
+          }
         />
         <Route
           path="/summary/Performance/GkeDetail"
-          element={<PerfGkeDetail />}
+          element={
+            <PerfGkeDetail
+              detailForPods={deploymentData}
+              masterNodeName={master_IName}
+              instanceNameForDetails={peformance_IName}
+            />
+          }
         />
 
         <Route
@@ -91,8 +140,26 @@ const App = () => {
             />
           }
         />
-        <Route path="/summary/Balance/AksDetail" element={<BalAksDetail />} />
-        <Route path="/summary/Balance/GkeDetail" element={<BalGkeDetail />} />
+        <Route
+          path="/summary/Balance/AksDetail"
+          element={
+            <BalAksDetail
+              detailForPods={deploymentData}
+              instanceNameForDetails={aksbalance_IName}
+              masterNodeName={aksmaster_IName}
+            />
+          }
+        />
+        <Route
+          path="/summary/Balance/GkeDetail"
+          element={
+            <BalGkeDetail
+              detailForPods={deploymentData}
+              instanceNameForDetails={balance_IName}
+              masterNodeName={master_IName}
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -15,6 +15,16 @@ const SecondPage = (props) => {
   const [performance_InstanceName, setPerformanceName] = useState();
   const [balance_InstanceName, setBalanceName] = useState();
 
+  const [aksinstanceCost, setAksInstanceCost] = useState();
+  const [aksperformanceCost, setAksPerformanceCost] = useState();
+  const [aksbalanceCost, setAksBalanceCost] = useState();
+  const [aksMsCost, setAksMsCost] = useState();
+
+  const [akscost_MsName, setAksMsName] = useState();
+  const [akscost_InstanceName, setAksInstanceName] = useState();
+  const [aksperformance_InstanceName, setAksPerformanceName] = useState();
+  const [aksbalance_InstanceName, setAksBalanceName] = useState();
+
   const getInstanceData = (
     instanceCost,
     PerformanceCost,
@@ -23,7 +33,15 @@ const SecondPage = (props) => {
     Performance_Name,
     Balance_Name,
     MasterCost,
-    MasterName
+    MasterName,
+    aksinstanceCost,
+    aksPerformanceCost,
+    aksBalanceCost,
+    aksinstance_Name,
+    aksPerformance_Name,
+    aksBalance_Name,
+    aksMasterCost,
+    aksMasterName
   ) => {
     setInstanceCost(instanceCost);
     setBalanceCost(BalanceCost);
@@ -33,6 +51,14 @@ const SecondPage = (props) => {
     setPerformanceName(Performance_Name);
     setMsCost(MasterCost);
     setMsName(MasterName);
+    setAksInstanceCost(aksinstanceCost);
+    setAksBalanceCost(aksBalanceCost);
+    setAksPerformanceCost(aksPerformanceCost);
+    setAksInstanceName(aksinstance_Name);
+    setAksBalanceName(aksBalance_Name);
+    setAksPerformanceName(aksPerformance_Name);
+    setAksMsCost(aksMasterCost);
+    setAksMsName(aksMasterName);
   };
 
   // end Max Pods
@@ -49,9 +75,9 @@ const SecondPage = (props) => {
   const Vcpuindeployment = Math.max(...depolymentVcpu);
   const maxVcpuindeployment = Vcpuindeployment + (Vcpuindeployment * 10) / 100;
   const VcpuindeploymentforPerformance =
-    Vcpuindeployment + (Vcpuindeployment * 30) / 100;
+    Vcpuindeployment + (Vcpuindeployment * 90) / 100;
   const VcpuindeploymentforBalance =
-    Vcpuindeployment + (Vcpuindeployment * 15) / 100;
+    Vcpuindeployment + (Vcpuindeployment * 65) / 100;
 
   const demonsetVcpu = props.dsData.map((object) => {
     if (object.demonMaxVcpu === "") {
@@ -185,7 +211,6 @@ const SecondPage = (props) => {
 
   //  storage ends
 
-
   // calculation for nodes
   const depolymentPods = props.dpData.map((object) => {
     if (object.maxPods === "") {
@@ -215,7 +240,11 @@ const SecondPage = (props) => {
     cost_InstanceName,
     balance_InstanceName,
     performance_InstanceName,
-    cost_MsName
+    cost_MsName,
+    akscost_InstanceName,
+    aksbalance_InstanceName,
+    aksperformance_InstanceName,
+    akscost_MsName
   );
 
   return (
@@ -235,14 +264,34 @@ const SecondPage = (props) => {
 
       <div className="graph">
         <div className="innerGraph">
-          <Graph workerCost={instanceCost} masterCost={MsCost} />
-          {/* <Graph workerCost="77" masterCost="47" /> */}
+          <Graph
+            workerCost={instanceCost}
+            masterCost={MsCost}
+            aksworkerCost={aksinstanceCost}
+            aksmasterCost={aksMsCost}
+            gkeworkerCost={aksinstanceCost}
+            gkemasterCost={aksMsCost}
+          />
         </div>
         <div className="innerGraph">
-          <Graph workerCost={performanceCost} />
+          <Graph
+            workerCost={performanceCost}
+            masterCost={MsCost}
+            aksworkerCost={aksperformanceCost}
+            aksmasterCost={aksMsCost}
+            gkeworkerCost={aksperformanceCost}
+            gkemasterCost={aksMsCost}
+          />
         </div>
         <div className="innerGraph">
-          <Graph workerCost={balanceCost} />
+          <Graph
+            workerCost={balanceCost}
+            masterCost={MsCost}
+            aksworkerCost={aksbalanceCost}
+            aksmasterCost={aksMsCost}
+            gkeworkerCost={aksbalanceCost}
+            gkemasterCost={aksMsCost}
+          />
         </div>
       </div>
 
