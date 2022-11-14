@@ -71,19 +71,19 @@ export const AksCalculation = (props) => {
   const onDemonadValue = data
     .filter((name) => name.Instance === props.instanceName)
     .map((c) => {
-      return parseFloat(c.PayAsYouGo);
+      return parseFloat(((c.PayAsYouGo) / 730).toFixed(3));
     });
 
   const onUpfront1YValue = data
     .filter((name) => name.Instance === props.instanceName)
     .map((c) => {
-      return parseFloat(c.OneYearSavingsPlan);
+      return parseFloat(((c.OneYearSavingsPlan) / 730).toFixed(3));
     });
 
   const onUpfront3YValue = data
     .filter((name) => name.Instance === props.instanceName)
     .map((c) => {
-      return parseFloat(c.ThreeYearSavingsPlan);
+      return parseFloat(((c.ThreeYearSavingsPlan / 730).toFixed(3)));
     });
 
   const OnDemandClick = () => {
@@ -215,8 +215,12 @@ export const AksCalculation = (props) => {
                         <td className="ptd">{i.Instance}</td>
                         <td className="ptd">{parseFloat(i.Cores)}</td>
                         <td className="ptd">{parseFloat(i.RAM)}</td>
-                        <td className="ptd">{parseFloat(i.TemporaryStorage)}</td>
-                        <td className="ptd">{parseFloat(i.PayAsYouGo)}</td>
+                        <td className="ptd">
+                          {parseFloat(i.TemporaryStorage)}
+                        </td>
+                        <td className="ptd">
+                          {(parseFloat(i.PayAsYouGo) / 730).toFixed(3)}
+                        </td>
                       </>
                     );
                   })}
@@ -231,9 +235,11 @@ export const AksCalculation = (props) => {
                         <td className="ptd">{i.Instance}</td>
                         <td className="ptd">{parseFloat(i.Cores)}</td>
                         <td className="ptd">{parseFloat(i.RAM)}</td>
-                        <td className="ptd">{parseFloat(i.TemporaryStorage)}</td>
                         <td className="ptd">
-                          {parseFloat(i.OneYearSavingsPlan)}
+                          {parseFloat(i.TemporaryStorage)}
+                        </td>
+                        <td className="ptd">
+                          {parseFloat((i.OneYearSavingsPlan) / 730).toFixed(3)}
                         </td>
                       </>
                     );
@@ -249,9 +255,11 @@ export const AksCalculation = (props) => {
                         <td className="ptd">{i.Instance}</td>
                         <td className="ptd">{parseFloat(i.Cores)}</td>
                         <td className="ptd">{parseFloat(i.RAM)}</td>
-                        <td className="ptd">{parseFloat(i.TemporaryStorage)}</td>
                         <td className="ptd">
-                          {parseFloat(i.ThreeYearSavingsPlan)}
+                          {parseFloat(i.TemporaryStorage)}
+                        </td>
+                        <td className="ptd">
+                          {parseFloat((i.ThreeYearSavingsPlan) / 730).toFixed(3)}
                         </td>
                       </>
                     );
@@ -265,7 +273,8 @@ export const AksCalculation = (props) => {
               {OnDemand ? (
                 <>
                   <b>
-                    OnDemand Cost(Monthly): {onDemonadValue * 730 * node} USD
+                    OnDemand Cost(Monthly):{" "}
+                    {(onDemonadValue * 730 * node).toFixed(3)} USD
                   </b>
                 </>
               ) : null}
@@ -273,8 +282,8 @@ export const AksCalculation = (props) => {
               {Upfront1Y ? (
                 <>
                   <b>
-                    onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730 * node}{" "}
-                    USD
+                    onUpfront1Y Cost(Monthly):{" "}
+                    {(onUpfront1YValue * 730 * node).toFixed(3)} USD
                   </b>
                 </>
               ) : null}
@@ -282,8 +291,8 @@ export const AksCalculation = (props) => {
               {Upfront3Y ? (
                 <>
                   <b>
-                    onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730 * node}{" "}
-                    USD
+                    onUpfront3Y Cost(Monthly):{" "}
+                    {(onUpfront3YValue * 730 * node).toFixed(3)} USD
                   </b>
                 </>
               ) : null}
@@ -406,7 +415,10 @@ export const AksCalculation = (props) => {
           </table>
           <div className="monthlyCost">
             <label>
-              <b>MasterNode Cost(Monthly): {(Ms_Cost * 730 * Ms_node).toFixed(3)} USD</b>
+              <b>
+                MasterNode Cost(Monthly): {(Ms_Cost * 730 * Ms_node).toFixed(3)}{" "}
+                USD
+              </b>
             </label>
           </div>
 

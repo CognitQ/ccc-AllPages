@@ -102,11 +102,10 @@ const SecondPage = (props) => {
   });
 
   const Vcpuindeployment = Math.max(...depolymentVcpu);
-  const maxVcpuindeployment = Vcpuindeployment + (Vcpuindeployment * 10) / 100;
+  const maxVcpuindeployment = Vcpuindeployment;
   const VcpuindeploymentforPerformance =
-    Vcpuindeployment + (Vcpuindeployment * 90) / 100;
-  const VcpuindeploymentforBalance =
-    Vcpuindeployment + (Vcpuindeployment * 65) / 100;
+    Vcpuindeployment + (Vcpuindeployment * 30) / 100;
+  const VcpuindeploymentforBalance = Vcpuindeployment + Vcpuindeployment * 0.15;
 
   const demonsetVcpu = props.dsData.map((object) => {
     if (object.demonMaxVcpu === "") {
@@ -138,14 +137,14 @@ const SecondPage = (props) => {
   // maxRam
   const depolymentRam = props.dpData.map((object) => {
     if (object.maxRam === "") {
-      if (object.minRamUnit === "GiB") {
-        return parseInt(object.minRam) * 1024;
+      if (object.minRamUnit === "MiB") {
+        return parseInt(object.minRam) / 1024;
       } else {
-        return parseInt(object.minRam);
+        return parseInt(object.minRam) ;
       }
     } else {
-      if (object.maxRamUnit === "GiB") {
-        return parseInt(object.maxRam) * 1024;
+      if (object.maxRamUnit === "MiB") {
+        return parseInt(object.maxRam) / 1024;
       } else {
         return parseInt(object.maxRam);
       }
@@ -153,55 +152,54 @@ const SecondPage = (props) => {
   });
 
   const Ramindeployment = Math.max(...depolymentRam);
-  const maxRamindeployment =
-    (Ramindeployment + (Ramindeployment * 10) / 100) / 1024;
+  const maxRamindeployment = Ramindeployment ;
 
   const ramindeploymentforPerformance =
-    (Ramindeployment + (Ramindeployment * 30) / 100) / 1024;
+    Ramindeployment + (Ramindeployment * 30) / 100;
 
   const ramindeploymentforBalance =
-    (Ramindeployment + (Ramindeployment * 15) / 100) / 1024;
+    Ramindeployment + (Ramindeployment * 15) / 100;
 
   const demonsetRam = props.dsData.map((object) => {
     if (object.demonMaxRam === "") {
-      if (object.demonMinRamUnit === "GiB") {
-        return parseInt(object.demonMinRam) * 1024;
+      if (object.demonMinRamUnit === "MiB") {
+        return parseInt(object.demonMinRam) / 1024;
       } else {
         return parseInt(object.DemonMinRam);
       }
     } else {
-      if (object.demonMaxRamUnit === "GiB") {
-        return parseInt(object.demonMaxRam) * 1024;
+      if (object.demonMaxRamUnit === "MiB") {
+        return parseInt(object.demonMaxRam) / 1024;
       } else {
         return parseInt(object.demonMaxRam);
       }
     }
   });
 
-  const maxRamindemonset = Math.max(...demonsetRam) / 1024;
+  const maxRamindemonset = Math.max(...demonsetRam);
 
   // Max Ram ends
 
   // minRam
   const depolymentMinRam = props.dpData.map((object) => {
-    if (object.minRamUnit === "GiB") {
-      return parseInt(object.minRam) * 1024;
+    if (object.minRamUnit === "MiB") {
+      return parseInt(object.minRam) / 1024;
     } else {
       return parseInt(object.minRam);
     }
   });
 
-  const minRamindeployment = Math.max(...depolymentMinRam) / 1024;
+  const minRamindeployment = Math.max(...depolymentMinRam);
 
   const demonsetMinRam = props.dsData.map((object) => {
-    if (object.demonMinRamUnit === "GiB") {
-      return parseInt(object.demonMinRam) * 1024;
+    if (object.demonMinRamUnit === "MiB") {
+      return parseInt(object.demonMinRam) / 1024;
     } else {
       return parseInt(object.demonMinRam);
     }
   });
 
-  const minRamindemonset = Math.max(...demonsetMinRam) / 1024;
+  const minRamindemonset = Math.max(...demonsetMinRam);
 
   // MinRam ends
 
@@ -210,33 +208,33 @@ const SecondPage = (props) => {
     if (object.storage === "") {
       return 0;
     } else {
-      if (object.storageUnit === "GiB") {
-        return parseInt(object.storage) * 1024;
+      if (object.storageUnit === "MiB") {
+        return parseInt(object.storage) / 1024;
       } else if (object.storageUnit === "TB") {
-        return parseInt(object.storage) * 1024 * 1024;
+        return parseInt(object.storage) / 1024 / 1024;
       } else {
         return parseInt(object.storage);
       }
     }
   });
 
-  const storageindeployment = Math.max(...depolymentstorage) / 1024;
+  const storageindeployment = Math.max(...depolymentstorage);
 
   const demonsetStorage = props.dsData.map((object) => {
     if (object.demonStorage === "") {
       return 0;
     } else {
-      if (object.demonStorageUnit === "GiB") {
-        return parseInt(object.demonStorage) * 1024;
+      if (object.demonStorageUnit === "MiB") {
+        return parseInt(object.demonStorage) / 1024;
       } else if (object.demonStorageUnit === "TB") {
-        return parseInt(object.demonStorage) * 1024 * 1024;
+        return parseInt(object.demonStorage) / 1024 / 1024;
       } else {
         return parseInt(object.demonStorage);
       }
     }
   });
 
-  const storageindemonset = Math.max(...demonsetStorage) / 1024;
+  const storageindemonset = Math.max(...demonsetStorage);
 
   //  storage ends
 

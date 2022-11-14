@@ -77,7 +77,7 @@ export const Table = (props) => {
             <tr>
               <th scope="row">Gke</th>
               <td>{props.gkeName}</td>
-              <td>{props.gkeCost * 730}</td>
+              <td>{(props.gkeCost * 730).toFixed(3)}</td>
               <td>{props.gkeMasterName}</td>
               <td>{(props.gkeMasterCost * 730).toFixed(3)}</td>
               <td>{gketotal}</td>

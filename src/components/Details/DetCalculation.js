@@ -483,45 +483,45 @@ export const DetCalculation = (props) => {
             <label>
               {OnDemand ? (
                 <>
-                  <b>OnDemand Cost(Monthly): {onDemonadValue * 730 * node} USD</b>
+                  <b>OnDemand Cost(Monthly): {(onDemonadValue * 730 * node).toFixed(3)} USD</b>
                 </>
               ) : null}
               {Spot ? (
                 <>
-                  <b>onSpot Cost(Monthly): {onSpotValue * 730 * node} USD</b>
+                  <b>onSpot Cost(Monthly): {(onSpotValue * 730 * node).toFixed(3)} USD</b>
                 </>
               ) : null}
               {Upfront1Y ? (
                 <>
-                  <b>onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730 * node} USD</b>
+                  <b>onUpfront1Y Cost(Monthly): {(onUpfront1YValue * 730 * node).toFixed(3)} USD</b>
                 </>
               ) : null}
               {Partial1Y ? (
                 <>
-                  <b>onPartial1Y Cost(Monthly): {onPartial1YValue * 730 * node} USD</b>
+                  <b>onPartial1Y Cost(Monthly): {(onPartial1YValue * 730 * node).toFixed(3)} USD</b>
                 </>
               ) : null}
               {NoUpfront1Y ? (
                 <>
                   <b>
-                    onNoUpfront1Y Cost(Monthly): {onNoUpfront1YValue * 730 * node} USD
+                    onNoUpfront1Y Cost(Monthly): {(onNoUpfront1YValue * 730 * node).toFixed(3)} USD
                   </b>
                 </>
               ) : null}
               {Upfront3Y ? (
                 <>
-                  <b>onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730 * node} USD</b>
+                  <b>onUpfront3Y Cost(Monthly): {(onUpfront3YValue * 730 * node).toFixed(3)} USD</b>
                 </>
               ) : null}
               {Partial3Y ? (
                 <>
-                  <b>onPartial3Y Cost(Monthly): {onPartial3YValue * 730 * node} USD</b>
+                  <b>onPartial3Y Cost(Monthly): {(onPartial3YValue * 730 * node).toFixed(3)} USD</b>
                 </>
               ) : null}
               {NoUpfront3Y ? (
                 <>
                   <b>
-                    onNoUpfront3Y Cost(Monthly): {onNoUpfront3YValue * 730 * node} USD
+                    onNoUpfront3Y Cost(Monthly): {(onNoUpfront3YValue * 730 * node).toFixed(3)} USD
                   </b>
                 </>
               ) : null}

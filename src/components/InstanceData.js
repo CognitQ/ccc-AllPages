@@ -104,10 +104,9 @@ export const InstanceData = (props) => {
     return parseFloat(c.OnDemandLinuxpricing_USDperHour);
   });
 
-  const minCost = Math.min(...CostOfFilterdata);
+  const minCost = CostOfFilterdata.sort((a, b) => a.id - b.id).slice(0, 1);
   const performanceCost = Math.min(...CostOfPerformance);
   const balanceCost = Math.min(...CostOfBalance);
-
   const selectedName = filterdata
     .filter((Instance) => Instance.OnDemandLinuxpricing_USDperHour == minCost)
     .slice(0, 1)
@@ -327,7 +326,7 @@ export const InstanceData = (props) => {
       balanceName,
       MsCost,
       MsNodeName,
-      
+
       aksMinCost,
       aksPerformanceCost,
       aksBalanceCost,
@@ -350,31 +349,29 @@ export const InstanceData = (props) => {
 
   return (
     <div>
-      {/* <ul>
-        {MsFilterByCost
-          .filter(
-            (Instance) =>
-            Instance.DedicatedHostSupport === "TRUE" &&
-              Instance.vCPUs >= MsVcpu &&
-              Instance.MemoryInGiB >= MsRam
-          )
+      {/* <ul> */}
+      {/* {data
+          .filter((i) => i.vCPUs >= props.vcpu && i.MemoryInGiB >= props.ram)
           .slice(0, 1)
           .map((d) => {
             return (
               <li key={d.id}>
-              name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
-              {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
+                name = {d.InstanceType}, vcpu = {d.vCPUs}, MemoryInGiB =
+                {d.MemoryInGiB} cost ={d.OnDemandLinuxpricing_USDperHour}
               </li>
-              );
-            })}
-          </ul> */}
+            );
+          })} */}
+      {/* {CostOfFilterdata.sort((a, b) => a.id - b.id).slice(0, 1)} */}
+      {/* </ul> */}
       {/* <h3>node / 2 = {nodes}</h3>
       <h3>Msvcpu = {MsVcpu}</h3>
       <h3>MsRam = {MsRam}</h3>
+    */}
 
-      <h3>
-        cost={MsCost}
-      </h3> */}
+      <h3>cost={minCost}</h3>
+      <h3>Ram={props.ram}</h3>
+      <h3>pRam={props.peformanceRam}</h3>
+      <h3>bRam={props.balanceRam}</h3>
 
       <div className="graph">
         <div className="innerGraph">

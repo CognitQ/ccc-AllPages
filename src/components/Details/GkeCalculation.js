@@ -265,7 +265,7 @@ export const GkeCalculation = (props) => {
               {OnDemand ? (
                 <>
                   <b>
-                    OnDemand Cost(Monthly): {onDemonadValue * 730 * node} USD
+                    OnDemand Cost(Monthly): {(onDemonadValue * 730 * node).toFixed(3)} USD
                   </b>
                 </>
               ) : null}
@@ -273,7 +273,7 @@ export const GkeCalculation = (props) => {
               {Upfront1Y ? (
                 <>
                   <b>
-                    onUpfront1Y Cost(Monthly): {onUpfront1YValue * 730 * node}{" "}
+                    onUpfront1Y Cost(Monthly): {(onUpfront1YValue * 730 * node).toFixed(3)}{" "}
                     USD
                   </b>
                 </>
@@ -282,7 +282,7 @@ export const GkeCalculation = (props) => {
               {Upfront3Y ? (
                 <>
                   <b>
-                    onUpfront3Y Cost(Monthly): {onUpfront3YValue * 730 * node}{" "}
+                    onUpfront3Y Cost(Monthly): {(onUpfront3YValue * 730 * node).toFixed(3)}{" "}
                     USD
                   </b>
                 </>

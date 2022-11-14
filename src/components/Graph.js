@@ -35,10 +35,7 @@ const Graph = (props) => {
         <BarChart width={300} height={250} data={dataLeast} barSize={22}>
           <CartesianGrid />
           <XAxis dataKey="name" />
-          <YAxis
-            tick={false}
-            label={{ value: "Price $", angle: -90, position: "Left" }}
-          />
+          <YAxis tick={true} label={{ angle: -90, position: "Left" }} />
           <Tooltip
             wrapperStyle={{
               width: "fit-content",
@@ -59,9 +56,19 @@ const Graph = (props) => {
               fontSize: "12px",
             }}
           />
-          <Bar dataKey="MasterNode" stackId="a" fill="blue" />
+          <Bar dataKey="MasterNode" stackId="a" fill="blue">
+            <LabelList
+              dataValue="MasterNode"
+              isAnimationActive={false}
+              position="top"
+            />
+          </Bar>
           <Bar dataKey="WorkerNode" stackId="a" fill="grey">
-            <LabelList position="top" />
+            <LabelList
+              isAnimationActive={false}
+              dataValue="WorkerNode"
+              position="top"
+            />
           </Bar>
         </BarChart>
       </div>
